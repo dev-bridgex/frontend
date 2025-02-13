@@ -1,0 +1,30 @@
+/* registerPage style */
+.registerPage {
+    background-color: #eff5ff;
+    min-height: 100vh;
+    overflow: auto;
+}
+
+
+/* registerContainer */
+.registerContainer {
+    margin-top: 11.25rem !important;
+    display: flex;
+    width: 80%;
+    margin: auto;
+
+}
+
+/* reg-left-panel */
+.regLeftPanel {
+    width: 40%;
+}
+
+
+/* reg-right-panel */
+.regRightPanel {
+    width: 60%;
+    background-color: white;
+}
+
+.regRightPanel form {}
