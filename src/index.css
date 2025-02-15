@@ -1,68 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 * {
     font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+    font-variation-settings:
+        "wdth"100;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-.specialContainer {
-    width: 90%;
-    margin: auto;
+:root {
+
+    /*main colors */
+    --primary-color: linear-gradient(to bottom right, #2563eb, #4338ca);
+    --secondary-color: #eef3ff;
+
+    /* text color */
+    --text-primary: #111827;
+    --text-secondary: #4b5563;
+    --text-tertiary: #868686;
+
+    /* font size */
+    --font-size-h1: 3.75rem;
+    --font-size-h2: 3.125rem;
+    --font-size-h3: 2.5rem;
+    --font-size-h4: 1.875rem;
+    --font-size-h5: 1.25rem;
+    --font-size-h6: 1.125rem;
+    --font-size-p: 1rem;
+    --font-size-button: 1.125rem;
+
+    /* margin-between-elements */
+    --margin-between-elements: 1rem;
+    --margin-heading: 1.5625rem;
+    --section-margin: 60px;
 }
 
-.h2Style {
-    background-color: white;
+/* button style */
+.PrimaryButtonStyle {
+    margin-top: var(--margin-between-elements);
     font-weight: bold;
-    color: black;
-    font-size: 60px;
-
+    background:#2563eb;
+    padding: .625rem 1.5625rem;
+    border-radius: .3125rem;
+    border: none;
+    color: white;
+    width: 100%;
+    font-size: var(--font-size-button);
 }
 
-.h3Style {
-    font-size: 3.125rem;
-    color: #1f2937;
-    font-weight: bold;
-}
-
-.h4Style {
-    font-size: 2.5rem;
-    color: #1f2937;
-    font-weight: bold;
-}
-
-.h5Style {
-    font-size: 1.875rem;
-    color: #1f2937;
-    font-weight: bold;
-}
-
-.h6Style {
-    font-size: 1.25rem;
-    color: #1f2937;
-    font-weight: bold;
-}
-
-.pStyle {
-    font-size: 1.125rem;
-    color: #383737;
-    font-weight: 600;
-}
-
-.lableStyle {
-    font-size: 1.125rem;
-    color: #374151;
-    font-weight: 600;
-}
-
+/* input style */
 .inputStyle {
     display: block;
     width: 100%;
     margin-bottom: .9375rem;
     padding: .5rem .3125rem;
     border-radius: .3125rem;
-    border: solid 2px #e1e2e4 !important;
-    background-color: var(--bgc2);
+    border: solid 1px #d1d5db !important;
     outline: none;
+}
+
+
+/* lable style */
+.lableStyle {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: .3125rem;
+}
+
+
+
+
+
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul {
+    margin: 0 !important;
+}
+
+
+.specialContainer {
+    width: 90%;
+    margin: auto;
 }
 
 
@@ -82,3 +111,55 @@
 .goldborder {
     border: gold 2px solid;
 }
+
+/* responsive design==============================================> */
+@media (max-width:1200px) {
+    :root {
+        font-size: 15px;
+    }
+
+}
+
+@media (max-width:1000px) {
+    :root {
+        font-size: 14px;
+    }
+
+    .specialContainer {
+        width: 95%;
+    }
+}
+
+@media (max-width:800px) {
+    :root {
+        font-size: 13px;
+    }
+}
+
+@media (max-width:600px) {
+    :root {
+        font-size: 12px;
+    }
+
+    .specialContainer {
+        width: 97%;
+    }
+
+}
+
+@media (max-width:400px) {
+    :root {
+        font-size: 11px;
+    }
+
+}
+
+
+/* 
+Responsive design
+1200px: text=> 90% ,img=> 70.
+1000px: img=> 80%.
+800px: text=> 100% , img=> 90%.
+600px: img=> 100%.
+
+*/

@@ -1,0 +1,134 @@
+/* signUpPage style======================================================> */
+.signUpPage {
+    background-color: #eff5ff;
+    min-height: 100vh;
+    overflow: auto;
+}
+
+
+/* signUpContainer======================================================> */
+.signUpContainer {
+    margin: var(--section-margin) auto !important;
+    display: flex;
+    width: 70%;
+    border-radius: .625rem;
+    overflow: hidden;
+
+
+}
+
+
+
+
+/* signUp-right-panel======================================================> */
+.signUpRightPanel {
+    padding: 2.1875rem 1.5625rem;
+    width: 60%;
+    background-color: white;
+}
+
+.signUpRightPanel .formHeader {
+    margin-bottom: var(--margin-heading);
+}
+
+.signUpRightPanel h4 {
+    font-size: var(--font-size-h4) !important;
+    font-weight: 700;
+    color: var(--text-primary);
+
+}
+
+.signUpRightPanel p {
+    font-size: var(--font-size-p) !important;
+    color: var(--text-secondary);
+    margin-top: var(--margin-between-elements) !important;
+    font-weight: 500;
+
+}
+
+.signUpRightPanel p a {
+    color: #3947d5;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* signUpRightPanel form */
+.signUpRightPanel form {
+    margin-top: var(--margin-between-elements);
+}
+
+
+.signUpRightPanel button i {
+    transition: .3s all ease-in-out;
+
+}
+
+.signUpRightPanel button:hover i {
+    transform: translateX(30%);
+
+}
+
+/* signUp-left-panel======================================================> */
+.signUpLeftPanel {
+    width: 40%;
+    background: var(--primary-color);
+    padding: 2.1875rem 1.5625rem;
+}
+
+.signUpLeftPanel h5 {
+    font-size: var(--font-size-h5) !important;
+    color: white;
+    cursor: pointer;
+}
+
+.signUpLeftPanel h5 i {
+    transition: .3s all ease-in-out;
+
+}
+
+.signUpLeftPanel h5:hover i {
+    transform: translateX(-30%);
+
+}
+
+.signUpLeftPanel .logo {
+    margin: var(--margin-heading) auto !important;
+}
+
+.signUpLeftPanel h2 {
+    margin-top: var(--margin-between-elements) !important;
+    color: white;
+    font-size: var(--font-size-h4);
+    font-weight: 600;
+}
+
+.signUpLeftPanel p {
+    margin-top: var(--margin-between-elements) !important;
+    color: #dbeafe;
+    font-size: var(--font-size-p);
+    font-weight: 500;
+}
+
+/* responsive design======================================================> */
+@media (max-width:1200px) {
+    .signUpContainer {
+
+        width: 90%;
+
+    }
+
+
+}
+
+@media (max-width:800px) {
+    .signUpContainer {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .signUpLeftPanel, .signUpRightPanel {
+        width: 100%;
+    }
+
+
+}
