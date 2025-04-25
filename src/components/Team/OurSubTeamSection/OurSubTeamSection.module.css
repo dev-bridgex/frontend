@@ -1,0 +1,128 @@
+.ourSubTeamsPage {
+    margin-top: var(--section-margin);
+    margin-bottom: var(--section-margin);
+}
+
+.subTeamsContainer {
+    margin-top: var(--margin-heading);
+}
+
+.subTeamsHeader {
+    margin-bottom: var(--margin-between-elements);
+}
+
+.title {
+    font-size: var(--font-size-h3);
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.subTeamCards {
+    position: relative;
+    padding: 20px 0;
+}
+
+.subTeamCardWrapper {
+    border-radius: 0.25rem;
+    background-color: #f9fafb;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: white 0.125rem solid;
+    height: 100%;
+}
+
+
+
+.subTeamCardImage {
+    width: 100%;
+    height: 300px;
+    object-fit: contain;
+    object-position: top;
+}
+
+.subTeamCardContent {
+    padding: 1.5rem;
+}
+
+.subTeamContentHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.subTeamCardTitle {
+    font-size: var(--font-size-h4);
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.numberOfMember {
+    color: var(--text-muted);
+    font-size: var(--font-size-small);
+    margin: 0;
+}
+
+.subTeamCardDescription {
+    color: var(--text-dark);
+    margin-bottom: 1rem !important;
+    font-size: var(--font-size-p);
+}
+
+.cardFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.learnMore {
+    font-weight: 500;
+    color: var(--primary-color);
+    font-size: var(--font-size-p);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.learnMore:hover {
+    color: var(--primary-color-dark);
+}
+
+.editIon {
+    font-size: 1.125rem;
+    /* color: var(--primary-color); */
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.editIon:hover {
+    transform: scale(1.1);
+}
+
+.customPagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.noSubTeamsMessage {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+}
+
+/* joinButton */
+.joinButton{
+    background-color: #2563EB;
+    border:none;
+    color: white;
+    padding: .5rem 1.25rem;
+    border-radius: .3125rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+}

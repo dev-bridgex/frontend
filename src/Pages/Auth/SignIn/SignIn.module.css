@@ -1,0 +1,163 @@
+/* signInPage */
+.signInPage {
+    background-color: var(--background-secondary);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+
+/* signInContainer*/
+.signInContainer {
+    display: flex;
+    width: 70%;
+    border-radius:.25rem;
+    overflow: hidden;
+    margin: auto;
+}
+
+
+
+/* signInLeftPanel */
+.signInLeftPanel {
+    width: 40%;
+    background: var(--background-primary);
+    padding: 2.1875rem 1.5625rem;
+}
+
+/* backLink */
+.backLink {
+    font-size: var(--font-size-h5) !important;
+    color: white;
+    cursor: pointer;
+}
+
+.backLink i {
+    transition: .3s all ease-in-out;
+
+}
+
+.backLink:hover i {
+    transform: translateX(-30%);
+
+}
+
+/* logo */
+.logo {
+    margin: var(--margin-heading) auto !important;
+}
+
+/* title */
+.signInLeftPanel .title {
+    margin-top: var(--margin-between-elements) !important;
+    color: white;
+    font-size: var(--font-size-h4);
+    font-weight: 600;
+}
+
+/* desc */
+.signInLeftPanel .desc {
+    margin-top: var(--margin-between-elements) !important;
+    color: #dbeafe;
+    font-size: var(--font-size-p);
+    font-weight: 500;
+}
+
+/* signInRightPanel */
+.signInRightPanel {
+    padding: 2.1875rem 1.5625rem;
+    width: 60%;
+    background-color: var(--background-light);
+}
+
+
+/* formHeader */
+.formHeader {
+    margin-bottom: var(--margin-heading);
+}
+
+.formHeader .title {
+    font-size: var(--font-size-h4) !important;
+    font-weight: 700;
+    color: var(--text-primary);
+
+}
+
+.formHeader .desc {
+    font-size: var(--font-size-p) !important;
+    color: var(--text-secondary);
+    margin-top: var(--margin-between-elements) !important;
+    font-weight: 500;
+
+}
+
+.formHeader .desc a {
+    color: #3947d5;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+
+/* signInForm */
+.signInForm {
+    margin-top: var(--margin-between-elements);
+}
+
+/* inputWrapper */
+.inputWrapper {
+    margin-bottom: 1rem;
+}
+
+/* forgetPassword */
+.forgetPassword {
+    font-size: var(--font-size-p);
+    font-weight: 700;
+    color: #1d4eda;
+    cursor: pointer;
+}
+
+/* submittingButon */
+.submittingButon {
+
+    margin-top: .5rem;
+}
+
+.submittingButon i {
+    transition: .3s all ease-in-out;
+
+}
+
+.submittingButon:hover i {
+    transform: translateX(30%);
+
+}
+
+
+
+
+
+
+/* responsive design======================================================> */
+@media (max-width:1200px) {
+    .signInContainer {
+
+        width: 90%;
+
+    }
+
+
+}
+
+@media (max-width:800px) {
+    .signInContainer {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .signInLeftPanel, .signInRightPanel {
+        width: 100%;
+    }
+
+
+}

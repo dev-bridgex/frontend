@@ -1,0 +1,272 @@
+.UploadSubTeamInfo h1 {
+    color: #1a1a1a;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+  
+  .infoSection {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .formGroup label {
+    font-weight: 600;
+    color: #333;
+    font-size: 0.95rem;
+  }
+  
+  .formGroup input,
+  .formGroup textarea {
+    padding: 0.875rem 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background-color: #fafafa;
+    width: 100%;
+  }
+  
+  .formGroup input:focus,
+  .formGroup textarea:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
+    background-color: #fff;
+  }
+  
+  .formGroup textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  .errorInput {
+    border-color: #e74c3c !important;
+    background-color: #fff9f9 !important;
+  }
+  
+  .errorText {
+    color: #e74c3c;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+  }
+  
+  .linkInputs {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .linkInputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .labelWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .charCounter {
+    font-size: 0.8rem;
+    color: #666;
+  }
+  
+  .charCounter.nearLimit {
+    color: #f39c12;
+  }
+  
+  .charCounter.overLimit {
+    color: #e74c3c;
+    font-weight: bold;
+  }
+  
+  .addLinkButton {
+    padding: 0.625rem 1.25rem;
+    background-color: #f0f7ff;
+    color: #4a90e2;
+    border: 1px solid #4a90e2;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    align-self: flex-start;
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+  
+  .addLinkButton:hover {
+    background-color: #e1f0ff;
+  }
+  
+  .addLinkButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+    color: #999;
+  }
+  
+  .linksList {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .linkItem {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s;
+  }
+  
+  .linkItem:hover {
+    background-color: #f0f5ff;
+  }
+  
+  .linkPlatform {
+    font-weight: 500;
+    width: 120px;
+    color: #4a5568;
+    font-size: 0.9rem;
+  }
+  
+  .linkUrl {
+    flex: 1;
+    color: #4a90e2;
+    text-decoration: none;
+    word-break: break-all;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+  
+  .linkUrl:hover {
+    color: #3a7bc8;
+    text-decoration: underline;
+  }
+  
+  .deleteButton {
+    margin-left: 1rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #e74c3c;
+    padding: 0.25rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+  
+  .deleteButton:hover {
+    background-color: #ffebee;
+  }
+  
+  .deleteButton svg {
+    display: block;
+  }
+  
+  .submitSection {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .submitButton {
+    padding: 0.875rem 1.75rem;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+  
+  .submitButton:hover {
+    background-color: #3a7bc8;
+  }
+  
+  .submitButton:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  .spinner {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 2px solid white;
+    width: 1.125rem;
+    height: 1.125rem;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .messagesContainer {
+    min-height: 3rem;
+  }
+  
+  .errorMessage {
+    padding: 0.875rem 1rem;
+    background-color: #fff5f5;
+    color: #e53e3e;
+    border-radius: 8px;
+    border: 1px solid #fed7d7;
+  }
+  
+  .successMessage {
+    padding: 0.875rem 1rem;
+    background-color: #f0fff4;
+    color: #38a169;
+    border-radius: 8px;
+    border: 1px solid #c6f6d5;
+  }
+  
+  .messageContent {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .messageIcon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+  }
+  
+  .errorMessage .messageIcon {
+    color: #e53e3e;
+  }
+  
+  .successMessage .messageIcon {
+    color: #38a169;
+  }
+  
+  .subLabel {
+    font-size: 0.85rem;
+    color: #666;
+  }

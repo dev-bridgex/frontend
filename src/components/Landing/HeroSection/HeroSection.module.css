@@ -1,0 +1,128 @@
+/* heroSection */
+.heroSection {
+    background: var(--background-primary);
+    /* min-height: 100vh; */
+    display: flex;
+    align-items: center;
+    padding-bottom: var(--section-margin);
+}
+
+/* heroSectionContainer */
+
+.heroSectionContainer {
+    margin-top: var(--nav-spacing);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* heroSectionContent==================================>  */
+.heroSectionContent {
+    width: 50%;
+    padding-right: .625rem;
+}
+
+.heroSectionContent h1 {
+    font-weight: 900;
+    color: white;
+    font-size: var(--font-size-h1);
+    margin-bottom: var(--margin-heading) !important;
+}
+
+.heroSectionContent h4 {
+    font-weight: 600;
+    color: #d5e5fd;
+    font-size: var(--font-size-h5);
+    margin-bottom: var(--margin-between-elements) !important;
+}
+
+/* heroContentBtn */
+
+.heroContentBtn {
+    display: flex;
+    gap: 1.25rem;
+
+}
+
+
+.heroSignInBtn {
+    background-color: white;
+    color: #2563eb;
+    border: 2px white solid;
+}
+
+.heroSignUpBtn {
+    background-color: inherit;
+    border: 2px white solid;
+    color: white;
+}
+
+/* heroSectionImage==================================> */
+
+.heroSectionImage {
+    width: 50%;
+}
+
+.heroSectionImage img {
+    width: 70%;
+}
+
+
+
+/* responsive design */
+
+@media (max-width:1200px) {
+    .heroSection{
+        padding-bottom: 40px !important;
+    }
+
+    .heroSectionContainer {
+        flex-direction: column-reverse;
+    }
+
+    .heroSectionContent {
+        width: 90%;
+        padding-right: 0;
+        margin-top: var(--vertical-gap);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .heroSectionContent h1 {
+
+        text-align: center;
+    }
+
+    .heroSectionImage {
+        width: 70%;
+    }
+}
+
+@media (max-width:1000px) {
+    .heroSectionImage {
+        width: 80%;
+    }
+}
+
+@media (max-width:800px) {
+
+
+
+    .heroSectionContent {
+        width: 100%;
+    
+    }
+
+ 
+    .heroSectionImage {
+        width: 90%;
+    }
+}
+@media (max-width:600px) {
+
+
+    .heroSectionImage {
+        width: 100%;
+    }
+}

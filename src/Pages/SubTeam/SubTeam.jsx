@@ -1,0 +1,209 @@
+import { useQuery } from 'react-query';
+import { useNavigate, useParams } from "react-router-dom";
+import styles from "./SubTeam.module.css";
+import ScrollToTop from "../../components/ScrollToTop/ScrollToTop";
+import SubTeamGallery from "../../Components/SubTeam/SubTeamGallery/SubTeamGallery";
+import SubTeamOverview from "../../Components/SubTeam/SubTeamOverview/SubTeamOverview";
+import JoinUs from "../../Components/SubTeam/JoinUs/JoinUs";
+import axios from 'axios';
+import LoadingScreen from '../../components/LoadingScreen/LoadingScreen';
+import 'react-toastify/dist/ReactToastify.css';
+import UpdateSubTeamData from '../../Components/SubTeam/UpdateSubTeamData/UpdateSubTeamData';
+import AddMember from '../../Components/SubTeam/AddMember/AddMember';
+import Channels from '../../Components/SubTeam/Channels/Channels';
+import LearningPhase from "../../Components/SubTeam/LearningPhase/LearningPhase"
+import { toast } from 'react-toastify';
+
+const baseUrl = import.meta.env.VITE_BASE_URL;
+
+// Placeholder data
+const placeholderData = {
+    Id: "default-subteam-id",
+    Name: "Sub-Team Name",
+    Desc: "This is a default sub-team description.",
+    DescShort: "Short description about the sub-team",
+    Vision: "Our vision is to achieve excellence in our field.",
+    Logo: null,
+    Images: [],
+    MediaLinks: [],
+    Channels: [],
+    Leaders: [],
+    CreatedAt: new Date().toISOString(),
+    CanModify: false,
+    JoinLink: null
+};
+
+export default function SubTeam() {
+    const navigate = useNavigate();
+    const { communityId, teamId, subTeamId } = useParams();
+    const token = localStorage.getItem("token");
+
+    // Fetch sub-team data
+    const fetchSubTeam = async () => {
+        try {
+            const { data } = await axios.get(
+                `${baseUrl}/api/communities/${communityId}/teams/${teamId}/subteams/${subTeamId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+            return data?.Data;
+        } catch (error) {
+            throw new Error(error.response?.data?.Message || 'Failed to fetch sub-team data');
+        }
+    };
+
+    // Merge actual data with placeholders
+    const getSafeData = (data) => {
+        if (!data) return placeholderData;
+
+        return {
+            ...placeholderData,
+            ...data,
+            Name: data.Name || placeholderData.Name,
+            Desc: data.Desc || placeholderData.Desc,
+            DescShort: data.DescShort || placeholderData.DescShort,
+            Vision: data.Vision || placeholderData.Vision,
+            Logo: data.Logo || placeholderData.Logo,
+            Images: data.Images || placeholderData.Images,
+            MediaLinks: data.MediaLinks || placeholderData.MediaLinks,
+            Channels: data.Channels || placeholderData.Channels,
+            Leaders: data.Leaders || placeholderData.Leaders,
+            CreatedAt: data.CreatedAt || placeholderData.CreatedAt,
+            JoinLink: data.JoinLink || placeholderData.JoinLink
+        };
+    };
+
+    const handleLeaveSubTeam = async () => {
+        try {
+            const response = await axios.post(
+                `${baseUrl}/api/communities/${communityId}/teams/${teamId}/subteams/${subTeamId}/members/leave`,
+                {},
+                {
+                    headers: {
+                        'accept': '*/*',
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+            );
+
+            if (response.status === 200) {
+                toast.success('Successfully left the sub-team!', {
+                    position: "top-center",
+                    autoClose: 2000
+                });
+                navigate(-1);
+            }
+        } catch (error) {
+            toast.error(error.response?.data?.Message || 'Failed to leave sub-team', {
+                position: "top-center",
+                autoClose: 3000
+            });
+        }
+    };
+
+    const { data: subTeamData, isLoading, refetch } = useQuery(
+        ['subTeam', communityId, teamId, subTeamId],
+        fetchSubTeam,
+        {
+            staleTime: Infinity,
+            refetchOnWindowFocus: false,
+        }
+    );
+
+    const safeData = getSafeData(subTeamData);
+
+    // // console.log(JSON.stringify(safeData, null, 2));
+    // console.log(safeData.Leaders);
+    
+
+
+
+
+    if (isLoading) return <LoadingScreen />;
+
+    return (
+        <>
+            <AddMember communityId={communityId} teamId={teamId} subTeamId={subTeamId} />
+            <ScrollToTop />
+            <UpdateSubTeamData refetch={refetch} communityId={communityId} teamId={teamId} subTeamId={subTeamId} />
+
+            <section className={`${styles.subTeamPage}`}>
+                {/* Action buttons container - only shown if user has modification rights */}
+                {safeData?.CanModify ? (
+                    <div className={styles.actionButtons}>
+                        {/* Edit SubTeam Button */}
+                        <button
+                            data-bs-toggle="modal"
+                            data-bs-target="#updateSubTeamModal"
+                            className={styles.actionButton}
+                            title="Edit SubTeam Information"
+                        >
+                            <i className={`fa-solid fa-pen-to-square ${styles.buttonIcon}`}></i>
+                            <span className={styles.tooltip}>Edit SubTeam</span>
+                        </button>
+
+                        {/* Add Member Button */}
+                        <button
+                            data-bs-toggle="modal"
+                            data-bs-target="#addMemberModal"
+                            className={styles.actionButton}
+                            title="Add New Member"
+                        >
+                            <i className={`fa-solid fa-user-plus ${styles.buttonIcon}`}></i>
+                            <span className={styles.tooltip}>Add Member</span>
+                        </button>
+
+                        {/* Manage Members Button */}
+                        <button
+                            onClick={() => navigate(`/communities/${communityId}/teams/${teamId}/subteams/${subTeamId}/manageMembers`)}
+                            className={styles.actionButton}
+                            title="Manage Members"
+                        >
+                            <i className={`fa-solid fa-users-gear ${styles.buttonIcon}`}></i>
+                            <span className={styles.tooltip}>Manage Members</span>
+                        </button>
+                    </div>
+                ) : (
+                    token && safeData && (
+                        <div className={styles.actionButtons}>
+                            <button
+                                onClick={handleLeaveSubTeam}
+                                className={`${styles.actionButton} ${styles.leaveButton}`}
+                                title="Leave SubTeam"
+                            >
+                                <i className={`fa-solid fa-right-from-bracket ${styles.buttonIcon}`}></i>
+                                <span className={styles.tooltip}>Leave SubTeam</span>
+                            </button>
+                        </div>
+                    )
+                )}
+
+                {/* subTeamGallery */}
+                <SubTeamGallery
+                    CanModify={safeData?.CanModify}
+                    images={safeData.Images}
+                    name={safeData.Name}
+                    descShort={safeData.DescShort}
+                    communityId={communityId}
+                    teamId={teamId}
+                    subTeamId={subTeamId}
+                    refetch={refetch}
+                />
+
+                <div className={`${styles.subTeamContainer} specialContainer `}>
+                    <SubTeamOverview subTeamData={safeData} />
+                    {token &&
+                        <>
+                            <Channels />
+                            <LearningPhase />
+                        </>
+                    }
+                    <JoinUs />
+                </div>
+            </section>
+        </>
+    );
+}

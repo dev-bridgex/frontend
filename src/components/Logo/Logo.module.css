@@ -1,0 +1,9 @@
+/* logo */
+.logoWrapper {
+  width: 7.5rem;
+}
+
+.logoWrapper .logo {
+  width: 100%;
+  cursor: pointer;
+}

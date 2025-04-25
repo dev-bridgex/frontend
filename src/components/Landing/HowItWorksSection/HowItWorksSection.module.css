@@ -1,0 +1,136 @@
+/* HowItWorksSection */
+.HowItWorksSection {
+    background-color: var(--background-secondary);
+    overflow: auto;
+}
+
+/* howItWorkContainer */
+.howItWorkContainer {
+    margin-top: var(--section-margin);
+    margin-bottom: calc(var(--section-margin) * 2);
+
+}
+
+.howItWorkContainer .title {
+    font-size: var(--font-size-h2);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--margin-heading) !important;
+    text-align: center;
+}
+
+.howItWorkContainer .subtitle {
+    font-size: var(--font-size-h6);
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: var(--vertical-gap) !important;
+    text-align: center;
+}
+
+.catButtonWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.ctaButton {
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    margin-top: var(--margin-between-elements);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.ctaButton i {
+    padding-left: .625rem;
+}
+
+
+/* stepsContainer */
+.stepsContainer {
+    display: flex;
+}
+
+
+.horizontalLine {
+    width: 80%;
+    margin: auto;
+    height: .25rem;
+    background-color: #3947d5;
+
+}
+
+/* stepItem */
+.stepItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 .625rem;
+}
+
+.iconWrapper {
+    background-color: #F3F4FF;
+    border-radius: 50%;
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(calc(-50% - 2px));
+}
+
+.iconWrapper .icon {
+    width: 1.5rem;
+    height: 2rem;
+}
+
+.stepTitle {
+
+    font-size: var(--font-size-h5);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--margin-between-elements) !important;
+
+}
+
+.stepDescription {
+
+    font-size: var(--font-size-p);
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: var(--margin-between-elements) !important;
+
+}
+
+@media (max-width:600px) {
+
+    .stepsContainer {
+        flex-direction: column;
+    }
+
+    .horizontalLine {
+        display: none;
+
+    }
+
+    .iconWrapper {
+
+        transform: none;
+        margin-bottom: var(--margin-between-elements);
+    }
+
+    .stepItem {
+
+        margin-top: var(--margin-between-elements);
+        padding: 0 0px;
+    }
+
+    .howItWorkContainer .subtitle {
+        margin-bottom: var(--margin-between-elements) !important;
+
+    }
+
+
+}

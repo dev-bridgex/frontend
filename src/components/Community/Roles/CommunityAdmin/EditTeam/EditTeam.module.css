@@ -1,0 +1,92 @@
+/* Main Container */
+.EditTeam {
+    font-family: inherit;
+}
+
+/* Modal Content */
+.teamContent {
+    border: 2px solid #E5E7EB !important;
+    border-radius: 0.25rem !important;
+    padding: 0.625rem;
+}
+
+/* Modal Header */
+.teamHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0 !important;
+    margin-bottom: var(--margin-heading);
+}
+
+.headerTitle {
+    font-size: 1.875rem;
+    color: black;
+    font-weight: 600;
+}
+
+.closeBtn {
+    font-size: 1.375rem;
+    cursor: pointer;
+}
+
+/* Inputs Wrapper */
+.inputsWrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5rem;
+}
+
+/* Input Group */
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.inputGroup input,
+.inputGroup textarea {
+    padding: 0.5rem;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.25rem;
+    resize: vertical;
+}
+
+.inputGroup input::placeholder,
+.inputGroup textarea::placeholder {
+    color: #9CA3AF;
+}
+
+/* Buttons Wrapper */
+.buttonsWrapper {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.5rem;
+}
+
+.buttonsWrapper button {
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.buttonsWrapper button:first-child {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.buttonsWrapper button:last-child {
+    background-color: inherit;
+    color: black;
+    margin-top: 0.375rem;
+    border: 2px solid rgb(242, 242, 242);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .headerTitle {
+        font-size: 1.5rem;
+    }
+}

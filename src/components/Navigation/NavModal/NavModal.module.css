@@ -1,0 +1,87 @@
+/* modalContent */
+.modalContent {
+    background-color: var(--background-light) !important;
+}
+
+
+
+/* modalHeader */
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modalHeader h6 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+
+.modalHeader .modalClose {
+    font-size: 18px !important;
+    cursor: pointer;
+    color: var(--text-primary);
+}
+
+
+/* modalBody */
+.modalBodyUl {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 15px;
+    font-size: var(--font-size-a);
+    font-weight: 600;
+
+}
+
+.modalBodyUl a {
+    color: black;
+    position: relative;
+
+}
+
+.modalBodyUl a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 1.5px;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease-in-out;
+}
+
+.modalBodyUl a:hover::after {
+    width: 100%;
+}
+
+.modalBodyUl a.active::after {
+    width: 100%;
+}
+
+.logoutButton {
+    background-color: #ff5c5c;
+    color: #ffffff;
+    padding: .5rem 1rem;
+    border: none;
+    border-radius: .5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logoutButton:hover {
+    background-color: #d9534f;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.logoutButton:active {
+    background-color: #c9302c;
+    transform: translateY(0);
+}

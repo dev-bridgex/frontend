@@ -1,0 +1,87 @@
+/* subTeamContent */
+.subTeamContent {
+    border: 2px solid #E5E7EB !important;
+    border-radius: .25rem !important;
+    padding: .625rem;
+}
+
+/* subTeamHeader */
+.subTeamHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0 !important;
+    margin-bottom: var(--margin-heading);
+}
+
+.subTeamHeader .headerTitle {
+    font-size: 1.875rem;
+    color: black;
+    font-weight: 600;
+}
+
+.subTeamHeader .closeBtn {
+    font-size: 1.375rem;
+    cursor: pointer;
+}
+
+/* inputsWrapper */
+.inputsWrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5rem;
+}
+
+/* inputGroup */
+.inputGroup {
+    position: relative;
+}
+
+.inputGroup input {
+    padding-left: .5rem;
+    width: 100%;
+}
+
+.inputGroup input::placeholder {
+    color: #9CA3AF;
+}
+
+.inputGroup .characterCount {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    font-size: 0.75rem;
+    color: #6B7280;
+}
+
+/* Error states */
+.inputError {
+    border-color: #EF4444 !important;
+}
+
+.errorMessage {
+    font-size: 0.875rem;
+}
+
+/* buttonsWrapper */
+.buttonsWrapper button:first-child {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: white;
+    margin-top: var(--margin-between-elements);
+}
+
+.buttonsWrapper button:last-child {
+    width: 100%;
+    background-color: inherit;
+    color: black;
+    margin-top: .375rem;
+    border: 2px solid rgb(242, 242, 242);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .subTeamHeader .headerTitle {
+        font-size: 1.5rem;
+    }
+}

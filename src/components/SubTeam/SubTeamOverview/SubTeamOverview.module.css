@@ -1,0 +1,163 @@
+/* subTeamOverview */
+.subTeamOverview {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* subTeamStats */
+.subTeamStats {
+    width: 20%;
+}
+
+/* subTeamLogoWrapper */
+.subTeamLogoWrapper {
+    margin-bottom: var(--margin-between-elements);
+    display: flex;
+    justify-content: center;
+}
+
+.subTeamLogoWrapper .logo {
+    height: 100%;
+    width: 80%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* statisticsWrapper */
+.statisticsWrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+}
+
+/* statistic */
+.statisticsWrapper .statistic {
+    display: flex;
+    align-items: center;
+    column-gap: .25rem;
+}
+
+.statistic p {
+    font-size: var(--font-size-p);
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+/* socialMedia */
+.socialMedia {
+    margin-top: var(--margin-between-elements);
+}
+
+/* socialIcons */
+.socialIcons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+/* socialLink */
+.socialLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #4b5563;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.socialLink:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f3f4f6;
+}
+
+
+
+/* teamOverview */
+.subTeamInfo {
+    width: 70%;
+}
+
+/* aboutSubTeam */
+.aboutSubTeam {
+    margin-bottom: var(--margin-heading);
+}
+
+.aboutSubTeam .title {
+    font-size: var(--font-size-h4);
+    font-weight: 700;
+    margin-bottom: var(--margin-between-elements) !important;
+    color: var(--text-primary);
+}
+
+.aboutSubTeam .desc {
+    font-size: var(--font-size-p);
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+/* subTeamVision */
+.subTeamVision {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid #e1e2e3;
+}
+
+.subTeamVision .title {
+    font-size: var(--font-size-h4);
+    font-weight: 700;
+    margin-bottom: var(--margin-between-elements) !important;
+    color: var(--text-primary);
+}
+
+.subTeamVision .desc {
+    font-size: var(--font-size-p);
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+
+
+
+/* responsive design */
+@media (max-width: 800px) {
+    .subTeamStats {
+        width: 25%;
+    }
+}
+
+@media (max-width: 600px) {
+    .subTeamOverview {
+        flex-direction: column;
+    }
+
+    .subTeamStats {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .subTeamLogoWrapper .logo {
+
+        width: 50%;
+    }
+
+    .subTeamInfo {
+        width: 100%;
+        margin-top: var(--vertical-gap);
+    }
+}
+
+@media (max-width: 400px) {
+    .subTeamLogoWrapper .logo {
+
+        width: 60%;
+    }
+}

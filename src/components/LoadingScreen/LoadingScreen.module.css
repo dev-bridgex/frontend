@@ -1,0 +1,79 @@
+.loadingScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #1a2a3a, #0d1b2a);
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.loaderContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.pulseLoader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.pulseDot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #4facfe;
+    animation: pulseAnimation 1.5s ease-in-out infinite;
+}
+
+.pulseDot:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.pulseDot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.pulseDot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes pulseAnimation {
+    0%, 100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+        background-color: #00f2fe;
+    }
+}
+
+.loadingText {
+    color: white;
+    font-family: 'Arial', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    animation: textFade 2s ease-in-out infinite;
+}
+
+@keyframes textFade {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+}

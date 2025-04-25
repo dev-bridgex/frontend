@@ -1,0 +1,62 @@
+/* ImpactStatSection */
+.ImpactStatSection {
+    background-color: var(--background-light);
+    overflow: auto;
+}
+
+/* ImpactStatContainer */
+.ImpactStatContainer {
+    margin: var(--section-margin) auto;
+
+}
+
+/* statsContainer */
+.statsContainer {
+    display: flex;
+    overflow: hidden;
+}
+
+/* statItem */
+.statItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.statItem .icon {
+    width: 2.5rem;
+    height: 2rem;
+    margin-bottom: var(--margin-heading) !important;
+}
+
+.statItem .value {
+    font-size: var(--font-size-h4);
+    font-weight: 700;
+    margin-bottom: .5rem !important;
+    color: var(--text-primary);
+}
+
+.statItem .label {
+    font-size: var(--font-size-h6);
+    font-weight: 500;
+    margin-bottom: var(--margin-between-elements);
+    color: var(--text-secondary);
+}
+
+/* responsive design */
+
+@media (max-width: 768px) {
+
+    .statsContainer {
+        row-gap: 30px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .statsContainer {
+        gap: 30px;
+    }
+}

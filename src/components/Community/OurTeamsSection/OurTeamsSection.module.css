@@ -1,0 +1,209 @@
+/* ourTeamsPage */
+.ourTeamsPage {
+    overflow: auto;
+}
+
+
+/* teamsHeader */
+.teamsHeader {
+    margin-bottom: var(--margin-heading) !important;
+}
+
+.teamsHeader .title {
+    font-weight: 700;
+    font-size: var(--font-size-h3);
+    color: var(--text-primary);
+    text-align: center;
+}
+
+/* Card styling */
+.teamCardWrapper {
+    border-radius: .25rem;
+    background-color: white;
+    box-shadow: 0 .25rem 1.25rem rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: all 0.4s ease;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    position: relative;
+}
+
+.teamCardWrapper:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, 0.1);
+}
+
+.teamCardWrapper:hover::before {
+    opacity: 1;
+}
+
+.teamCardWrapper img {
+    width: 100% !important;
+    height: 18.75rem !important;
+    object-fit: cover;
+    object-position: top;
+    transition: transform 0.5s ease;
+}
+
+.teamCardWrapper:hover img {
+    transform: scale(1.03);
+}
+
+.teamCardContent {
+    padding: 1.75rem;
+    background: white;
+}
+
+.teamContentHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--margin-between-elements);
+}
+
+.teamContentHeader .teamCardTitle {
+    font-weight: 700;
+    color: #2d3748;
+    font-size: 1.25rem;
+    margin: 0;
+    position: relative;
+    padding-bottom: .5rem;
+}
+
+.teamContentHeader .teamCardTitle::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 2.5rem;
+    height: .1875rem;
+    background: linear-gradient(90deg, #4299e1, #667eea);
+    border-radius: 2px;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+}
+
+.teamCardWrapper:hover .teamCardTitle::after {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.teamContentHeader .numberOfMember {
+    background: #ebf4ff;
+    color: #4299e1;
+    padding: 0.4rem 1rem;
+    border-radius: 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(66, 153, 225, 0.1);
+}
+
+.teamCardWrapper:hover .numberOfMember {
+    background: #4299e1;
+    color: white;
+}
+
+.teamCardContent .teamCardDescription {
+    font-weight: 500;
+    color: #718096;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: var(--margin-between-elements) !important;
+    position: relative;
+}
+
+.cardFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid #f0f2f5;
+}
+
+.learnMore {
+    font-weight: 600;
+    color: #4299e1;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 0.5rem 0.75rem;
+    border-radius: .5rem;
+}
+
+.learnMore:hover {
+    color: #2b6cb0;
+    background: #f7fafc;
+    gap: 0.75rem;
+}
+
+.editIon {
+    font-size: 1.125rem;
+    cursor: pointer;
+    color: #718096;
+    padding: 0.5rem;
+    border-radius: .5rem;
+    transition: all 0.3s ease;
+}
+
+.editIon:hover {
+    color: #4299e1;
+    background: #f7fafc;
+}
+
+/* Responsive adjustments */
+@media (max-width:600px) {
+    .teamCard {
+        padding: 0 .9375rem !important;
+    }
+}
+
+@media (max-width:400px) {
+    .teamCard {
+        width: 100% !important;
+        padding: 0 .9375rem !important;
+    }
+}
+
+.noTeamsWrapper {
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.noTeamsContent {
+    text-align: center;
+    color: #718096;
+}
+
+.noTeamsContent i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #4299e1;
+    opacity: 0.8;
+}
+
+.noTeamsContent h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+}
+
+.noTeamsContent p {
+    font-size: 1rem;
+    color: #718096;
+}
+
+
+

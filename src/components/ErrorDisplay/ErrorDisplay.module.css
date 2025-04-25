@@ -1,0 +1,121 @@
+/* src/components/ErrorDisplay/ErrorDisplay.module.css */
+.errorContainer {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+    padding: 2rem;
+}
+
+.errorContent {
+    background: white;
+    padding: 3rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    animation: slideUp 0.5s ease-out;
+}
+
+.errorIcon {
+    color: #ff4d4d;
+    font-size: 4rem;
+    margin-bottom: 1.5rem !important;
+    animation: pulse 2s infinite;
+}
+
+.errorTitle {
+    color: #2d3748;
+    font-size: 1.8rem;
+    margin-bottom: 1rem !important;
+    font-weight: 600;
+}
+
+.errorMessage {
+    color: #718096;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem !important;
+}
+
+.errorActions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.errorButton, .errorButtonSecondary {
+    padding: 0.8rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.errorButton {
+    background: #4299e1;
+    color: white;
+}
+
+.errorButton:hover {
+    background: #3182ce;
+    transform: translateY(-2px);
+}
+
+.errorButtonSecondary {
+    background: #edf2f7;
+    color: #4a5568;
+}
+
+.errorButtonSecondary:hover {
+    background: #e2e8f0;
+    transform: translateY(-2px);
+}
+
+.buttonIcon {
+    font-size: 1.1rem;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 480px) {
+    .errorContent {
+        padding: 2rem;
+    }
+
+    .errorActions {
+        flex-direction: column;
+    }
+
+    .errorButton, .errorButtonSecondary {
+        width: 100%;
+        justify-content: center;
+    }
+}

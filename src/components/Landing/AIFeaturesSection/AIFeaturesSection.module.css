@@ -1,0 +1,142 @@
+/* aiFeaturesSection */
+.aiFeaturesSection {
+    background-color: var(--background-secondary);
+    overflow: auto;
+}
+
+/* aiFeaturesContainer */
+.aiFeaturesContainer {
+    margin: var(--section-margin) auto;
+
+}
+
+.aiFeaturesContainer>.title {
+    text-align: center;
+    font-size: var(--font-size-h2);
+    color: var(--text-primary);
+    margin-bottom: var(--margin-heading) !important;
+    font-weight: 700;
+    text-align: center;
+}
+
+.aiFeaturesContainer>.subtitle {
+    text-align: center;
+    font-size: var(--font-size-h6);
+    color: var(--text-secondary);
+    margin-bottom: var(--margin-between-elements) !important;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* aiFeaturesContent */
+.aiFeaturesContent {
+    margin-top: var(--vertical-gap);
+
+}
+
+/* exploreLinkWrapper */
+.exploreLinkWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary-color);
+
+}
+
+.exploreLink {
+    color: var(--primary-color);
+    font-weight: 500;
+    font-size: var(--font-size-a);
+    margin-right: .625rem;
+}
+
+/* cardsContainer */
+.cardsContainer {
+    display: flex;
+    gap: 1.25rem;
+    margin-bottom: var(--vertical-gap) !important;
+
+}
+
+/* card */
+.card {
+    border-radius: .75rem;
+    padding: 2rem !important;
+    flex: 1 1 30%;
+    background-color: var(--background-light);
+    cursor: pointer;
+
+}
+
+
+
+/* iconWrapper */
+.card .iconWrapper {
+    background-color: var(--primary-color);
+    width: 4rem;
+    height: 4rem;
+    border-radius: .75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: var(--margin-heading);
+}
+
+.card .iconWrapper img {
+    width: 2rem;
+    height: 2rem;
+}
+
+
+
+/* cardInfo */
+
+.cardInfo .cardTitle {
+    font-size: var(--font-size-h4);
+    font-weight: 700;
+    margin-bottom: var(--margin-heading) !important;
+    color: var(--text-primary);
+}
+
+.cardInfo .cardDescription {
+    font-size: var(--font-size-p);
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin-bottom: var(--margin-between-elements) !important;
+}
+
+/* highlightWrapper */
+
+.cardInfo .highlight {
+    font-size: var(--font-size-p);
+    font-weight: 600;
+    color: #22C55E;
+    margin-left: 10px;
+}
+
+/* responsive design */
+@media (max-width: 1200px) {
+    .card {
+        flex: 1 1 45%;
+        max-width: 45% !important;
+        margin: auto;
+    }
+}
+
+@media (max-width: 800px) {
+    .card {
+        flex: 1 1 90%;
+        max-width: 90% !important;
+    }
+    
+    
+    
+}
+@media (max-width: 600px) {
+    .card {
+        max-width: 100% !important;
+    }
+
+  
+
+}

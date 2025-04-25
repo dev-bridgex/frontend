@@ -1,0 +1,62 @@
+/* communityContent */
+.communityContent {
+    border: 2px solid #E5E7EB !important;
+    border-radius: .25rem !important;
+    padding: .625rem;
+}
+
+/* communityHeader */
+.communityHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0 !important;
+    margin-bottom: var(--margin-heading);
+}
+
+.headerTitle {
+    font-size: 1.875rem;
+    color: black;
+    font-weight: 600;
+}
+
+.communityHeader .closeBtn {
+    font-size: 1.375rem;
+    cursor: pointer;
+}
+
+/* inputsWrapper */
+.inputsWrapper {
+
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5rem;
+}
+
+/* inputGroup */
+.inputGroup input {
+    padding-left: .5rem;
+}
+
+.inputGroup input::placeholder {
+    color: #9CA3AF;
+}
+
+/* buttonsWrapper */
+
+.buttonsWrapper button:first-child {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: white;
+    margin-top: .625rem;
+
+}
+
+.buttonsWrapper button:last-child {
+    width: 100%;
+    background-color: inherit;
+    color: black;
+    margin-top: .375rem;
+    border: 2px solid rgb(242, 242, 242);
+
+}

@@ -1,0 +1,30 @@
+/* updateSubTeamContent */
+.updateSubTeamContent {
+    border-radius: .25rem !important;
+    background-color: #fff;
+    padding: 10px .9375rem;
+}
+
+/* modalHeader */
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--margin-between-elements) !important;
+}
+
+/* headerTitle */
+.headerTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.closeBtn {
+    cursor: pointer;
+    font-size: 1.25rem;
+}
+
+/* updateSubTeamBody */
+.updateSubTeamBody {
+    padding: 1.5rem;
+}

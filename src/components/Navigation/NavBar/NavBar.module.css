@@ -1,0 +1,108 @@
+/* nav */
+nav {
+    background-color: white;
+}
+
+/* navContainer */
+.navContainer {
+    background-color: inherit;
+}
+
+/* navBarContainer==================================> */
+.navBarContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .625rem 0px !important;
+}
+
+/* logo */
+.logoWrapper {
+    width: 7.5rem;
+}
+
+.logoWrapper .logo {
+    width: 100%;
+    cursor: pointer;
+}
+
+.navBarUl {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    column-gap: 3.125rem;
+    font-size: var(--font-size-a);
+    font-weight: 600;
+
+}
+
+.navBarUl a {
+    color: black;
+    position: relative;
+
+}
+
+.navBarUl a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 1.5px;
+    background-color: white;
+    transition: width 0.3s ease-in-out;
+}
+
+.navBarUl a:hover::after {
+    width: 100%;
+}
+
+.navBarUl a.active::after {
+    width: 100%;
+}
+
+.menuIcon {
+    font-size: 18px;
+    display: none !important;
+    cursor: pointer;
+    color: black;
+
+}
+
+/*logoutButton*/
+
+.logoutButton {
+    background-color: #ff5c5c;
+    color: #ffffff;
+    padding: .5rem 1rem;
+    border: none;
+    border-radius: .5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logoutButton:hover {
+    background-color: #d9534f;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.logoutButton:active {
+    background-color: #c9302c;
+    transform: translateY(0);
+}
+
+/* responsive navBar */
+
+@media (max-width: 600px) {
+    .navBarUl {
+        display: none;
+    }
+
+    .menuIcon {
+        display: block !important;
+    }
+
+}

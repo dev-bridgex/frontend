@@ -1,0 +1,116 @@
+/* learningPhaseSection */
+.learningPhaseSection {
+    background-color: #F9FAFB;
+    border-radius: 1rem;
+    padding: 2.5rem 1.875rem;
+    margin-top: var(--section-margin);
+    margin-bottom: var(--section-margin);
+    border-radius: 1rem;
+}
+
+/* learingPhaseContainer */
+.learingPhaseContainer {
+    display: flex;
+}
+
+/* LearningPhaseIntro */
+.LearningPhaseIntro {
+    width: 50%;
+}
+
+.LearningPhaseIntro .title {
+    font-size: var(--font-size-h3);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--margin-heading) !important;
+
+}
+
+.LearningPhaseIntro .desc {
+    font-size: var(--font-size-p);
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: var(--margin-between-elements) !important;
+    width: 90%;
+}
+
+.LearningPhaseIntro .viewButton {
+    border: 2px solid #2563EB;
+    background-color: white;
+    color: #2563EB;
+    border-radius: .75rem !important;
+}
+
+/* LearningPhaseFeatures*/
+.LearningPhaseFeatures {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    width: 50%;
+}
+
+/* feature */
+.feature {
+    display: flex;
+    align-items: center;
+    column-gap: 1.25rem;
+    background-color: white;
+    border-radius: .75rem;
+    padding: .9375rem;
+    width: 100%;
+}
+
+.feature .logoWrapper {
+    background-color: #DBEAFE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: .5rem;
+    width: 3rem;
+    height: 3rem;
+}
+
+.logoWrapper img {
+    width: 1.5rem;
+    height: 1.3125rem;
+}
+
+/* featureInfo */
+.featureInfo {
+    display: flex;
+    flex-direction: column;
+    row-gap: .5rem;
+    width: 100%;
+}
+
+.featureInfo .title {
+    font-size: 1.375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.featureInfo .desc {
+    font-size: var(--font-size-p);
+    font-weight: 400;
+    color: var(--text-secondary);
+}
+
+/* responsive design */
+@media (max-width:600px) {
+    .learingPhaseContainer {
+        flex-direction: column;
+    }
+
+    .LearningPhaseFeatures {
+        width: 100%;
+        margin-top: var(--header-gap);
+    }
+
+    .LearningPhaseIntro {
+        width: 100%;
+    }
+
+    .LearningPhaseIntro .desc {
+        width: 100%;
+    }
+}

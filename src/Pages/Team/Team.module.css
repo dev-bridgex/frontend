@@ -1,0 +1,223 @@
+/* teamPage */
+.teamPage {
+    min-height: 100vh;
+    overflow: auto;
+    background-color: var(--background-light);
+}
+
+/* teamContainer */
+.teamContainer {
+    margin-bottom: var(--margin-heading);
+    margin-top: var(--margin-heading);
+}
+
+.editIon {
+    position: fixed;
+    top: 15%;
+    right: 2%;
+    padding: 0.75rem;
+    cursor: pointer;
+    z-index: 99999999;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.editIon:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* teamHeader */
+.teamHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* teamStats */
+.teamStats {
+    width: 20%;
+}
+
+.teamStatsContainer .teamLogo {
+    height: 12.5rem;
+    margin-bottom: var(--margin-between-elements);
+}
+
+/* statisticsWrapper */
+.statisticsWrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5rem;
+}
+
+.statisticsWrapper .statistic {
+    display: flex;
+    align-items: center;
+    column-gap: .25rem;
+}
+
+.statistic p {
+    font-size: var(--font-size-p);
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+/* Social Media Styles */
+.socialMedia {
+    margin-top: var(--margin-between-elements);
+}
+
+.socialIcons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.socialLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #4b5563;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.socialLink:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f3f4f6;
+}
+
+.socialLink .fa-facebook-f {
+    color: #1877f2;
+}
+
+.socialLink .fa-twitter {
+    color: #1da1f2;
+}
+
+.socialLink .fa-linkedin-in {
+    color: #0a66c2;
+}
+
+.socialLink .fa-youtube {
+    color: #ff0000;
+}
+
+.socialLink .fa-github {
+    color: #333;
+}
+
+.socialLink .fa-instagram {
+    background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.socialLink .fa-link {
+    color: #6b7280;
+}
+
+/* teamOverview */
+.teamOverview {
+    width: 70%;
+}
+
+/* aboutTeam */
+.aboutTeam .title {
+    font-size: var(--font-size-h4);
+    font-weight: 700;
+    margin-bottom: var(--margin-between-elements) !important;
+    color: var(--text-primary);
+}
+
+.aboutTeam .desc {
+    font-size: var(--font-size-p);
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: var(--margin-between-elements) !important;
+}
+
+/* teamVision */
+.teamVision {
+    margin-top: var(--header-gap) !important;
+    background-color: #f8f9fa;
+    border-radius: .75rem;
+    padding: 1.25rem;
+    border: solid #e1e2e3 2px;
+    margin-bottom: var(--margin-between-elements);
+}
+
+.teamVision .title {
+    font-size: var(--font-size-h4);
+    font-weight: 700;
+    margin-bottom: var(--margin-between-elements) !important;
+    color: var(--text-primary);
+}
+
+.teamVision .desc {
+    font-size: var(--font-size-p);
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: var(--margin-between-elements) !important;
+}
+
+/* actionButtonContainer */
+.actionButtonContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: var(--margin-between-elements);
+}
+
+/* actionButton */
+.actionButton {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.625rem 1.5rem;
+    border-radius: 0.3125rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.actionButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 800px) {
+    .teamStats {
+        width: 25%;
+    }
+}
+
+@media (max-width: 600px) {
+    .teamHeader {
+        flex-direction: column;
+    }
+
+    .teamStats {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .teamOverview {
+        width: 100%;
+        margin-top: var(--vertical-gap);
+    }
+}

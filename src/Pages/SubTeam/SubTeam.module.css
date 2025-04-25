@@ -1,0 +1,157 @@
+/* Action buttons styles */
+.actionButtons {
+    position: fixed;
+    top: 7.5rem;
+    right: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: .625rem;
+    z-index: 1000;
+}
+
+.subTeamContainer{
+    margin-top: var(--section-margin);
+    margin-bottom: var(--section-margin);
+}
+.actionButton {
+    position: relative;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Specific styles for each button */
+.actionButton:nth-child(1) { /* Edit button */
+    background-color: #3498db;
+}
+
+.actionButton:nth-child(2) { /* Add member button */
+    background-color: #2ecc71;
+}
+
+.actionButton:nth-child(3) { /* Manage members button */
+    background-color: #9b59b6; /* Purple color for management functionality */
+}
+
+.actionButton:nth-child(4) { /* Update head status button */
+    background-color: #f1c40f;
+}
+
+.actionButton:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.actionButton .buttonIcon {
+    font-size: 1rem;
+    color: white;
+}
+
+/* Tooltip styles */
+.actionButton .tooltip {
+    color: white;
+    visibility: hidden;
+    width: max-content;
+    min-width: 4rem;
+    max-width: 15rem;
+    white-space: nowrap;
+    text-align: center;
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    position: absolute;
+    right: 125%;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: all 0.3s ease;
+    font-size: 0.875rem;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Specific tooltip styles matching their buttons */
+.actionButton:nth-child(1) .tooltip {
+    background-color: #3498db;
+}
+
+.actionButton:nth-child(2) .tooltip {
+    background-color: #2ecc71;
+}
+
+.actionButton:nth-child(3) .tooltip {
+    background-color: #9b59b6;
+}
+
+.actionButton:nth-child(4) .tooltip {
+    background-color: #f1c40f;
+    color: #2c3e50; /* Dark text for light background */
+}
+
+/* Tooltip arrow */
+.actionButton .tooltip::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+}
+
+/* Specific tooltip arrow colors */
+.actionButton:nth-child(1) .tooltip::after {
+    border-color: transparent transparent transparent #3498db;
+}
+
+.actionButton:nth-child(2) .tooltip::after {
+    border-color: transparent transparent transparent #2ecc71;
+}
+
+.actionButton:nth-child(3) .tooltip::after {
+    border-color: transparent transparent transparent #9b59b6;
+}
+
+.actionButton:nth-child(4) .tooltip::after {
+    border-color: transparent transparent transparent #f1c40f;
+}
+
+.actionButton:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+    right: 120%;
+}
+
+/* Add subtle animation for buttons */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.actionButton:active {
+    animation: pulse 0.3s ease;
+}
+
+/* Hover states */
+.actionButton:nth-child(1):hover {
+    background-color: #2980b9;
+}
+
+.actionButton:nth-child(2):hover {
+    background-color: #27ae60;
+}
+
+.actionButton:nth-child(3):hover {
+    background-color: #8e44ad;
+}
+
+.actionButton:nth-child(4):hover {
+    background-color: #f39c12;
+}
