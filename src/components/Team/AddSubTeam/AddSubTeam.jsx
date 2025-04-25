@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
-export default function AddSubTeam({ communityId, teamId }) {
+export default function AddSubTeam({ communityId, teamId, refetch }) {
   // State management
   const [subTeamName, setSubTeamName] = useState("");
   const [joinLink, setJoinLink] = useState("");
@@ -73,6 +73,7 @@ export default function AddSubTeam({ communityId, teamId }) {
       setSuccess("Sub-team created successfully!");
       setSubTeamName("");
       setJoinLink("");
+      refetch();
 
       setTimeout(() => {
         document.getElementById("closeAddSubTeamModal").click();
@@ -175,13 +176,13 @@ export default function AddSubTeam({ communityId, teamId }) {
                 </div>
 
                 {error && (
-                  <div className={`alert alert-danger py-2 mt-1 ${styles.errorMessage}`}>
+                  <div className={`alert alert-danger py-2 mt-1 mb-0 ${styles.errorMessage}`}>
                     {error}
                   </div>
                 )}
 
                 {success && (
-                  <div className="alert alert-success py-2 mt-1">
+                  <div className="alert alert-success py-2 mt-1 mb-0">
                     {success}
                   </div>
                 )}

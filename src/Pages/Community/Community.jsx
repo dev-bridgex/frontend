@@ -106,7 +106,7 @@ const Community = () => {
             {/* Scroll to top */}
             <ScrollToTop />
             <UpdateCommunityData communityId={communityId} refetch={refetch} />
-            <AddNewTeam communityId={communityId} />
+            <AddNewTeam communityId={communityId} refetch={refetch} />
 
             {/* communityPage */}
             <section className={`${styles.communityPage} `}>

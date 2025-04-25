@@ -5,7 +5,7 @@ import styles from "./UploadTeamLogo.module.css";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
-export default function UploadTeamLogo({ teamId, communityId }) {
+export default function UploadTeamLogo({ teamId, communityId, refetch }) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -72,6 +72,7 @@ export default function UploadTeamLogo({ teamId, communityId }) {
       setUploadSuccess(true);
       setSelectedFile(null);
       setPreviewUrl(null);
+      refetch();
     } catch (error) {
       setUploadError(error.response?.data?.Message || error.message || "Failed to upload logo");
     } finally {

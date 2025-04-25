@@ -34,7 +34,7 @@ const teamInfoSchema = yup.object().shape({
   ).required("Media links are required")
 });
 
-export default function UploadTeamInfo({ communityId, teamId }) {
+export default function UploadTeamInfo({ communityId, teamId, refetch }) {
   // Form state
   const [formData, setFormData] = useState({
     shortDesc: "",
@@ -171,6 +171,7 @@ export default function UploadTeamInfo({ communityId, teamId }) {
 
       setSubmitSuccess(true);
       setTimeout(() => setSubmitSuccess(false), 5000);
+      refetch();
     } catch (error) {
       const errorMsg = error.response?.data?.Message ||
         error.message ||

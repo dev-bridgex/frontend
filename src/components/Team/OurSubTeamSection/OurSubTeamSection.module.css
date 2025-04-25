@@ -1,128 +1,191 @@
 .ourSubTeamsPage {
+    overflow: auto;
     margin-top: var(--section-margin);
     margin-bottom: var(--section-margin);
 }
 
-.subTeamsContainer {
-    margin-top: var(--margin-heading);
-}
-
 .subTeamsHeader {
-    margin-bottom: var(--margin-between-elements);
+    margin-bottom: var(--margin-heading) !important;
+
 }
 
 .title {
-    font-size: var(--font-size-h3);
     font-weight: 700;
-    color: var(--text-dark);
+    font-size: var(--font-size-h3);
+    color: var(--text-primary);
+    text-align: center;
 }
 
-.subTeamCards {
-    position: relative;
-    padding: 20px 0;
-}
-
+/* Card styling */
 .subTeamCardWrapper {
-    border-radius: 0.25rem;
-    background-color: #f9fafb;
+    border-radius: .25rem;
+    background-color: white;
+    box-shadow: 0 .25rem 1.25rem rgba(0, 0, 0, 0.05);
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: white 0.125rem solid;
-    height: 100%;
+    transition: all 0.4s ease;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    position: relative;
+    margin-bottom: 1.25rem;
+    cursor: grab;
+}
+.subTeamCardWrapper:active{
+    cursor: grabbing;
+}
+.subTeamCardWrapper:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 .75rem .625rem rgba(0, 0, 0, 0.1);
 }
 
-
+.subTeamCardWrapper:hover::before {
+    opacity: 1;
+}
 
 .subTeamCardImage {
-    width: 100%;
-    height: 300px;
-    object-fit: contain;
+    width: 100% !important;
+    height: 18.75rem !important;
+    object-fit: cover;
     object-position: top;
+    transition: transform 0.5s ease;
+}
+
+.subTeamCardWrapper:hover .subTeamCardImage {
+    transform: scale(1.03);
 }
 
 .subTeamCardContent {
-    padding: 1.5rem;
+    padding: 1.75rem;
+    background: white;
 }
 
 .subTeamContentHeader {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    justify-content: space-between;
+    margin-bottom: var(--margin-between-elements);
 }
 
 .subTeamCardTitle {
-    font-size: var(--font-size-h4);
     font-weight: 700;
-    color: var(--text-dark);
+    color: #2d3748;
+    font-size: 1.25rem;
     margin: 0;
+    position: relative;
+    padding-bottom: .5rem;
+}
+
+.subTeamCardTitle::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 2.5rem;
+    height: .1875rem;
+    background: linear-gradient(90deg, #4299e1, #667eea);
+    border-radius: 2px;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+}
+
+.subTeamCardWrapper:hover .subTeamCardTitle::after {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .numberOfMember {
-    color: var(--text-muted);
-    font-size: var(--font-size-small);
-    margin: 0;
+    background: #ebf4ff;
+    color: #4299e1;
+    padding: 0.4rem 1rem;
+    border-radius: 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(66, 153, 225, 0.1);
+}
+
+.subTeamCardWrapper:hover .numberOfMember {
+    background: #4299e1;
+    color: white;
 }
 
 .subTeamCardDescription {
-    color: var(--text-dark);
-    margin-bottom: 1rem !important;
-    font-size: var(--font-size-p);
+    font-weight: 500;
+    color: #718096;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: var(--margin-between-elements) !important;
+    position: relative;
 }
 
 .cardFooter {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    margin-top: 1rem;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid #f0f2f5;
 }
 
 .learnMore {
-    font-weight: 500;
-    color: var(--primary-color);
-    font-size: var(--font-size-p);
+    font-weight: 600;
+    color: #4299e1;
+    font-size: 1rem;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 0.5rem 0.75rem;
+    border-radius: .5rem;
 }
 
 .learnMore:hover {
-    color: var(--primary-color-dark);
+    color: #2b6cb0;
+    background: #f7fafc;
+    gap: 0.75rem;
 }
 
-.editIon {
-    font-size: 1.125rem;
-    /* color: var(--primary-color); */
+.joinButton {
+    font-weight: 600;
+    color: white;
+    background: #4299e1;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.editIon:hover {
-    transform: scale(1.1);
+.joinButton:hover {
+    background: #2b6cb0;
 }
 
 .customPagination {
     display: flex;
     justify-content: center;
-    margin-top: 15px;
+    margin-top: 2rem;
 }
 
 .noSubTeamsMessage {
     text-align: center;
     padding: 2rem;
-    color: var(--text-muted);
+    color: #718096;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(226, 232, 240, 0.8);
 }
 
-/* joinButton */
-.joinButton{
-    background-color: #2563EB;
-    border:none;
-    color: white;
-    padding: .5rem 1.25rem;
-    border-radius: .3125rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    cursor: pointer;
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .subTeamCard {
+        padding: 0 .9375rem !important;
+    }
+}
 
+@media (max-width: 400px) {
+    .subTeamCard {
+        width: 100% !important;
+        padding: 0 .9375rem !important;
+    }
 }

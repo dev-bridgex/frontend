@@ -8,6 +8,7 @@ const getSocialMediaIcon = (name) => {
     const iconMap = {
         facebook: 'fa-facebook-f',
         twitter: 'fa-twitter',
+        x: 'fa-twitter',
         linkedin: 'fa-linkedin-in',
         instagram: 'fa-instagram',
         youtube: 'fa-youtube',
@@ -28,12 +29,12 @@ export default function SubTeamOverview({ subTeamData }) {
         {
             value: subTeamData.MembersCount || 0,
             label: "Members",
-            icon: "/public/icons/member.svg"
+            icon: "/icons/member.svg"
         },
         {
             value: subTeamData.CreatedAt ? subTeamData.CreatedAt.substring(0, 7) : "-",
             label: "Created",
-            icon: "/public/icons/time.svg"
+            icon: "/icons/time.svg"
         }
     ];
 
@@ -90,17 +91,38 @@ export default function SubTeamOverview({ subTeamData }) {
 
             <div className={styles.subTeamInfo}>
                 <div className={styles.aboutSubTeam}>
-                    <h4 className={styles.title}>{subTeamData.Name || "Sub-Team Name"}</h4>
-                    <p className={styles.desc}>
-                        {subTeamData.Desc || "No description available for this sub-team."}
-                    </p>
+                    <div className={styles.sectionHeader}>
+                        <i className="fas fa-info-circle"></i>
+                        <h4 className={styles.title}>
+                            {subTeamData.Name || "SubTeam Name"}
+                        </h4>
+                    </div>
+                    <div className={styles.descriptionBox}>
+                        <p className={styles.desc}>
+                            {subTeamData.Desc || "No description available for this sub-team."}
+                        </p>
+                        <div className={styles.decorativeLine}></div>
+                    </div>
                 </div>
 
                 <div className={styles.subTeamVision}>
-                    <h4 className={styles.title}>Our Vision</h4>
-                    <p className={styles.desc}>
-                        {subTeamData.Vision || "No vision statement available for this sub-team."}
-                    </p>
+                    <div className={styles.visionHeader}>
+                        <div className={styles.iconWrapper}>
+                            <i className="fas fa-lightbulb"></i>
+                        </div>
+                        <h4 className={styles.title}>Our Vision</h4>
+                    </div>
+                    <div className={styles.visionContent}>
+                        <div className={styles.quoteIcon}>
+                            <i className="fas fa-quote-left"></i>
+                        </div>
+                        <p className={styles.desc}>
+                            {subTeamData.Vision || "No vision statement available for this sub-team."}
+                        </p>
+                        <div className={styles.quoteIcon}>
+                            <i className="fas fa-quote-right"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

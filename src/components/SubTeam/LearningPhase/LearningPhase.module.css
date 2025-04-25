@@ -5,12 +5,35 @@
     padding: 2.5rem 1.875rem;
     margin-top: var(--section-margin);
     margin-bottom: var(--section-margin);
-    border-radius: 1rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease-out;
+}
+
+.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* learingPhaseContainer */
 .learingPhaseContainer {
     display: flex;
+    gap: 2rem;
+}
+
+.titleContainer {
+    position: relative;
+    margin-bottom: 1.5rem !important;
+}
+
+.titleUnderline {
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, #2563EB, #60A5FA);
+    border-radius: 2px;
 }
 
 /* LearningPhaseIntro */
@@ -20,10 +43,9 @@
 
 .LearningPhaseIntro .title {
     font-size: var(--font-size-h3);
-    font-weight: 600;
+    font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: var(--margin-heading) !important;
-
+    margin-bottom: 0.5rem !important;
 }
 
 .LearningPhaseIntro .desc {
@@ -31,21 +53,49 @@
     font-weight: 500;
     color: var(--text-secondary);
     margin-bottom: var(--margin-between-elements) !important;
+    line-height: 1.6;
     width: 90%;
 }
 
-.LearningPhaseIntro .viewButton {
-    border: 2px solid #2563EB;
+.viewButton {
     background-color: white;
     color: #2563EB;
-    border-radius: .75rem !important;
+    border: 2px solid #2563EB;
+    border-radius: 12px;
+    padding: 0.875rem 1.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.viewButton:hover {
+    background-color: #2563EB;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+}
+
+.viewButton:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px -1px rgba(37, 99, 235, 0.2);
+}
+
+.arrow {
+    transition: transform 0.3s ease;
+}
+
+.viewButton:hover .arrow {
+    transform: translateX(4px);
 }
 
 /* LearningPhaseFeatures*/
 .LearningPhaseFeatures {
     display: flex;
     flex-direction: column;
-    row-gap: 1rem;
+    gap: 1rem;
     width: 50%;
 }
 
@@ -53,60 +103,83 @@
 .feature {
     display: flex;
     align-items: center;
-    column-gap: 1.25rem;
+    gap: 1.25rem;
     background-color: white;
-    border-radius: .75rem;
-    padding: .9375rem;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
     width: 100%;
+    transition: all 0.3s ease;
+    opacity: 1;
+    border: 1px solid transparent;
 }
 
-.feature .logoWrapper {
+.feature:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 15px -1px rgba(0, 0, 0, 0.1);
+    border-color: #2563EB;
+}
+
+.logoWrapper {
     background-color: #DBEAFE;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: .5rem;
+    border-radius: 0.5rem;
     width: 3rem;
     height: 3rem;
+    transition: all 0.3s ease;
 }
 
-.logoWrapper img {
-    width: 1.5rem;
-    height: 1.3125rem;
+.feature:hover .logoWrapper {
+    background-color: #2563EB;
+    transform: scale(1.1);
+}
+
+.feature .logoWrapper {
+    color: #2563eb;
+    font-size: 1.125rem;
+}
+
+.feature:hover .logoWrapper i {
+    filter: brightness(0) invert(1);
+    transform: rotate(5deg);
 }
 
 /* featureInfo */
 .featureInfo {
     display: flex;
     flex-direction: column;
-    row-gap: .5rem;
-    width: 100%;
+    gap: 0.5rem;
 }
 
 .featureInfo .title {
-    font-size: 1.375rem;
+    font-size: 1.25rem;
     font-weight: 600;
     color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.feature:hover .featureInfo .title {
+    color: #2563EB;
 }
 
 .featureInfo .desc {
     font-size: var(--font-size-p);
     font-weight: 400;
     color: var(--text-secondary);
+    line-height: 1.5;
 }
 
+
+
 /* responsive design */
-@media (max-width:600px) {
+@media (max-width: 768px) {
     .learingPhaseContainer {
         flex-direction: column;
     }
 
+    .LearningPhaseIntro,
     .LearningPhaseFeatures {
-        width: 100%;
-        margin-top: var(--header-gap);
-    }
-
-    .LearningPhaseIntro {
         width: 100%;
     }
 

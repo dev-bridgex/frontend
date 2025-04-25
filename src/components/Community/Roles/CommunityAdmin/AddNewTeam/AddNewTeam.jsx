@@ -4,7 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
-export default function AddNewTeam({ communityId }) {
+export default function AddNewTeam({ communityId, refetch }) {
 
 
   // handle state management
@@ -55,6 +55,7 @@ export default function AddNewTeam({ communityId }) {
       setTimeout(() => {
         document.getElementById("closeAddTeamModal").click();
       }, 2000);
+      refetch();
 
     } catch (err) {
       setError(err.response?.data?.Message || err.message || "Failed to create team");

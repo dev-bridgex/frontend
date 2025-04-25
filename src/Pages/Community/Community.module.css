@@ -128,7 +128,6 @@
     display: flex;
     align-items: center;
     gap: .5rem;
-    margin: var(--margin-heading);
     box-shadow: 0 .25rem .375rem rgba(49, 130, 206, 0.1);
 }
 
@@ -149,7 +148,6 @@
     font-weight: 400;
 }
 
-/* تأثير ripple */
 .addTeamButton {
     position: relative;
     overflow: hidden;

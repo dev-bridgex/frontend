@@ -5,7 +5,7 @@ import UploadTeamLogo from './components/UploadTeamLogo/UploadTeamLogo';
 import UploadTeamInfo from './components/UploadTeamInfo/UploadTeamInfo';
 import AddAchievement from "./components/AddAchievement/AddAchievement";
 
-export default function UpdateTeamData({ teamId, communityId }) {
+export default function UpdateTeamData({ teamId, communityId, refetch }) {
   return (
     <section className={`${styles.UpdateTeamData}`}>
       {/* updateTeamModal */}
@@ -22,10 +22,10 @@ export default function UpdateTeamData({ teamId, communityId }) {
 
             {/* updateTeamBody */}
             <div className={`modal-body ${styles.updateTeamBody}`}>
-              <UploadTeamImages teamId={teamId} communityId={communityId} />
-              <UploadTeamLogo teamId={teamId} communityId={communityId} />
-              <UploadTeamInfo teamId={teamId} communityId={communityId} />
-              <AddAchievement teamId={teamId} communityId={communityId} />
+              <UploadTeamImages teamId={teamId} communityId={communityId} refetch={refetch} />
+              <UploadTeamLogo teamId={teamId} communityId={communityId} refetch={refetch} />
+              <UploadTeamInfo teamId={teamId} communityId={communityId} refetch={refetch} />
+              <AddAchievement teamId={teamId} communityId={communityId} refetch={refetch} />
             </div>
           </div>
         </div>

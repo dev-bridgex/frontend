@@ -30,12 +30,12 @@ export default function CommunityOverview({ safeData }) {
         {
             value: safeData.MembersCount || 0,
             label: "Members",
-            icon: "/public/icons/member.svg"
+            icon: "/icons/member.svg"
         },
         {
             value: safeData.CreatedAt ? safeData.CreatedAt.substring(0, 7) : "-",
             label: "Created",
-            icon: "/public/icons/time.svg"
+            icon: "/icons/time.svg"
         }
     ];
 

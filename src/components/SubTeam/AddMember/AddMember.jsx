@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
-export default function AddMember({ communityId, teamId, subTeamId }) {
+export default function AddMember({ communityId, teamId, subTeamId, refetch }) {
   // State management
   const [userEmail, setUserEmail] = useState("");
   const [isHead, setIsHead] = useState(false);
@@ -60,6 +60,7 @@ export default function AddMember({ communityId, teamId, subTeamId }) {
       setSuccess("Member added successfully!");
       setUserEmail("");
       setIsHead(false);
+      refetch();
 
       setTimeout(() => {
         document.getElementById("closeAddMemberModal").click();

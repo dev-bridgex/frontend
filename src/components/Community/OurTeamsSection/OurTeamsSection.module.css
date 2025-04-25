@@ -1,6 +1,7 @@
 /* ourTeamsPage */
 .ourTeamsPage {
     overflow: auto;
+    margin-top: var(--section-margin);
 }
 
 

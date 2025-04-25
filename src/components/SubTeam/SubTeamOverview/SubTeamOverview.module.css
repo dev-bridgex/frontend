@@ -2,11 +2,16 @@
 .subTeamOverview {
     display: flex;
     justify-content: space-between;
+    margin-bottom: var(--section-margin)
 }
 
 /* subTeamStats */
 .subTeamStats {
     width: 20%;
+}
+
+.subTeamStatsContainer {
+    width: 100%;
 }
 
 /* subTeamLogoWrapper */
@@ -20,7 +25,7 @@
     height: 100%;
     width: 80%;
     object-fit: cover;
-    object-position: center;
+    object-position: top;
 }
 
 /* statisticsWrapper */
@@ -68,12 +73,12 @@
     border: 1px solid #e5e7eb;
     transition: all 0.3s ease;
     font-size: 1.2rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, 0.05);
 }
 
 .socialLink:hover {
     transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 .25rem .5rem rgba(0, 0, 0, 0.1);
     background-color: #f3f4f6;
 }
 
@@ -81,48 +86,157 @@
 
 /* teamOverview */
 .subTeamInfo {
-    width: 70%;
+    flex: 1;
 }
 
 /* aboutSubTeam */
 .aboutSubTeam {
-    margin-bottom: var(--margin-heading);
+    margin-bottom: 2rem;
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
 }
 
-.aboutSubTeam .title {
-    font-size: var(--font-size-h4);
+.aboutSubTeam:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 .25rem .5rem rgba(0, 0, 0, 0.1);
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.sectionHeader i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    opacity: 0.9;
+}
+
+.title {
+    font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: var(--margin-between-elements) !important;
     color: var(--text-primary);
+    margin: 0;
 }
 
-.aboutSubTeam .desc {
-    font-size: var(--font-size-p);
-    font-weight: 500;
+.descriptionBox {
+    position: relative;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 0.75rem;
+}
+
+.desc {
+    font-size: 1rem;
+    line-height: 1.7;
     color: var(--text-secondary);
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.decorativeLine {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--primary-color);
+    border-radius: .25rem;
+    opacity: 0.7;
 }
 
 /* subTeamVision */
 .subTeamVision {
-    background-color: #f8f9fa;
-    border-radius: 8px;
+    background: #f8f9fa;
+    border-radius: 1rem;
+    padding: 2rem;
+    border: 1px solid #e5e7eb;
+    position: relative;
+    overflow: hidden;
+}
+
+.subTeamVision::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 9.375rem;
+    height: 9.375rem;
+    background: var(--primary-color);
+    opacity: 0.03;
+    border-radius: 50%;
+    transform: translate(50%, -50%);
+}
+
+.visionHeader {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.iconWrapper {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-color);
+    border-radius: 50%;
+}
+
+.iconWrapper i {
+    font-size: 1.25rem;
+    color: white;
+}
+
+.visionContent {
+    position: relative;
     padding: 1.5rem;
-    border: 1px solid #e1e2e3;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, 0.05);
 }
 
-.subTeamVision .title {
-    font-size: var(--font-size-h4);
-    font-weight: 700;
-    margin-bottom: var(--margin-between-elements) !important;
-    color: var(--text-primary);
+.quoteIcon {
+    position: absolute;
+    font-size: 1.25rem;
+    color: var(--primary-color);
+    opacity: 0.2;
 }
 
-.subTeamVision .desc {
-    font-size: var(--font-size-p);
-    font-weight: 500;
-    color: var(--text-secondary);
+.quoteIcon:first-child {
+    top: 1rem;
+    left: 1rem;
 }
 
+.quoteIcon:last-child {
+    bottom: 1rem;
+    right: 1rem;
+}
+
+.visionContent .desc {
+    text-align: center;
+    font-style: italic;
+    padding: 0 2rem;
+    margin: 0.5rem 0;
+}
+
+.subTeamVision:hover .iconWrapper {
+    transform: rotate(360deg);
+    transition: transform 0.6s ease;
+}
+
+.subTeamVision:hover .quoteIcon {
+    opacity: 0.4;
+    transition: opacity 0.3s ease;
+}
 
 
 
@@ -144,8 +258,12 @@
         justify-content: center;
     }
 
-    .subTeamLogoWrapper .logo {
+    .subTeamStatsContainer {
+        align-items: center;
+        width: 100%;
+    }
 
+    .subTeamLogoWrapper .logo {
         width: 50%;
     }
 
@@ -157,7 +275,6 @@
 
 @media (max-width: 400px) {
     .subTeamLogoWrapper .logo {
-
         width: 60%;
     }
 }

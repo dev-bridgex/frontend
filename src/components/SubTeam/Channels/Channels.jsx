@@ -21,16 +21,16 @@ export default function Channels() {
                 <div className={`${styles.channelContent}`}>
 
                     {/* channel  */}
-                    <div className={`${styles.channel}`}># general</div>
-                    <div className={`${styles.channel}`}># project-discussions</div>
-                    <div className={`${styles.channel}`}># announcements</div>
-                    <div className={`${styles.channel}`}># announcements</div>
-                    <div className={`${styles.channel}`}># announcements</div>
-                    <div className={`${styles.channel}`}># announcements</div>
-                    <div className={`${styles.channel}`}># announcements</div>
-                    <div className={`${styles.channel}`}># announcements</div>
-                    <div className={`${styles.channel}`}># announcements</div>
-                    <div className={`${styles.channel}`}># announcements</div>
+                    <div className={`${styles.channel}`}>general</div>
+                    <div className={`${styles.channel}`}>project-discussions</div>
+                    <div className={`${styles.channel}`}>announcements</div>
+                    <div className={`${styles.channel}`}>announcements</div>
+                    <div className={`${styles.channel}`}>announcements</div>
+                    <div className={`${styles.channel}`}>announcements</div>
+                    <div className={`${styles.channel}`}>announcements</div>
+                    <div className={`${styles.channel}`}>announcements</div>
+                    <div className={`${styles.channel}`}>announcements</div>
+                    <div className={`${styles.channel}`}>announcements</div>
                 </div>
 
             </div>

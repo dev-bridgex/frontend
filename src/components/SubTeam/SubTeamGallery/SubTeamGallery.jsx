@@ -17,7 +17,17 @@ const getFullImageUrl = (imgPath, baseUrl) => {
     return `${baseUrl}/api${imgPath}`;
 };
 
-export default function SubTeamGallery({ images, name, descShort, communityId, teamId, subTeamId, refetch, CanModify }) {
+export default function SubTeamGallery({
+    images,
+    name,
+    descShort,
+    communityId,
+    teamId,
+    subTeamId,
+    refetch,
+    CanModify
+}) {
+
 
     const [isDeleting, setIsDeleting] = useState(false);
     const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -80,7 +90,7 @@ export default function SubTeamGallery({ images, name, descShort, communityId, t
             image: "/public/placeholder.webp"
         }];
 
-    return <>
+    return (
         <section className={`${styles.subTeamGallery}`}>
             <div className={styles.galleryContainer}>
                 <div className={styles.swiperWrapper}>
@@ -104,10 +114,6 @@ export default function SubTeamGallery({ images, name, descShort, communityId, t
                     >
                         {sliderImages.map((item, index) => (
                             <SwiperSlide key={index} className={styles.swiperSlide}>
-                                <div className={styles.sliderContent}>
-                                    <h4 className={styles.title}>{item.title}</h4>
-                                    <p className={styles.description}>{item.description}</p>
-                                </div>
                                 <div className={`${styles.imageContainer}`}>
                                     <img
                                         src={item.image}
@@ -142,6 +148,10 @@ export default function SubTeamGallery({ images, name, descShort, communityId, t
                                         </button>
                                     )}
                                 </div>
+                                <div className={styles.sliderContent}>
+                                    <h4 className={styles.title}>{item.title}</h4>
+                                    <p className={styles.description}>{item.description}</p>
+                                </div>
                             </SwiperSlide>
                         ))}
                     </Swiper>
@@ -149,5 +159,5 @@ export default function SubTeamGallery({ images, name, descShort, communityId, t
                 </div>
             </div>
         </section>
-    </>
+    );
 }

@@ -115,9 +115,10 @@ export default function SubTeam() {
 
     const safeData = getSafeData(subTeamData);
 
-    // // console.log(JSON.stringify(safeData, null, 2));
+    console.log(JSON.stringify(safeData, null, 2));
     // console.log(safeData.Leaders);
-    
+
+
 
 
 
@@ -126,7 +127,7 @@ export default function SubTeam() {
 
     return (
         <>
-            <AddMember communityId={communityId} teamId={teamId} subTeamId={subTeamId} />
+            <AddMember communityId={communityId} teamId={teamId} subTeamId={subTeamId} refetch={refetch} />
             <ScrollToTop />
             <UpdateSubTeamData refetch={refetch} communityId={communityId} teamId={teamId} subTeamId={subTeamId} />
 
@@ -183,7 +184,6 @@ export default function SubTeam() {
 
                 {/* subTeamGallery */}
                 <SubTeamGallery
-                    CanModify={safeData?.CanModify}
                     images={safeData.Images}
                     name={safeData.Name}
                     descShort={safeData.DescShort}
@@ -191,6 +191,7 @@ export default function SubTeam() {
                     teamId={teamId}
                     subTeamId={subTeamId}
                     refetch={refetch}
+                    CanModify={safeData.CanModify}
                 />
 
                 <div className={`${styles.subTeamContainer} specialContainer `}>

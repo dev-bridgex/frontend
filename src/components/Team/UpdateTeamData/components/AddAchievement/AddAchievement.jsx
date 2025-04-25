@@ -28,7 +28,7 @@ const achievementSchema = yup.object().shape({
     )
 });
 
-export default function AddAchievement({ communityId, teamId }) {
+export default function AddAchievement({ communityId, teamId, refetch }) {
   // Form state
   const [formData, setFormData] = useState({
     title: "",
@@ -175,7 +175,7 @@ export default function AddAchievement({ communityId, teamId }) {
       setFile(null);
       setFilePreview(null);
       setTouchedFields({});
-
+      refetch();
     } catch (error) {
       const errorMsg = error.response?.data?.Message ||
         error.message ||

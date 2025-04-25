@@ -35,15 +35,15 @@ export default function TeamGallery({ safeData, refetch, communityId, teamId }) 
 
         setIsDeleting(true);
         try {
-            await axios.delete(
-                `${baseUrl}/api/communities/${communityId}/teams/${teamId}/images/${imageId}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`,
-                        "accept": "*/*"
-                    }
+            const token = localStorage.getItem("token");
+            const url = `${baseUrl}/api/communities/${communityId}/teams/${teamId}/${imageId}`;
+
+            await axios.delete(url, {
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "accept": "*/*"
                 }
-            );
+            });
 
             toast.success("Image deleted successfully!", {
                 position: "top-center",
@@ -55,9 +55,11 @@ export default function TeamGallery({ safeData, refetch, communityId, teamId }) 
                 progress: undefined,
             });
 
-            await refetch();
+            refetch();
         } catch (error) {
-            toast.error(error.response?.data?.Message || "Failed to delete image", {
+            console.log(error);
+            
+                toast.error(error.response?.data?.Message || "Failed to delete image", {
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -75,7 +77,8 @@ export default function TeamGallery({ safeData, refetch, communityId, teamId }) 
     const getFullImageUrl = (imgPath) => {
         if (!imgPath) return '';
         if (imgPath.startsWith('http')) return imgPath;
-        return `${baseUrl}/api${imgPath}`;
+        // Handle both cases where image path might start with /api or not
+        return imgPath.startsWith('/api') ? `${baseUrl}${imgPath}` : `${baseUrl}/api${imgPath}`;
     };
 
     // Filter valid images
@@ -88,12 +91,12 @@ export default function TeamGallery({ safeData, refetch, communityId, teamId }) 
             title: data?.Name || placeholderData.Name,
             description: data?.DescShort || placeholderData.DescShort,
             image: getFullImageUrl(img.Link),
-            id: img.Id // Include ID for delete functionality
+            id: img.Id
         }))
         : [{
             title: data?.Name || placeholderData.Name,
             description: data?.DescShort || placeholderData.DescShort,
-            image: "/placeholder.webp"
+            image: "/placeholder.webp" // Make sure this is a valid local path
         }];
 
     return (
@@ -135,7 +138,6 @@ export default function TeamGallery({ safeData, refetch, communityId, teamId }) 
                                         }}
                                         className={styles.swipperImage}
                                     />
-                                    {/* Show delete button only for actual images (not placeholder) */}
                                     {item.id && data?.CanModify && (
                                         <button
                                             className={styles.deleteButton}
@@ -167,4 +169,4 @@ export default function TeamGallery({ safeData, refetch, communityId, teamId }) 
             </div>
         </section>
     );
-};
+}

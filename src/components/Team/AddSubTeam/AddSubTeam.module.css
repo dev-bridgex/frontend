@@ -68,7 +68,7 @@
     width: 100%;
     background-color: var(--primary-color);
     color: white;
-    margin-top: var(--margin-between-elements);
+    margin-top: .625rem;
 }
 
 .buttonsWrapper button:last-child {

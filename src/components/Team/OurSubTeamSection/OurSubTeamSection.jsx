@@ -71,12 +71,12 @@ export default function OurSubTeamSection({ subTeams, communityId, teamId }) {
     return (
         <section className={`${styles.ourSubTeamsPage} `}>
             <div className={`${styles.subTeamsContainer} specialContainer`}>
-                <div className={styles.subTeamsHeader}>
+                <div className={`${styles.subTeamsHeader}`}>
                     <h3 className={styles.title}>Our Sub-Teams</h3>
                 </div>
 
                 {processedSubTeams.length > 0 ? (
-                    <div className={`${styles.subTeamCards}`}>
+                    <div className={`${styles.subTeamCards}  `}>
                         <Swiper
                             modules={[Navigation, Pagination]}
                             spaceBetween={20}

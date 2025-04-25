@@ -3,7 +3,7 @@ import { useState, useCallback } from 'react';
 import axios from 'axios';
 import styles from './UploadTeamImages.module.css';
 
-export default function UploadTeamImages({ teamId, communityId }) {
+export default function UploadTeamImages({ teamId, communityId, refetch }) {
 
   const API_BASE_URL = `${import.meta.env.VITE_BASE_URL}/api/communities/${communityId}/teams/${teamId}/images`;
 
@@ -94,6 +94,7 @@ export default function UploadTeamImages({ teamId, communityId }) {
 
       setSelectedImages([]);
       setUploadSuccess(`${selectedImages.length} image${selectedImages.length !== 1 ? 's' : ''} uploaded successfully!`);
+      refetch();
     } catch (error) {
       setUploadError(error.response?.data?.Message || error.message || 'Failed to upload images');
     } finally {
