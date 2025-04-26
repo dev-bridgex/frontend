@@ -1,16 +1,24 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./EditTeam.module.css";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
-export default function EditTeam({ communityId, teamId }) {
+export default function EditTeam({ communityId, teamId, initialData }) {
     const [name, setName] = useState("");
     const [leaderEmail, setLeaderEmail] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+
+    // Set initial values when component mounts or initialData changes
+    useEffect(() => {
+        if (initialData) {
+            setName(initialData.name || "");
+            setLeaderEmail(initialData.leaderEmail || "");
+        }
+    }, [initialData]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -37,7 +45,6 @@ export default function EditTeam({ communityId, teamId }) {
             }, 1000);
 
         } catch (error) {
-
             const message =
                 error.response?.data?.Message || "Failed to update team.";
             setErrorMessage(message);
@@ -105,12 +112,12 @@ export default function EditTeam({ communityId, teamId }) {
                                 </div>
 
                                 {successMessage && (
-                                    <div className="alert alert-success mt-1 py-2" role="alert">
+                                    <div className="alert alert-success mt-1 py-2 mb-0" role="alert">
                                         {successMessage}
                                     </div>
                                 )}
                                 {errorMessage && (
-                                    <div className="alert alert-danger mt-1 py-2" role="alert">
+                                    <div className="alert alert-danger mt-1 py-2 mb-0" role="alert">
                                         {errorMessage}
                                     </div>
                                 )}
@@ -145,5 +152,5 @@ export default function EditTeam({ communityId, teamId }) {
                 </div>
             </div>
         </section>
-    );
+    )
 }

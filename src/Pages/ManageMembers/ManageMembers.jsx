@@ -5,6 +5,8 @@ import styles from './ManageMembers.module.css';
 import LoadingScreen from '../../components/LoadingScreen/LoadingScreen';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AddMember from '../../components/ManageMembers/AddMember/AddMember';
+
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const token = localStorage.getItem("token");
@@ -29,7 +31,12 @@ export default function ManageMembers() {
     const { communityId, teamId, subTeamId } = useParams();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    
+
+    // Add this function to handle refetch
+    const refetchMembers = () => {
+        queryClient.invalidateQueries(['subTeamMembers', communityId, teamId, subTeamId]);
+    };
+
     const handleChangeRole = async (memberId) => {
         try {
             const response = await axios.post(
@@ -125,8 +132,8 @@ export default function ManageMembers() {
             refetchOnWindowFocus: false,
         }
     );
-    
-    
+
+
 
     if (isLoading) return <LoadingScreen />;
     if (error) {
@@ -134,126 +141,143 @@ export default function ManageMembers() {
         return <div className={styles.error}>Error: {error.message}</div>;
     }
 
-    return <>
-        <section className={`${styles.manageMemberPage}`}>
+    return (
+        <>
+            <section className={`${styles.manageMemberPage}`}>
+                <div className={`${styles.manageMembersContainer} specialContainer`}>
+                    <div className={styles.header}>
+                        <div className={styles.headerLeft}>
+                            <h1>Manage Members</h1>
 
-            <div className={`${styles.manageMembersContainer} specialContainer`} >
+                            <button
+                                className={styles.circularAddButton}
+                                data-bs-toggle="modal"
+                                data-bs-target="#addMemberModal"
+                                title="Add New Member"
+                            >
+                                <i className="fa-solid fa-user-plus"></i>
+                            </button>
+                            
+                        </div>
+                        <button
+                            onClick={() => navigate(-1)}
+                            className={styles.backButton}
+                        >
+                            Back to SubTeam
+                        </button>
+                    </div>
 
-                <div className={styles.header}>
-                    <h1>Manage Members</h1>
-                    <button
-                        onClick={() => navigate(-1)}
-                        className={styles.backButton}
-                    >
-                        Back to SubTeam
-                    </button>
-                </div>
+                    {/* Add the AddMember component here */}
+                    <AddMember 
+                        communityId={communityId} 
+                        teamId={teamId} 
+                        subTeamId={subTeamId} 
+                        refetch={refetchMembers} 
+                    />
 
-                <div className={styles.membersTableContainer}>
-                    <table className={styles.membersTable}>
-                        <thead>
-                            <tr>
-                                <th>Profile</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Status</th>
-                                <th>Join Date</th>
-                                <th>Role</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {members?.map((member) => (
-                                <tr key={member.Id}>
-                                    <td>
-                                        <div className={styles.profilePhoto}>
-                                            {member.User.ProfilePhoto ? (
-                                                <img
-                                                    src={member.User.ProfilePhoto}
-                                                    alt={member.User.FirstName}
-                                                />
+                    <div className={styles.membersTableContainer}>
+                        <table className={styles.membersTable}>
+                            <thead>
+                                <tr>
+                                    <th>Profile</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                    <th>Join Date</th>
+                                    <th>Role</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {members?.map((member) => (
+                                    <tr key={member.Id}>
+                                        <td>
+                                            <div className={styles.profilePhoto}>
+                                                {member.User.ProfilePhoto ? (
+                                                    <img
+                                                        src={member.User.ProfilePhoto}
+                                                        alt={member.User.FirstName}
+                                                    />
+                                                ) : (
+                                                    <div className={styles.avatarPlaceholder}>
+                                                        {member.User.FirstName.charAt(0).toUpperCase()}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </td>
+                                        <td>{member.User.FirstName}</td>
+                                        <td>{member.User.Email}</td>
+                                        <td>
+                                            <span className={`${styles.statusBadge} ${member.IsAccepted
+                                                ? styles.accepted
+                                                : styles.pending
+                                                }`}>
+                                                {member.IsAccepted ? 'Accepted' : 'Pending'}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            {member.JoinDate
+                                                ? new Date(member.JoinDate).toLocaleDateString()
+                                                : '--'}
+                                        </td>
+                                        <td>
+                                            {member.IsHead ? (
+                                                <span className={styles.headBadge}>Head</span>
                                             ) : (
-                                                <div className={styles.avatarPlaceholder}>
-                                                    {member.User.FirstName.charAt(0).toUpperCase()}
-                                                </div>
+                                                <span className={styles.memberBadge}>Member</span>
                                             )}
-                                        </div>
-                                    </td>
-                                    <td>{member.User.FirstName}</td>
-                                    <td>{member.User.Email}</td>
-                                    <td>
-                                        <span className={`${styles.statusBadge} ${member.IsAccepted
-                                            ? styles.accepted
-                                            : styles.pending
-                                            }`}>
-                                            {member.IsAccepted ? 'Accepted' : 'Pending'}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        {member.JoinDate
-                                            ? new Date(member.JoinDate).toLocaleDateString()
-                                            : '--'}
-                                    </td>
-                                    <td>
-                                        {member.IsHead ? (
-                                            <span className={styles.headBadge}>Head</span>
-                                        ) : (
-                                            <span className={styles.memberBadge}>Member</span>
-                                        )}
-                                    </td>
-                                    <td>
-                                        <div className={styles.actionButtons}>
-                                            {!member.IsAccepted && (
+                                        </td>
+                                        <td>
+                                            <div className={styles.actionButtons}>
+                                                {!member.IsAccepted && (
+                                                    <button
+                                                        className={styles.actionButton}
+                                                        title="Accept Member"
+                                                        onClick={() => handleAcceptMember(member.Id)}
+                                                    >
+                                                        <i className="fa-solid fa-check"></i>
+                                                    </button>
+                                                )}
                                                 <button
                                                     className={styles.actionButton}
-                                                    title="Accept Member"
-                                                    onClick={() => handleAcceptMember(member.Id)}
+                                                    title="Change Role"
+                                                    disabled={!member.IsAccepted}
+                                                    onClick={() => handleChangeRole(member.Id)}
                                                 >
-                                                    <i className="fa-solid fa-check"></i>
+                                                    <i className="fa-solid fa-user-shield"></i>
                                                 </button>
-                                            )}
-                                            <button
-                                                className={styles.actionButton}
-                                                title="Change Role"
-                                                disabled={!member.IsAccepted}
-                                                onClick={() => handleChangeRole(member.Id)}
-                                            >
-                                                <i className="fa-solid fa-user-shield"></i>
-                                            </button>
-                                            <button
-                                                className={styles.actionButton}
-                                                title="Remove Member"
-                                                onClick={() => handleRemoveMember(member.Id)}
-                                            >
-                                                <i className="fa-solid fa-user-minus"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                                                <button
+                                                    className={styles.actionButton}
+                                                    title="Remove Member"
+                                                    onClick={() => handleRemoveMember(member.Id)}
+                                                >
+                                                    <i className="fa-solid fa-user-minus"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div className={styles.statsContainer}>
+                        <div className={styles.statCard}>
+                            <h3>Total Members</h3>
+                            <p>{members?.length || 0}</p>
+                        </div>
+                        <div className={styles.statCard}>
+                            <h3>Heads</h3>
+                            <p>{members?.filter(m => m.IsHead).length || 0}</p>
+                        </div>
+                        <div className={styles.statCard}>
+                            <h3>Pending</h3>
+                            <p>{members?.filter(m => !m.IsAccepted).length || 0}</p>
+                        </div>
+                    </div>
+
                 </div>
-
-                <div className={styles.statsContainer}>
-                    <div className={styles.statCard}>
-                        <h3>Total Members</h3>
-                        <p>{members?.length || 0}</p>
-                    </div>
-                    <div className={styles.statCard}>
-                        <h3>Heads</h3>
-                        <p>{members?.filter(m => m.IsHead).length || 0}</p>
-                    </div>
-                    <div className={styles.statCard}>
-                        <h3>Pending</h3>
-                        <p>{members?.filter(m => !m.IsAccepted).length || 0}</p>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-
-    </>
-
+            </section>
+        </>
+    );
 }

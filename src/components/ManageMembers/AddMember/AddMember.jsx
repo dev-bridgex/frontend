@@ -154,7 +154,7 @@ export default function AddMember({ communityId, teamId, subTeamId, refetch }) {
                 )}
 
                 {success && (
-                  <div className="alert alert-success py-2 mt-1">
+                  <div className="alert alert-success py-2 mt-1 mb-0">
                     {success}
                   </div>
                 )}

@@ -1,16 +1,24 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./EditSubTeam.module.css";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
-export default function EditSubTeam({ communityId, teamId, subTeamId  , refetch }) {
+export default function EditSubTeam({ communityId, teamId, subTeamId, refetch, initialData }) {
     const [name, setName] = useState("");
     const [joinLink, setJoinLink] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+
+    // Set initial values when component mounts or initialData changes
+    useEffect(() => {
+        if (initialData) {
+            setName(initialData.name || "");
+            setJoinLink(initialData.joinLink || "");
+        }
+    }, [initialData]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -114,12 +122,12 @@ export default function EditSubTeam({ communityId, teamId, subTeamId  , refetch 
                                 </div>
 
                                 {successMessage && (
-                                    <div className="alert alert-success mt-1 py-2" role="alert">
+                                    <div className="alert alert-success mt-1 py-2 mb-0" role="alert">
                                         {successMessage}
                                     </div>
                                 )}
                                 {errorMessage && (
-                                    <div className="alert alert-danger mt-1 py-2" role="alert">
+                                    <div className="alert alert-danger mt-1 py-2 mb-0" role="alert">
                                         {errorMessage}
                                     </div>
                                 )}

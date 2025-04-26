@@ -4,11 +4,49 @@
     margin-bottom: var(--section-margin);
     min-height: 100vh;
 }
+
+.headerLeft {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.circularAddButton {
+    width: 2.8125rem;
+    height: 2.8125rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+}
+
+.circularAddButton i {
+    font-size: 1rem;
+}
+
+.circularAddButton:hover {
+    background: linear-gradient(135deg, #2980b9, #2573a7);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+}
+
+.circularAddButton:active {
+    transform: translateY(0);
+}
+
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(229, 231, 235, 0.5);
 }
 
 .header h1 {
@@ -74,14 +112,12 @@
     left: -50%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(
-        to bottom right,
-        rgba(255, 255, 255, 0.2) 0%,
-        rgba(255, 255, 255, 0.2) 40%,
-        rgba(255, 255, 255, 0.4) 50%,
-        rgba(255, 255, 255, 0.2) 60%,
-        rgba(255, 255, 255, 0.2) 100%
-    );
+    background: linear-gradient(to bottom right,
+            rgba(255, 255, 255, 0.2) 0%,
+            rgba(255, 255, 255, 0.2) 40%,
+            rgba(255, 255, 255, 0.4) 50%,
+            rgba(255, 255, 255, 0.2) 60%,
+            rgba(255, 255, 255, 0.2) 100%);
     transform: rotate(45deg);
     transition: all 0.3s ease;
     opacity: 0;
@@ -96,9 +132,11 @@
         transform: rotate(45deg) translateX(-200%);
         opacity: 0;
     }
+
     50% {
         opacity: 0.3;
     }
+
     100% {
         transform: rotate(45deg) translateX(200%);
         opacity: 0;
@@ -348,17 +386,20 @@
 
 /* Icons for each card */
 .statCard:nth-child(1)::after {
-    content: '\f0c0'; /* users icon */
+    content: '\f0c0';
+    /* users icon */
     color: #2563eb;
 }
 
 .statCard:nth-child(2)::after {
-    content: '\f521'; /* crown icon */
+    content: '\f521';
+    /* crown icon */
     color: #0891b2;
 }
 
 .statCard:nth-child(3)::after {
-    content: '\f017'; /* clock icon */
+    content: '\f017';
+    /* clock icon */
     color: #4f46e5;
 }
 
@@ -394,6 +435,7 @@
         opacity: 0;
         transform: translateY(10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -404,9 +446,17 @@
     animation: fadeIn 0.5s ease-out forwards;
 }
 
-.statCard:nth-child(1) { animation-delay: 0.1s; }
-.statCard:nth-child(2) { animation-delay: 0.2s; }
-.statCard:nth-child(3) { animation-delay: 0.3s; }
+.statCard:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.statCard:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.statCard:nth-child(3) {
+    animation-delay: 0.3s;
+}
 
 @media (max-width: 768px) {
     .statsContainer {
@@ -534,7 +584,8 @@
     }
 
     .membersTable th::before {
-        display: none; /* Hide table header icons on very small screens */
+        display: none;
+        /* Hide table header icons on very small screens */
     }
 
     .actionButtons {
@@ -599,6 +650,7 @@
 }
 
 @media (max-width: 576px) {
+
     .loadingState,
     .errorState {
         padding: 1rem;

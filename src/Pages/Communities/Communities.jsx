@@ -46,10 +46,10 @@ const getUserRole = () => {
 };
 
 export default function Communities() {
-
     // State management
     const userRole = getUserRole();
     const [selectedCommunityId, setSelectedCommunityId] = useState(null);
+    const [selectedCommunityData, setSelectedCommunityData] = useState(null);
 
     // Fetch communities data with React Query
     const { data: communities, isLoading, isError, error, refetch } = useQuery('communities', fetchCommunities, {
@@ -60,27 +60,34 @@ export default function Communities() {
         refetchInterval: false,
     });
 
-
-
     // Handle edit button click
     const handleEditClick = (communityId) => {
         setSelectedCommunityId(communityId);
+        // Find the community data from the list
+        const communityToEdit = communities.find(community => community.Id === communityId);
+        setSelectedCommunityData(communityToEdit);
     };
 
     // Loading state
     if (isLoading) return <LoadingScreen />;
 
-
     // Error state
     if (isError) return <ErrorDisplay error={error} onRetry={refetch} />;
 
-
     return (
         <>
-
             {/* Only render these components for super admin */}
             {userRole && <CreateCommunity refetch={refetch} />}
-            {userRole && <EditCommunity communityId={selectedCommunityId} refetch={refetch} />}
+            {userRole && selectedCommunityData && (
+                <EditCommunity 
+                    communityId={selectedCommunityId} 
+                    refetch={refetch} 
+                    initialData={{
+                        name: selectedCommunityData.Name,
+                        leaderEmail: selectedCommunityData.Leader?.Email
+                    }} 
+                />
+            )}
 
             {/* Main communities section */}
             <section className={`${styles.communitiesPage}`}>
@@ -112,7 +119,6 @@ export default function Communities() {
                             {communities?.map((community) => (
                                 <div key={community.Id} className={`${styles.card} p-2 col-lg-4 col-md-6 mx-auto col-sm-9 col-10`}>
                                     <div className={`${styles.cardWrapper}`}>
-
                                         <div className={`${styles.cardImageContainer}`}>
                                             <img
                                                 src={community.Logo ? getFullImageUrl(community.Logo) : communityLogo}

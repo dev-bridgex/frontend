@@ -1,18 +1,27 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./EditCommunity.module.css";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
-export default function EditCommunity({ communityId, refetch }) {
+export default function EditCommunity({ communityId, refetch, initialData }) {
 
+  console.log("done");
 
   const [name, setName] = useState("");
   const [leaderEmail, setLeaderEmail] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  // Set initial values when component mounts or initialData changes
+  useEffect(() => {
+    if (initialData) {
+      setName(initialData.name || "");
+      setLeaderEmail(initialData.leaderEmail || "");
+    }
+  }, [initialData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,18 +45,12 @@ export default function EditCommunity({ communityId, refetch }) {
       setSuccessMessage("Community updated successfully!");
 
       setTimeout(() => {
-
         document.getElementById("closeEditCommunityModal").click();
-
       }, 1000);
       refetch();
 
-
     } catch (error) {
-
       setErrorMessage(error.response?.data?.Message || "Failed to update community.");
-
-
     } finally {
       setIsLoading(false);
     }

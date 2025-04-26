@@ -9,10 +9,11 @@ import axios from 'axios';
 import LoadingScreen from '../../components/LoadingScreen/LoadingScreen';
 import 'react-toastify/dist/ReactToastify.css';
 import UpdateSubTeamData from '../../Components/SubTeam/UpdateSubTeamData/UpdateSubTeamData';
-import AddMember from '../../Components/SubTeam/AddMember/AddMember';
 import Channels from '../../Components/SubTeam/Channels/Channels';
 import LearningPhase from "../../Components/SubTeam/LearningPhase/LearningPhase"
 import { toast } from 'react-toastify';
+import EditSubTeam from '../../components/SubTeam/EditSubTeam/EditSubTeam';
+import { useState } from 'react';
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -37,6 +38,7 @@ export default function SubTeam() {
     const navigate = useNavigate();
     const { communityId, teamId, subTeamId } = useParams();
     const token = localStorage.getItem("token");
+    const [selectedSubTeamData, setSelectedSubTeamData] = useState(null);
 
     // Fetch sub-team data
     const fetchSubTeam = async () => {
@@ -49,6 +51,7 @@ export default function SubTeam() {
                     }
                 }
             );
+            setSelectedSubTeamData(data?.Data);
             return data?.Data;
         } catch (error) {
             throw new Error(error.response?.data?.Message || 'Failed to fetch sub-team data');
@@ -114,47 +117,53 @@ export default function SubTeam() {
     );
 
     const safeData = getSafeData(subTeamData);
-
-    console.log(JSON.stringify(safeData, null, 2));
-    // console.log(safeData.Leaders);
-
-
-
-
-
+    console.log(safeData);
+    
 
     if (isLoading) return <LoadingScreen />;
 
     return (
         <>
-            <AddMember communityId={communityId} teamId={teamId} subTeamId={subTeamId} refetch={refetch} />
             <ScrollToTop />
             <UpdateSubTeamData refetch={refetch} communityId={communityId} teamId={teamId} subTeamId={subTeamId} />
+
+            {safeData?.CanModify && selectedSubTeamData && (
+                <EditSubTeam 
+                    communityId={communityId} 
+                    teamId={teamId} 
+                    subTeamId={subTeamId} 
+                    refetch={refetch}
+                    initialData={{
+                        name: selectedSubTeamData.Name,
+                        joinLink: selectedSubTeamData.JoinLink
+                    }}
+                />
+            )}
 
             <section className={`${styles.subTeamPage}`}>
                 {/* Action buttons container - only shown if user has modification rights */}
                 {safeData?.CanModify ? (
                     <div className={styles.actionButtons}>
-                        {/* Edit SubTeam Button */}
+                        {/* Update SubTeam Information */}
                         <button
                             data-bs-toggle="modal"
                             data-bs-target="#updateSubTeamModal"
                             className={styles.actionButton}
-                            title="Edit SubTeam Information"
+                            title="Update SubTeam Information"
                         >
                             <i className={`fa-solid fa-pen-to-square ${styles.buttonIcon}`}></i>
-                            <span className={styles.tooltip}>Edit SubTeam</span>
+                            <span className={styles.tooltip}>Update SubTeam Information</span>
                         </button>
 
-                        {/* Add Member Button */}
+                        {/* Edit Sub Team */}
                         <button
                             data-bs-toggle="modal"
-                            data-bs-target="#addMemberModal"
+                            data-bs-target="#editSubTeamModal"
                             className={styles.actionButton}
-                            title="Add New Member"
+                            title="Edit Sub Team"
                         >
-                            <i className={`fa-solid fa-user-plus ${styles.buttonIcon}`}></i>
-                            <span className={styles.tooltip}>Add Member</span>
+                            <i className={`fa-solid fa-file-pen ${styles.buttonIcon}`}></i>
+                            <span className={styles.tooltip}>Edit Sub Team</span>
                         </button>
 
                         {/* Manage Members Button */}

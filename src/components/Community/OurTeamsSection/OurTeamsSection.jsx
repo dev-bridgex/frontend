@@ -17,10 +17,28 @@ const getFullImageUrl = (imgPath) => {
 
 export default function OurTeamsSection({ teams, communityId, canModify }) {
   const [selectedTeamId, setSelectedTeamId] = useState(null);
+  const [selectedTeamData, setSelectedTeamData] = useState(null);
+
+  // Handle edit button click
+  const handleEditClick = (teamId) => {
+    setSelectedTeamId(teamId);
+    // Find the team data from the list
+    const teamToEdit = teams.find(team => team.Id === teamId);
+    setSelectedTeamData(teamToEdit);
+  };
 
   return (
     <>
-      <EditTeam communityId={communityId} teamId={selectedTeamId} />
+      {canModify && selectedTeamData && (
+        <EditTeam 
+          communityId={communityId} 
+          teamId={selectedTeamId}
+          initialData={{
+            name: selectedTeamData.Name,
+            leaderEmail: selectedTeamData.Leader?.Email
+          }} 
+        />
+      )}
 
       <section className={`${styles.ourTeamsPage} `}>
         <div className={`${styles.teamsContainer} specialContainer`}>
@@ -63,7 +81,7 @@ export default function OurTeamsSection({ teams, communityId, canModify }) {
                               data-bs-toggle="modal"
                               data-bs-target="#editTeamModal"
                               className={`${styles.editIon} fa-solid fa-pen-to-square`}
-                              onClick={() => setSelectedTeamId(team.Id)}
+                              onClick={() => handleEditClick(team.Id)}
                             ></i>
                           )}
                         </div>
