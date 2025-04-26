@@ -13,7 +13,7 @@ export default function AddSubTeam({ communityId, teamId, refetch }) {
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // Validation functions
+  // Validation functions aligned with SubTeamCreateDto schema
   const validateName = (name) => {
     const regex = /^[a-zA-Z0-9]+$/;
     if (!name.trim()) return "Name is required";
@@ -23,7 +23,7 @@ export default function AddSubTeam({ communityId, teamId, refetch }) {
   };
 
   const validateJoinLink = (link) => {
-    if (!link) return ""; // Optional field
+    if (!link) return ""; // Optional field as per schema
     if (link.length > 500) return "Link must be 500 characters or less";
     
     try {
@@ -38,7 +38,7 @@ export default function AddSubTeam({ communityId, teamId, refetch }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Validate inputs
+    // Validate inputs against schema requirements
     const nameError = validateName(subTeamName);
     const linkError = validateJoinLink(joinLink);
     
@@ -57,12 +57,15 @@ export default function AddSubTeam({ communityId, teamId, refetch }) {
         throw new Error("No authentication token found");
       }
 
+      // Prepare request body according to SubTeamCreateDto
+      const requestBody = {
+        Name: subTeamName,
+        JoinLink: joinLink || null, // Send null if empty as per schema
+      };
+
       await axios.post(
         `${baseUrl}/api/communities/${communityId}/teams/${teamId}/subteams`,
-        {
-          Name: subTeamName,
-          JoinLink: joinLink || null,
-        },
+        requestBody,
         {
           headers: {
             Authorization: `Bearer ${token}`,

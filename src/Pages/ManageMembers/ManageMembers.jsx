@@ -133,6 +133,9 @@ export default function ManageMembers() {
         }
     );
 
+    console.log(members);
+
+
 
 
     if (isLoading) return <LoadingScreen />;
@@ -157,7 +160,7 @@ export default function ManageMembers() {
                             >
                                 <i className="fa-solid fa-user-plus"></i>
                             </button>
-                            
+
                         </div>
                         <button
                             onClick={() => navigate(-1)}
@@ -168,11 +171,11 @@ export default function ManageMembers() {
                     </div>
 
                     {/* Add the AddMember component here */}
-                    <AddMember 
-                        communityId={communityId} 
-                        teamId={teamId} 
-                        subTeamId={subTeamId} 
-                        refetch={refetchMembers} 
+                    <AddMember
+                        communityId={communityId}
+                        teamId={teamId}
+                        subTeamId={subTeamId}
+                        refetch={refetchMembers}
                     />
 
                     <div className={styles.membersTableContainer}>
