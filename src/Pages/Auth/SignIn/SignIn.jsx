@@ -4,7 +4,7 @@ import style from "./SignIn.module.css";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Logo } from '../../../components/Logo/Logo';
 
@@ -51,7 +51,7 @@ export default function SignIn() {
 
         setTimeout(() => {
           window.location.replace('/');
-        }, 1000);
+        }, 300);
 
       }
 
@@ -89,17 +89,6 @@ export default function SignIn() {
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
 
       {/* signInPage */}
       <section className={`${style.signInPage} `}>

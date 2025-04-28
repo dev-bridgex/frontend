@@ -10,7 +10,7 @@ import LoadingScreen from '../../components/LoadingScreen/LoadingScreen';
 import 'react-toastify/dist/ReactToastify.css';
 import UpdateSubTeamData from '../../Components/SubTeam/UpdateSubTeamData/UpdateSubTeamData';
 import Channels from '../../Components/SubTeam/Channels/Channels';
-import LearningPhase from "../../Components/SubTeam/LearningPhase/LearningPhase"
+import LearningPhaseSection from "../../components/SubTeam/LearningPhaseSection/LearningPhaseSection"
 import { toast } from 'react-toastify';
 import EditSubTeam from '../../components/SubTeam/EditSubTeam/EditSubTeam';
 import { useState } from 'react';
@@ -117,10 +117,10 @@ export default function SubTeam() {
     );
 
     const safeData = getSafeData(subTeamData);
-    console.log(safeData);
-    
+
 
     if (isLoading) return <LoadingScreen />;
+    console.log(token);
 
     return (
         <>
@@ -128,10 +128,10 @@ export default function SubTeam() {
             <UpdateSubTeamData refetch={refetch} communityId={communityId} teamId={teamId} subTeamId={subTeamId} />
 
             {safeData?.CanModify && selectedSubTeamData && (
-                <EditSubTeam 
-                    communityId={communityId} 
-                    teamId={teamId} 
-                    subTeamId={subTeamId} 
+                <EditSubTeam
+                    communityId={communityId}
+                    teamId={teamId}
+                    subTeamId={subTeamId}
                     refetch={refetch}
                     initialData={{
                         name: selectedSubTeamData.Name,
@@ -142,7 +142,7 @@ export default function SubTeam() {
 
             <section className={`${styles.subTeamPage}`}>
                 {/* Action buttons container - only shown if user has modification rights */}
-                {safeData?.CanModify ? (
+                {safeData?.CanModify &&
                     <div className={styles.actionButtons}>
                         {/* Update SubTeam Information */}
                         <button
@@ -176,20 +176,25 @@ export default function SubTeam() {
                             <span className={styles.tooltip}>Manage Members</span>
                         </button>
                     </div>
-                ) : (
-                    token && safeData && (
-                        <div className={styles.actionButtons}>
-                            <button
-                                onClick={handleLeaveSubTeam}
-                                className={`${styles.actionButton} ${styles.leaveButton}`}
-                                title="Leave SubTeam"
-                            >
-                                <i className={`fa-solid fa-right-from-bracket ${styles.buttonIcon}`}></i>
-                                <span className={styles.tooltip}>Leave SubTeam</span>
-                            </button>
-                        </div>
-                    )
-                )}
+
+
+
+                }
+
+                {safeData.IsMember &&
+
+                    <div className={styles.actionButtons}>
+                        <button
+                            onClick={handleLeaveSubTeam}
+                            className={`${styles.actionButton} ${styles.leaveButton}`}
+                            title="Leave SubTeam"
+                        >
+                            <i className={`fa-solid fa-right-from-bracket ${styles.buttonIcon}`}></i>
+                            <span className={styles.tooltip}>Leave SubTeam</span>
+                        </button>
+                    </div>
+
+                }
 
                 {/* subTeamGallery */}
                 <SubTeamGallery
@@ -208,10 +213,12 @@ export default function SubTeam() {
                     {token &&
                         <>
                             <Channels />
-                            <LearningPhase />
+                            <LearningPhaseSection subTeamId={subTeamId} communityId={communityId} teamId={teamId} />
                         </>
                     }
-                    <JoinUs />
+
+                    {!token && <JoinUs joinLink={safeData?.JoinLink} />}
+
                 </div>
             </section>
         </>

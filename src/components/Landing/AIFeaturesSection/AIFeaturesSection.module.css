@@ -1,22 +1,27 @@
 /* aiFeaturesSection */
 .aiFeaturesSection {
     background-color: var(--background-secondary);
-    overflow: auto;
+    overflow: hidden;
+    position: relative;
 }
 
 /* aiFeaturesContainer */
 .aiFeaturesContainer {
+    position: relative;
+    z-index: 2;
     margin: var(--section-margin) auto;
-
 }
 
 .aiFeaturesContainer>.title {
-    text-align: center;
     font-size: var(--font-size-h2);
+    font-weight: 800;
     color: var(--text-primary);
     margin-bottom: var(--margin-heading) !important;
-    font-weight: 700;
     text-align: center;
+    background: linear-gradient(135deg, var(--text-primary) 0%, #3947d5 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .aiFeaturesContainer>.subtitle {
@@ -40,7 +45,7 @@
     justify-content: center;
     align-items: center;
     color: var(--primary-color);
-
+    transition: all 0.3s ease;
 }
 
 .exploreLink {
@@ -49,6 +54,7 @@
     font-size: var(--font-size-a);
     margin-right: .625rem;
 }
+
 
 /* cardsContainer */
 .cardsContainer {
@@ -65,10 +71,14 @@
     flex: 1 1 30%;
     background-color: var(--background-light);
     cursor: pointer;
-
+    transition: all 0.3s ease;
+    border: 2px solid #e3e5fb;
 }
 
-
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 .625rem 1.25rem rgba(37, 99, 235, 0.1) !important;
+}
 
 /* iconWrapper */
 .card .iconWrapper {
@@ -80,14 +90,14 @@
     justify-content: center;
     align-items: center;
     margin-bottom: var(--margin-heading);
+    transition: all 0.3s ease;
+
 }
 
 .card .iconWrapper img {
     width: 2rem;
     height: 2rem;
 }
-
-
 
 /* cardInfo */
 
@@ -107,15 +117,223 @@
 
 /* highlightWrapper */
 
+.highlightWrapper {
+    display: flex;
+    align-items: center;
+}
+
 .cardInfo .highlight {
     font-size: var(--font-size-p);
     font-weight: 600;
     color: #22C55E;
     margin-left: 10px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+
+}
+
+/* Modern decorative elements */
+.decorativeElements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+
+}
+
+/* Hexagon Grid Pattern */
+.hexagonGrid {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 25rem;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5L55 20V40L30 55L5 40V20L30 5Z' fill='none' stroke='rgba(37, 99, 235, 0.1)' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: 3.75rem 3.75rem;
+    opacity: 0.5;
+}
+
+/* Circuit Lines */
+.circuitLines {
+    position: absolute;
+    left: -6.25rem;
+    top: 50%;
+    width: 18.75rem;
+    height: 18.75rem;
+    background:
+        linear-gradient(90deg, rgba(37, 99, 235, 0.1) 1px, transparent 1px) 0 0,
+        linear-gradient(rgba(37, 99, 235, 0.1) 1px, transparent 1px) 0 0;
+    background-size: 1.25rem 1.25rem;
+    transform: rotate(-30deg);
+}
+
+/* Floating Particles */
+.particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.particle {
+    position: absolute;
+    width: .625rem;
+    height: .625rem;
+    border-radius: 50%;
+    background: rgba(37, 99, 235, 0.5);
+}
+
+.particle:nth-child(1) {
+    top: 20%;
+    left: 10%;
+    animation: float1 8s infinite;
+}
+
+.particle:nth-child(2) {
+    top: 20%;
+    right: 10%;
+    animation: float2 10s infinite;
+}
+
+.particle:nth-child(3) {
+    bottom: 10%;
+    left: 50%;
+    animation: float3 12s infinite;
+}
+
+/* Neural Network Nodes */
+.neuralNodes {
+    position: absolute;
+    right: 3.125rem;
+    bottom: 3.125rem;
+    width: 12.5rem;
+    height: 12.5rem;
+}
+
+.node {
+    position: absolute;
+    width: .625rem;
+    height: .625rem;
+    background: rgba(37, 99, 235, 0.5);
+    border-radius: 50%;
+}
+
+.node::before {
+    content: '';
+    position: absolute;
+    width: 6.25rem;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(37, 99, 235, 0.3), transparent);
+    transform-origin: left;
+}
+
+/* Glowing Orb */
+.glowingOrb {
+    position: absolute;
+    top: 20%;
+    left: 15%;
+    width: 9.375rem;
+    height: 9.375rem;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.4) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: pulse 4s ease-in-out infinite;
+}
+
+/* Binary Code Rain */
+.binaryRain {
+    position: absolute;
+    top: 0;
+    right: 10%;
+    font-family: monospace;
+    color: rgba(37, 99, 235, 0.1);
+    font-size: .875rem;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    animation: rain 20s linear infinite;
+}
+
+/* Animations */
+@keyframes float1 {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(20px, -20px);
+    }
+}
+
+@keyframes float2 {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(-15px, 15px);
+    }
+}
+
+@keyframes float3 {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(25px, 10px);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.2;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.4;
+    }
+}
+
+@keyframes rain {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(100vh);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+
+    .hexagonGrid,
+    .circuitLines {
+        opacity: 0.3;
+    }
+
+    .glowingOrb {
+        width: 100px;
+        height: 100px;
+    }
+
+    .neuralNodes {
+        width: 150px;
+        height: 150px;
+    }
 }
 
 /* responsive design */
 @media (max-width: 1200px) {
+    .cardsContainer {
+        row-gap: 4rem !important;
+    }
+
     .card {
         flex: 1 1 45%;
         max-width: 45% !important;
@@ -126,17 +344,26 @@
 @media (max-width: 800px) {
     .card {
         flex: 1 1 90%;
-        max-width: 90% !important;
+        max-width: 80% !important;
     }
-    
-    
-    
+
+
+
 }
+
 @media (max-width: 600px) {
+    .card {
+        max-width: 95% !important;
+    }
+
+
+
+}
+@media (max-width: 400px) {
     .card {
         max-width: 100% !important;
     }
 
-  
+
 
 }

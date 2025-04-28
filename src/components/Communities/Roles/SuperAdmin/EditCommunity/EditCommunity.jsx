@@ -7,7 +7,6 @@ const baseUrl = import.meta.env.VITE_BASE_URL;
 
 export default function EditCommunity({ communityId, refetch, initialData }) {
 
-  console.log("done");
 
   const [name, setName] = useState("");
   const [leaderEmail, setLeaderEmail] = useState("");

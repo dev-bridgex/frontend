@@ -57,7 +57,6 @@ export default function TeamGallery({ safeData, refetch, communityId, teamId }) 
 
             refetch();
         } catch (error) {
-            console.log(error);
             
                 toast.error(error.response?.data?.Message || "Failed to delete image", {
                 position: "top-center",

@@ -191,7 +191,7 @@ ul {
     }
 
     .specialContainer {
-        width: 98%;
+        width: 96%;
     }
 
 }
@@ -208,6 +208,9 @@ ul {
         font-size: 10px;
     }
 
+    .specialContainer {
+        width: 98%;
+    }
 }
 
 @media (max-width:300px) {

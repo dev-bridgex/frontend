@@ -1,6 +1,6 @@
 /* modalContent */
 .modalContent {
-    background-color: var(--background-light) !important;
+    background-color: #f3f4f6;
 }
 
 
@@ -12,15 +12,10 @@
     align-items: center;
 }
 
-.modalHeader h6 {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text-primary);
-}
 
 
 .modalHeader .modalClose {
-    font-size: 18px !important;
+    font-size: 16px !important;
     cursor: pointer;
     color: var(--text-primary);
 }
@@ -35,16 +30,16 @@
     row-gap: 15px;
     font-size: var(--font-size-a);
     font-weight: 600;
-
+    
 }
 
 .modalBodyUl a {
     color: black;
     position: relative;
-
 }
 
-.modalBodyUl a::after {
+/* Add this new selector to target only non-button links */
+.modalBodyUl li a::after {
     content: "";
     position: absolute;
     left: 0;
@@ -55,33 +50,110 @@
     transition: width 0.3s ease-in-out;
 }
 
-.modalBodyUl a:hover::after {
+.modalBodyUl li a:hover::after {
     width: 100%;
 }
 
-.modalBodyUl a.active::after {
+.modalBodyUl li a.active::after {
     width: 100%;
+}
+
+/* Remove underline effect from buttons */
+.loginButton::after,
+.signUpButton::after {
+    display: none;
+}
+
+/* Adjust button styles to be more consistent */
+.loginButton, .signUpButton {
+    padding: 0.6rem 1.2rem;
+    border-radius: .5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-weight: 500;
+    width: 100%;
+    justify-content: center;
+}
+
+.loginButton {
+    background: var(--primary-color);
+    color: white !important;
+    border: 2px solid var(--primary-color);
+}
+
+.loginButton:hover {
+    background: transparent;
+    color: var(--primary-color) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 .25rem .75rem rgba(57, 71, 213, 0.1);
+}
+
+.signUpButton {
+    background: transparent;
+    color: var(--primary-color) !important;
+    border: 2px solid var(--primary-color);
+}
+
+.signUpButton:hover {
+    background: var(--primary-color);
+    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: 0 .25rem .75rem rgba(57, 71, 213, 0.1);
+}
+
+.loginButton i, .signUpButton i {
+    font-size: 1rem;
+}
+
+
+
+
+
+.profileButton {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+}
+
+.profileButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 .25rem .75rem rgba(57, 71, 213, 0.2);
+}
+
+.profileButton i {
+    font-size: 1.2rem;
 }
 
 .logoutButton {
-    background-color: #ff5c5c;
-    color: #ffffff;
-    padding: .5rem 1rem;
+    background: #ff4757;
+    color: white;
     border: none;
+    padding: 0.6rem 1.2rem;
     border-radius: .5rem;
-    font-size: 1rem;
-    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .logoutButton:hover {
-    background-color: #d9534f;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    background: #ff6b81;
     transform: translateY(-2px);
 }
 
-.logoutButton:active {
-    background-color: #c9302c;
-    transform: translateY(0);
+.logoutButton i {
+    font-size: 1rem;
 }

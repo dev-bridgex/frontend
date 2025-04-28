@@ -13,6 +13,7 @@ import Team from './Pages/Team/Team';
 import SubTeam from "./Pages/SubTeam/SubTeam";
 import LearningPhase from "./Pages/LearningPhase/LearningPhase";
 import ManageMembers from "./Pages/ManageMembers/ManageMembers";
+import ManageProfile from "./Pages/ManageProfile/ManageProfile";
 
 export default function App() {
 
@@ -23,13 +24,12 @@ export default function App() {
       path: "", element: <Layout />, children: [
         { index: true, element: <Home /> },
         { path: "communities", element: <Communities /> },
+        { path: "manageProfile", element: <ManageProfile /> },
         { path: "communities/community/:communityId", element: <Community /> },
         { path: "communities/community/:communityId/teams/:teamId", element: <Team /> },
         { path: "communities/community/:communityId/teams/:teamId/subteams/:subTeamId", element: <SubTeam /> },
+        { path: "communities/community/:communityId/teams/:teamId/subteams/:subTeamId/LearningPhase", element: <LearningPhase /> },
         { path: "communities/:communityId/teams/:teamId/subteams/:subTeamId/manageMembers", element: <ManageMembers /> },
-
-        { path: "LearningPhase", element: <LearningPhase /> }
-
       ]
     },
     { path: "signUp", element: <SignUp /> },

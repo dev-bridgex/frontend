@@ -1,22 +1,67 @@
 /* HowItWorksSection */
 .HowItWorksSection {
     background-color: var(--background-secondary);
-    overflow: auto;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
 }
+
+/* Add these new styles */
+.decorativeElements {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.floatingSquare {
+    position: absolute;
+    width: 11.25rem;
+    height: 11.25rem;
+    background: linear-gradient(135deg, rgba(57, 71, 213, 0.08) 0%, rgba(57, 71, 213, 0.03) 100%);
+    bottom: 10%;
+    left: -50px;
+    border-radius: 10px;
+    transform-origin: center;
+}
+
+.floatingCircle {
+    position: absolute;
+    width: 15.625rem;
+    height: 15.625rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(57, 71, 213, 0.1) 0%, rgba(57, 71, 213, 0.05) 100%);
+    top: -6.25rem;
+    right: -6.25rem;
+}
+
+
 
 /* howItWorkContainer */
 .howItWorkContainer {
-    margin-top: var(--section-margin);
-    margin-bottom: calc(var(--section-margin) * 2);
+
+
+    position: relative;
+    z-index: 2;
+    padding:3rem 0;
 
 }
 
 .howItWorkContainer .title {
     font-size: var(--font-size-h2);
-    font-weight: 700;
+    font-weight: 800;
     color: var(--text-primary);
     margin-bottom: var(--margin-heading) !important;
     text-align: center;
+    background: linear-gradient(135deg, var(--text-primary) 0%, #3947d5 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .howItWorkContainer .subtitle {
@@ -30,35 +75,44 @@
 .catButtonWrapper {
     display: flex;
     justify-content: center;
+    margin-top: 2rem;
 }
 
 .ctaButton {
-    background-color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color) 0%, #3947d5 100%);
     color: var(--text-white);
-    margin-top: var(--margin-between-elements);
+    padding: 1rem 2rem;
+    border-radius: .5rem;
+    font-weight: 600;
     display: flex;
-    justify-content: center;
     align-items: center;
-
+    gap: 0.5rem;
+    box-shadow: 0 .25rem .75rem rgba(57, 71, 213, 0.2);
+    border: none;
+    cursor: pointer;
 }
 
 .ctaButton i {
-    padding-left: .625rem;
+    transition: transform 0.3s ease;
 }
 
+.ctaButton:hover i {
+    transform: translateX(5px);
+}
 
 /* stepsContainer */
 .stepsContainer {
     display: flex;
+    justify-content: space-around;
 }
-
 
 .horizontalLine {
     width: 80%;
     margin: auto;
-    height: .25rem;
-    background-color: #3947d5;
-
+    height: 0.25rem;
+    background: linear-gradient(90deg, #3947d5 0%, #6366f1 100%);
+    border-radius: .25rem;
+    box-shadow: 0 2px 4px rgba(57, 71, 213, 0.2);
 }
 
 /* stepItem */
@@ -67,11 +121,12 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 0 .625rem;
+    padding: 0 1rem;
+    width: 25%;
 }
 
 .iconWrapper {
-    background-color: #F3F4FF;
+    background: linear-gradient(135deg, #F3F4FF 0%, #FFFFFF 100%);
     border-radius: 50%;
     width: 4rem;
     height: 4rem;
@@ -79,58 +134,52 @@
     justify-content: center;
     align-items: center;
     transform: translateY(calc(-50% - 2px));
+    box-shadow: 0 4px 12px rgba(57, 71, 213, 0.1);
+    border: 2px solid rgba(57, 71, 213, 0.1);
 }
 
 .iconWrapper .icon {
     width: 1.5rem;
     height: 2rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .stepTitle {
-
     font-size: var(--font-size-h5);
     font-weight: 700;
     color: var(--text-primary);
     margin-bottom: var(--margin-between-elements) !important;
-
 }
 
 .stepDescription {
-
     font-size: var(--font-size-p);
     font-weight: 500;
     color: var(--text-secondary);
     margin-bottom: var(--margin-between-elements) !important;
-
+    line-height: 1.6;
 }
 
-@media (max-width:600px) {
-
+@media (max-width: 600px) {
     .stepsContainer {
         flex-direction: column;
-    }
+        row-gap: 4rem;
 
-    .horizontalLine {
-        display: none;
-
-    }
-
-    .iconWrapper {
-
-        transform: none;
-        margin-bottom: var(--margin-between-elements);
     }
 
     .stepItem {
-
-        margin-top: var(--margin-between-elements);
-        padding: 0 0px;
+        width: 100%;
+        padding: 0;
     }
-
-    .howItWorkContainer .subtitle {
-        margin-bottom: var(--margin-between-elements) !important;
-
+    
+    .horizontalLine {
+        display: none;
     }
-
-
+    
+    .iconWrapper {
+        transform: none;
+        margin-bottom: var(--margin-between-elements);
+    }
+ 
+    
+ 
 }

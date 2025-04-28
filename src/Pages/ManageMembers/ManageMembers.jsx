@@ -133,7 +133,6 @@ export default function ManageMembers() {
         }
     );
 
-    console.log(members);
 
 
 
