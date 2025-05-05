@@ -25,7 +25,7 @@ export default function AddSubTeam({ communityId, teamId, refetch }) {
   const validateJoinLink = (link) => {
     if (!link) return ""; // Optional field as per schema
     if (link.length > 500) return "Link must be 500 characters or less";
-    
+
     try {
       new URL(link); // Validate URL format
       return "";
@@ -37,11 +37,11 @@ export default function AddSubTeam({ communityId, teamId, refetch }) {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validate inputs against schema requirements
     const nameError = validateName(subTeamName);
     const linkError = validateJoinLink(joinLink);
-    
+
     if (nameError || linkError) {
       setError(nameError || linkError);
       return;
@@ -84,8 +84,8 @@ export default function AddSubTeam({ communityId, teamId, refetch }) {
 
     } catch (err) {
       setError(
-        err.response?.data?.Message || 
-        err.message || 
+        err.response?.data?.Message ||
+        err.message ||
         "Failed to create sub-team"
       );
     } finally {

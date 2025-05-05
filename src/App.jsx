@@ -14,6 +14,7 @@ import SubTeam from "./Pages/SubTeam/SubTeam";
 import LearningPhase from "./Pages/LearningPhase/LearningPhase";
 import ManageMembers from "./Pages/ManageMembers/ManageMembers";
 import ManageProfile from "./Pages/ManageProfile/ManageProfile";
+import NotFound from "./Pages/NotFound/NotFound";
 
 export default function App() {
 
@@ -30,6 +31,7 @@ export default function App() {
         { path: "communities/community/:communityId/teams/:teamId/subteams/:subTeamId", element: <SubTeam /> },
         { path: "communities/community/:communityId/teams/:teamId/subteams/:subTeamId/LearningPhase", element: <LearningPhase /> },
         { path: "communities/:communityId/teams/:teamId/subteams/:subTeamId/manageMembers", element: <ManageMembers /> },
+        { path: "*", element: <NotFound /> },
       ]
     },
     { path: "signUp", element: <SignUp /> },
@@ -46,3 +48,4 @@ export default function App() {
 
   </>
 }
+

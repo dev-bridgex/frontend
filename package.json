@@ -20,6 +20,7 @@
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.475.0",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.10.9",
     "react-dom": "^18.2.0",
     "react-helmet-async": "^2.0.5",
     "react-hook-form": "^7.56.1",
@@ -29,6 +30,7 @@
     "react-router": "^7.5.2",
     "react-router-dom": "^7.5.2",
     "react-toastify": "^11.0.5",
+    "sweetalert2": "^11.19.1",
     "swiper": "^11.2.6",
     "yup": "^1.6.1"
   },

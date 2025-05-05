@@ -47,7 +47,6 @@ export default function ProfilePhotoSection({
         setDisplayImage(fullUrl);
       }
     } catch (error) {
-      console.error('Error fetching preview image:', error);
       setDisplayImage(''); 
     }
   };

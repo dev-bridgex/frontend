@@ -35,6 +35,8 @@ const placeholderData = {
 };
 
 export default function SubTeam() {
+
+    // state managment
     const navigate = useNavigate();
     const { communityId, teamId, subTeamId } = useParams();
     const token = localStorage.getItem("token");
@@ -116,11 +118,12 @@ export default function SubTeam() {
         }
     );
 
+
+
     const safeData = getSafeData(subTeamData);
 
 
     if (isLoading) return <LoadingScreen />;
-    console.log(token);
 
     return (
         <>
@@ -210,12 +213,20 @@ export default function SubTeam() {
 
                 <div className={`${styles.subTeamContainer} specialContainer `}>
                     <SubTeamOverview subTeamData={safeData} />
-                    {token &&
+                   
                         <>
                             <Channels />
-                            <LearningPhaseSection subTeamId={subTeamId} communityId={communityId} teamId={teamId} />
+                            <LearningPhaseSection 
+                                subTeamId={subTeamId} 
+                                communityId={communityId} 
+                                teamId={teamId} 
+                                learningPhaseTitle={safeData.LearningPhaseTitle}
+                                learningPhaseDesc={safeData.LearningPhaseDesc}
+                                isMember={safeData.IsMember}
+                                canModify={safeData.CanModify}
+                            />
                         </>
-                    }
+                    
 
                     {!token && <JoinUs joinLink={safeData?.JoinLink} />}
 

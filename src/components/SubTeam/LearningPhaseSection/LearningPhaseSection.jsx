@@ -1,10 +1,20 @@
 /* eslint-disable react/prop-types */
-import { Link } from "react-router-dom";
-import styles from "./LearningPhaseSection.module.css";
-import { useEffect, useRef } from 'react';
+import { useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styles from './LearningPhaseSection.module.css';
+import { toast } from 'react-toastify';
 
-export default function LearningPhaseSection({ subTeamId, communityId, teamId }) {
+export default function LearningPhaseSection({
+    subTeamId,
+    communityId,
+    teamId,
+    learningPhaseTitle,
+    learningPhaseDesc,
+    isMember,
+    canModify
+}) {
     const sectionRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -36,21 +46,56 @@ export default function LearningPhaseSection({ subTeamId, communityId, teamId })
         }
     ];
 
+    // Default placeholder values if data is null
+    const title = learningPhaseTitle || "Learning Phase";
+    const description = learningPhaseDesc || "Embark on a structured learning journey with our comprehensive curriculum. Master new skills through expert-led content and hands-on practice.";
+
+    // Handle view learning phase button click
+    const handleViewLearningPhase = (e) => {
+        e.preventDefault();
+
+        if (isMember || canModify) {
+            // Navigate to learning phase page
+            navigate(`/communities/community/${communityId}/teams/${teamId}/subteams/${subTeamId}/LearningPhase`);
+        } else {
+            // Show error message
+            toast.error(
+                <div className={styles.accessDeniedToast}>
+                    <i className="fa-solid fa-lock"></i>
+                    <div>
+                        <strong>Access Restricted</strong>
+                        <p>You need to create an account and join this team to access the learning materials.</p>
+                    </div>
+                </div>,
+                {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                }
+            );
+        }
+    };
+
     return (
         <>
             <section ref={sectionRef} className={`${styles.learningPhaseSection} ${styles.fadeIn}`}>
                 <div className={`${styles.learingPhaseContainer}`}>
                     <div className={`${styles.LearningPhaseIntro}`}>
                         <div className={styles.titleContainer}>
-                            <h3 className={`${styles.title}`}>Learning Phase</h3>
+                            <h3 className={`${styles.title}`}>{title}</h3>
                             <div className={styles.titleUnderline}></div>
                         </div>
                         <p className={`${styles.desc}`}>
-                            Embark on a structured learning journey with our comprehensive curriculum.
-                            Master new skills through expert-led content and hands-on practice.
+                            {description}
                         </p>
-                        <Link to={`/communities/community/${communityId}/teams/${teamId}/subteams/${subTeamId}/LearningPhase`} className={styles.learnMore}>
-                            <button className={`${styles.viewButton} ButtonStyle`}>
+                        <div className={styles.learnMore}>
+                            <button
+                                className={`${styles.viewButton} ButtonStyle`}
+                                onClick={handleViewLearningPhase}
+                            >
                                 View Learning Phase
                                 <svg
                                     className={styles.arrow}
@@ -69,7 +114,7 @@ export default function LearningPhaseSection({ subTeamId, communityId, teamId })
                                     />
                                 </svg>
                             </button>
-                        </Link>
+                        </div>
                     </div>
 
                     <div className={`${styles.LearningPhaseFeatures}`}>

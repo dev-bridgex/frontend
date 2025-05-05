@@ -4,16 +4,14 @@ import style from "./SignIn.module.css";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import {  toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { Logo } from '../../../components/Logo/Logo';
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
 export default function SignIn() {
-
-  // state managment
+  // state management
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState({ type: '', text: '' });
 
   // Form validation schema
   const validationSchema = Yup.object({
@@ -26,56 +24,35 @@ export default function SignIn() {
 
   // Form submission handler
   const handleSubmit = async (values) => {
-
     setIsSubmitting(true);
+    setMessage({ type: '', text: '' });
 
     try {
       const { data } = await axios.post(`${baseUrl}/api/users/login`, values);
 
       // Show success message
       if (data.StatusCode === 200) {
-
-
-        toast.success('Login successful! Redirecting...', {
-          position: "top-right",
-          autoClose: 500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+        setMessage({ 
+          type: 'success', 
+          text: 'Login successful! Redirecting...' 
         });
 
-
-        localStorage.setItem("token", data?.Data?.JWT)
+        localStorage.setItem("token", data?.Data?.JWT);
 
         setTimeout(() => {
           window.location.replace('/');
-        }, 300);
-
+        }, 1000);
       }
-
-
     } catch (err) {
-
-
-      // show error message
-      toast.error(err.response.data.Message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+      // Show error message
+      setMessage({ 
+        type: 'error', 
+        text: err.response?.data?.Message || 'Login failed. Please try again.' 
       });
-
-
     } finally {
       setIsSubmitting(false);
     }
   };
-
 
   // Formik configuration
   const formik = useFormik({
@@ -88,118 +65,113 @@ export default function SignIn() {
   });
 
   return (
-    <>
+    <section className={style.signInPage}>
+      <div className={style.signInContainer}>
+        {/* Left Panel */}
+        <div className={style.signInLeftPanel}>
+          <Link to="/" className={style.backLink}>
+            <i className="fas fa-arrow-left-long"></i>
+            <span>Back To Home</span>
+          </Link>
 
-      {/* signInPage */}
-      <section className={`${style.signInPage} `}>
+          <Logo />
 
-        {/* signInContainer */}
-        <div className={`specialContainer`}>
+          <h2 className={style.title}>Welcome Back!</h2>
 
-          <div className={`${style.signInContainer} shadow`}>
-            {/* signInLeftPanel */}
-            <div className={`${style.signInLeftPanel}`}>
+          <p className={style.desc}>
+            Continue your learning journey with BridgeX. Access your courses,
+            connect with peers, and enhance your skills.
+          </p>
+        </div>
 
-              {/* backLink */}
-              <Link to="/" className={`${style.backLink}`}>
-                <i className={`fas fa-arrow-left-long me-2`}></i>
-                Back To Home
+        {/* Right Panel */}
+        <div className={style.signInRightPanel}>
+          <div className={style.formHeader}>
+            <h4 className={style.title}>Sign in to your account</h4>
+            <p className={style.desc}>
+              Don&apos;t have an account?{' '}
+              <Link to="/signUp" className={style.signUpLink}>
+                Sign Up
               </Link>
-
-              {/* logo */}
-              <Logo />
-
-              <h2 className={`${style.title}`}>Welcome Back!</h2>
-
-              <p className={`${style.desc}`}>
-                Continue your learning journey with BridgeX. Access your courses,
-                connect with peers, and enhance your skills.
-              </p>
-            </div>
-
-            {/* signInRightPanel */}
-            <div className={`${style.signInRightPanel}`}>
-
-              {/* formHeader */}
-              <div className={`${style.formHeader}`}>
-
-                <h4 className={`${style.title}`}>Sign in to your account</h4>
-                <p className={`${style.desc}`}>
-                  Don&apos;t have an account?{' '}
-                  <Link to="/signUp" className={`${style.signUpLink}`}>
-                    Sign Up
-                  </Link>
-                </p>
-              </div>
-
-              {/* signInForm */}
-              <form onSubmit={formik.handleSubmit} className={`${style.signInForm} `}>
-
-                {/* inputWrapper */}
-                <div className={`${style.inputWrapper}`}>
-                  <label className="lableStyle" htmlFor="Email">
-                    Email:
-                  </label>
-                  <input
-                    id="Email"
-                    name="Email"
-                    type="email"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.Email}
-                    className={`inputStyle ${formik.touched.Email && formik.errors.Email ? 'is-invalid' : ''}`}
-                  />
-                  {formik.touched.Email && formik.errors.Email && (
-                    <div className="alert alert-danger py-2 mt-2">{formik.errors.Email}</div>
-                  )}
-                </div>
-
-                {/* inputWrapper */}
-                <div className={`${style.inputWrapper} `}>
-                  <label className="lableStyle" htmlFor="Password">
-                    Password:
-                  </label>
-                  <input
-                    id="Password"
-                    name="Password"
-                    type="password"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.Password}
-                    className={`inputStyle ${formik.touched.Password && formik.errors.Password ? 'is-invalid' : ''}`}
-                  />
-                  {formik.touched.Password && formik.errors.Password && (
-                    <div className="alert alert-danger py-2 mt-2">{formik.errors.Password}</div>
-                  )}
-                </div>
-
-                {/* forgetPassword */}
-                <Link to="/RequestResetCode" className={`${style.forgetPassword} `}>
-                  Forgot password?
-                </Link>
-
-
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  className={`PrimaryButtonStyle ${style.submittingButon}`}
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    'Signing in...'
-                  ) : (
-                    <>
-                      Sign In
-                      <i className={`fas fa-arrow-right-long ms-2`}></i>
-                    </>
-                  )}
-                </button>
-              </form>
-            </div>
+            </p>
           </div>
 
+          <form onSubmit={formik.handleSubmit} className={style.signInForm}>
+            <div className={style.inputWrapper}>
+              <label className={style.inputLabel} htmlFor="Email">
+                Email
+              </label>
+              <div className={style.inputContainer}>
+                <i className="far fa-envelope"></i>
+                <input
+                  id="Email"
+                  name="Email"
+                  type="email"
+                  placeholder="Enter your email"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.Email}
+                  className={`${style.formInput} ${formik.touched.Email && formik.errors.Email ? style.inputError : ''}`}
+                />
+              </div>
+              {formik.touched.Email && formik.errors.Email && (
+                <div className={style.errorText}>{formik.errors.Email}</div>
+              )}
+            </div>
+
+            <div className={style.inputWrapper}>
+              <label className={style.inputLabel} htmlFor="Password">
+                Password
+              </label>
+              <div className={style.inputContainer}>
+                <i className="fas fa-lock"></i>
+                <input
+                  id="Password"
+                  name="Password"
+                  type="password"
+                  placeholder="Enter your password"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.Password}
+                  className={`${style.formInput} ${formik.touched.Password && formik.errors.Password ? style.inputError : ''}`}
+                />
+              </div>
+              {formik.touched.Password && formik.errors.Password && (
+                <div className={style.errorText}>{formik.errors.Password}</div>
+              )}
+            </div>
+
+            <Link to="/RequestResetCode" className={style.forgetPassword}>
+              Forgot password?
+            </Link>
+
+            {message.text && (
+              <div className={`${style.messageAlert} ${style[message.type]}`}>
+                <i className={message.type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle'}></i>
+                <span>{message.text}</span>
+              </div>
+            )}
+
+            <button
+              type="submit"
+              className={style.submitButton}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <span className={style.spinner}></span>
+                  <span>Signing in...</span>
+                </>
+              ) : (
+                <>
+                  <span>Sign In</span>
+                  <i className="fas fa-arrow-right-long"></i>
+                </>
+              )}
+            </button>
+          </form>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }

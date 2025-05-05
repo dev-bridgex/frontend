@@ -1,0 +1,359 @@
+.notFoundPage {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    position: relative;
+    overflow: hidden;
+}
+
+.notFoundContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 50rem;
+    width: 90%;
+    padding: 3rem 2rem;
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(0.625rem);
+    border-radius: 1.25rem;
+    box-shadow: 0 1.25rem 3.75rem rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 10;
+    animation: fadeIn 0.8s ease-out;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.errorCode {
+    font-size: 10rem;
+    font-weight: 900;
+    color: transparent;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    background-clip: text;
+    -webkit-background-clip: text;
+    line-height: 1;
+    margin-bottom: 1.5rem !important;
+    text-shadow: 0 0.625rem 1.875rem rgba(37, 99, 235, 0.3);
+    position: relative;
+    animation: pulse 3s infinite;
+}
+
+.errorCode::after {
+    content: "404";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    filter: blur(1.25rem);
+    opacity: 0.7;
+    animation: pulse 3s infinite alternate;
+}
+
+.content {
+    text-align: center;
+    margin-bottom: 2.5rem !important;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #f8fafc;
+    margin-bottom: 1rem !important;
+}
+
+.description {
+    font-size: 1.125rem;
+    color: #cbd5e1;
+    max-width: 31.25rem;
+    margin: 0 auto 2rem !important;
+    line-height: 1.6;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.homeButton, .backButton {
+    padding: 0.875rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.homeButton {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border: none;
+    box-shadow: 0 0.25rem 0.75rem rgba(37, 99, 235, 0.3);
+}
+
+.homeButton:hover {
+    transform: translateY(-0.25rem);
+    box-shadow: 0 0.5rem 1rem rgba(37, 99, 235, 0.4);
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+}
+
+.backButton {
+    background: transparent;
+    color: #e2e8f0;
+    border: 1px solid rgba(226, 232, 240, 0.3);
+}
+
+.backButton:hover {
+    background: rgba(226, 232, 240, 0.1);
+    transform: translateY(-0.25rem);
+}
+
+/* Particles animation */
+.particle {
+    position: fixed;
+    border-radius: 50%;
+    opacity: 0;
+    animation: particleAnimation 2s ease-out forwards;
+    z-index: 5;
+}
+
+@keyframes particleAnimation {
+    0% {
+        opacity: 0;
+        transform: scale(0) rotate(0deg);
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(2) rotate(360deg);
+    }
+}
+
+/* Space illustration */
+.illustration {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.astronaut {
+    position: absolute;
+    width: 6.25rem;
+    height: 6.25rem;
+    top: 20%;
+    right: 15%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.astronautHelmet {
+    position: absolute;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: #f8fafc;
+    border-radius: 50%;
+    top: 0.625rem;
+    left: 1.875rem;
+    border: 0.1875rem solid #3b82f6;
+}
+
+.astronautBody {
+    position: absolute;
+    width: 3.125rem;
+    height: 4.375rem;
+    background: #f8fafc;
+    border-radius: 1.25rem;
+    top: 2.5rem;
+    left: 1.5625rem;
+    border: 0.1875rem solid #3b82f6;
+}
+
+.astronautPack {
+    position: absolute;
+    width: 2.5rem;
+    height: 3.125rem;
+    background: #3b82f6;
+    border-radius: 0.625rem;
+    top: 3.125rem;
+    left: 0.3125rem;
+}
+
+.astronautArm1, .astronautArm2 {
+    position: absolute;
+    width: 1.25rem;
+    height: 2.5rem;
+    background: #f8fafc;
+    border-radius: 0.625rem;
+    border: 0.1875rem solid #3b82f6;
+}
+
+.astronautArm1 {
+    top: 3.125rem;
+    left: 4.375rem;
+    transform: rotate(-20deg);
+}
+
+.astronautArm2 {
+    top: 3.125rem;
+    left: 0.9375rem;
+    transform: rotate(20deg);
+}
+
+.astronautLeg1, .astronautLeg2 {
+    position: absolute;
+    width: 1.25rem;
+    height: 2.5rem;
+    background: #f8fafc;
+    border-radius: 0.625rem;
+    border: 0.1875rem solid #3b82f6;
+}
+
+.astronautLeg1 {
+    top: 6.25rem;
+    left: 3.75rem;
+}
+
+.astronautLeg2 {
+    top: 6.25rem;
+    left: 1.875rem;
+}
+
+.planet {
+    position: absolute;
+    width: 12.5rem;
+    height: 12.5rem;
+    background: linear-gradient(135deg, #475569, #334155);
+    border-radius: 50%;
+    bottom: -6.25rem;
+    left: 10%;
+    box-shadow: inset 0.625rem 0.625rem 1.25rem rgba(255, 255, 255, 0.1),
+        inset -0.625rem -0.625rem 1.25rem rgba(0, 0, 0, 0.3);
+}
+
+.stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.stars::before, .stars::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image:
+        radial-gradient(0.125rem 0.125rem at 1.25rem 1.25rem, white, transparent),
+        radial-gradient(0.125rem 0.125rem at 3.75rem 3.75rem, white, transparent),
+        radial-gradient(0.125rem 0.125rem at 6.25rem 6.25rem, white, transparent),
+        radial-gradient(0.125rem 0.125rem at 8.75rem 8.75rem, white, transparent),
+        radial-gradient(0.125rem 0.125rem at 11.25rem 11.25rem, white, transparent);
+    background-size: 12.5rem 12.5rem;
+    background-position: 0 0, 2.5rem 2.5rem, 5rem 5rem, 7.5rem 7.5rem, 10rem 10rem;
+    animation: twinkle 4s ease-in-out infinite alternate;
+}
+
+.stars::after {
+    background-size: 15rem 15rem;
+    animation-delay: 2s;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(1.25rem);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-1.25rem) rotate(5deg);
+    }
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.7;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 48rem) {
+    .errorCode {
+        font-size: 7.5rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .description {
+        font-size: 1rem;
+    }
+
+    .actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .homeButton, .backButton {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .astronaut {
+        top: 10%;
+        right: 10%;
+        transform: scale(0.8);
+    }
+
+    .planet {
+        left: 5%;
+        transform: scale(0.8);
+    }
+}

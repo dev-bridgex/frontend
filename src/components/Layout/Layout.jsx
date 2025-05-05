@@ -11,7 +11,7 @@ export default function Layout() {
 
 
     return <>
-        <ToastContainer autoClose={300} />
+        <ToastContainer autoClose={500} />
         <NavBar />
         <Outlet />
         <Footer />
