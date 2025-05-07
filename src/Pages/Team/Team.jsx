@@ -83,7 +83,7 @@ const getSafeData = (data) => {
 
 const Team = () => {
     const { teamId, communityId } = useParams();
-    
+
     const { data: teamData, isLoading, isError, error, refetch } = useQuery(
         ['team', communityId, teamId],
         () => fetchTeam(communityId, teamId),
@@ -96,9 +96,12 @@ const Team = () => {
         }
     );
 
+
+
+
     const safeData = getSafeData(teamData);
 
-   
+
 
     if (isLoading) return <LoadingScreen />;
 
@@ -118,7 +121,7 @@ const Team = () => {
     return (
         <>
             <AddSubTeam teamId={teamId} communityId={communityId} refetch={refetch} />
-            <ScrollToTop  />
+            <ScrollToTop />
             <ToastContainer />
             <UpdateTeamData teamId={teamId} communityId={communityId} refetch={refetch} />
 
@@ -132,9 +135,9 @@ const Team = () => {
                 }
 
                 <TeamGallery safeData={safeData} refetch={refetch} communityId={communityId} teamId={teamId} />
-                
+
                 <div className={`${styles.teamContainer} specialContainer`}>
-                    <TeamOverview 
+                    <TeamOverview
                         safeData={safeData}
                     />
 

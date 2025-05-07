@@ -13,17 +13,15 @@ export default function AddSubTeam({ communityId, teamId, refetch }) {
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // Validation functions aligned with SubTeamCreateDto schema
+  // Validation functions
   const validateName = (name) => {
-    const regex = /^[a-zA-Z0-9]+$/;
     if (!name.trim()) return "Name is required";
     if (name.length > 15) return "Name must be 15 characters or less";
-    if (!regex.test(name)) return "Only letters and numbers are allowed";
     return "";
   };
 
   const validateJoinLink = (link) => {
-    if (!link) return ""; // Optional field as per schema
+    if (!link.trim()) return "Join link is required";
     if (link.length > 500) return "Link must be 500 characters or less";
 
     try {
@@ -38,7 +36,7 @@ export default function AddSubTeam({ communityId, teamId, refetch }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate inputs against schema requirements
+    // Validate inputs
     const nameError = validateName(subTeamName);
     const linkError = validateJoinLink(joinLink);
 
@@ -57,31 +55,36 @@ export default function AddSubTeam({ communityId, teamId, refetch }) {
         throw new Error("No authentication token found");
       }
 
-      // Prepare request body according to SubTeamCreateDto
+      // Prepare request body
       const requestBody = {
         Name: subTeamName,
-        JoinLink: joinLink || null, // Send null if empty as per schema
+        JoinLink: joinLink,
       };
 
-      await axios.post(
+      const response = await axios.post(
         `${baseUrl}/api/communities/${communityId}/teams/${teamId}/subteams`,
         requestBody,
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            accept: "application/json",
           },
         }
       );
 
-      setSuccess("Sub-team created successfully!");
-      setSubTeamName("");
-      setJoinLink("");
-      refetch();
+      if (response.data.Success) {
+        setSuccess(response.data.Message || "Sub-team created successfully!");
+        setSubTeamName("");
+        setJoinLink("");
+        refetch();
 
-      setTimeout(() => {
-        document.getElementById("closeAddSubTeamModal").click();
-      }, 2000);
-
+        setTimeout(() => {
+          document.getElementById("closeAddSubTeamModal").click();
+        }, 2000);
+      } else {
+        throw new Error(response.data.Message || "Failed to create sub-team");
+      }
     } catch (err) {
       setError(
         err.response?.data?.Message ||
@@ -97,7 +100,6 @@ export default function AddSubTeam({ communityId, teamId, refetch }) {
   const handleNameChange = (e) => {
     const value = e.target.value;
     setSubTeamName(value);
-    // Clear error when user starts correcting
     if (error && validateName(value) !== error) {
       setError("");
     }
@@ -106,7 +108,6 @@ export default function AddSubTeam({ communityId, teamId, refetch }) {
   const handleLinkChange = (e) => {
     const value = e.target.value;
     setJoinLink(value);
-    // Clear error when user starts correcting
     if (error && validateJoinLink(value) !== error) {
       setError("");
     }
@@ -146,7 +147,7 @@ export default function AddSubTeam({ communityId, teamId, refetch }) {
                       className={`inputStyle ${error && error.includes("Name") ? styles.inputError : ""}`}
                       type="text"
                       id="subTeamName"
-                      placeholder="Enter Sub-Team Name (letters and numbers only)"
+                      placeholder="Enter Sub-Team Name"
                       value={subTeamName}
                       onChange={handleNameChange}
                       maxLength={15}
@@ -159,7 +160,7 @@ export default function AddSubTeam({ communityId, teamId, refetch }) {
 
                   <div className={styles.inputGroup}>
                     <label className="lableStyle" htmlFor="joinLink">
-                      Join Link (Optional)
+                      Join Link *
                     </label>
                     <input
                       className={`inputStyle ${error && error.includes("Link") ? styles.inputError : ""}`}
@@ -169,12 +170,11 @@ export default function AddSubTeam({ communityId, teamId, refetch }) {
                       value={joinLink}
                       onChange={handleLinkChange}
                       maxLength={500}
+                      required
                     />
-                    {joinLink && (
-                      <div className={styles.characterCount}>
-                        {joinLink.length}/500 characters
-                      </div>
-                    )}
+                    <div className={styles.characterCount}>
+                      {joinLink.length}/500 characters
+                    </div>
                   </div>
                 </div>
 

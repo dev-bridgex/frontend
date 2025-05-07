@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 // Helper function to get full image URL
 const getFullImageUrl = (imgPath, baseUrl) => {
-    if (!imgPath) return '/public/placeholder.webp';
+    if (!imgPath) return '/placeholder.webp';
     if (imgPath.startsWith('http')) return imgPath;
     return `${baseUrl}/api${imgPath}`;
 };
@@ -87,7 +87,7 @@ export default function SubTeamGallery({
             id: null,
             title: name || "Sub-Team Name",
             description: descShort || "Short description about the sub-team",
-            image: "/public/placeholder.webp"
+            image: "/placeholder.webp"
         }];
 
     return (
@@ -118,10 +118,7 @@ export default function SubTeamGallery({
                                     <img
                                         src={item.image}
                                         alt={`Slide ${index + 1}`}
-                                        onError={(e) => {
-                                            e.target.onerror = null;
-                                            e.target.src = "/public/placeholder.webp";
-                                        }}
+                                        
                                         className={`${styles.swipperImage}`}
                                     />
                                     {/* Show delete button only for actual images (not placeholder) */}

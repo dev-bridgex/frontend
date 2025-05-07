@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { useState } from 'react';
 import { useQuery } from 'react-query';
 import axios from 'axios';
 import VideosList from "../../components/LearningPhase/VideosList/VideosList";
@@ -8,6 +9,7 @@ import ErrorDisplay from '../../components/ErrorDisplay/ErrorDisplay';
 import { useParams } from 'react-router';
 import UpdateNameAndDesc from '../../components/LearningPhase/UpdateNameAndDesc/UpdateNameAndDesc';
 import AddNewSection from '../../components/LearningPhase/AddNewSection/AddNewSection';
+import AIChatModal from '../../components/LearningPhase/AIChatModal/AIChatModal';
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -32,6 +34,7 @@ const fetchLearningPhase = async ({ communityId, teamId, subTeamId }) => {
 
 export default function LearningPhase() {
     const { communityId, teamId, subTeamId } = useParams();
+    const [showAiChat, setShowAiChat] = useState(false);
 
     const { data, isLoading, isError, error, refetch } = useQuery(
         ['learningPhase', communityId, teamId, subTeamId],
@@ -59,7 +62,7 @@ export default function LearningPhase() {
         const hours = Math.floor(totalSeconds / 3600);
         const minutes = Math.floor((totalSeconds % 3600) / 60);
         const seconds = Math.floor(totalSeconds % 60);
-        
+
         let formattedTime = '';
         if (hours > 0) {
             formattedTime += `${hours} ${hours === 1 ? 'hour' : 'hours'} `;
@@ -68,7 +71,7 @@ export default function LearningPhase() {
             formattedTime += `${minutes} ${minutes === 1 ? 'minute' : 'minutes'} `;
         }
         formattedTime += `${seconds} ${seconds === 1 ? 'second' : 'seconds'}`;
-        
+
         return formattedTime;
     };
 
@@ -81,6 +84,17 @@ export default function LearningPhase() {
         <>
             <UpdateNameAndDesc communityId={communityId} teamId={teamId} subTeamId={subTeamId} initialData={data} refetch={refetch} />
             <AddNewSection communityId={communityId} teamId={teamId} subTeamId={subTeamId} refetch={refetch} />
+
+            {/* AI Chat Floating Button */}
+            <button
+                className={styles.aiChatButton}
+                onClick={() => setShowAiChat(true)}
+                title="Open AI Assistant"
+            >
+                <i className="fa-solid fa-robot"></i>
+                <span>AI Assistant</span>
+            </button>
+
             {/* LearningPhase */}
             <section className={`${styles.learingPhasePage}`}>
 
@@ -154,6 +168,9 @@ export default function LearningPhase() {
 
                 </div>
             </section>
+
+            {/* AI Chat Modal */}
+            <AIChatModal isOpen={showAiChat} onClose={() => setShowAiChat(false)} communityId={communityId} teamId={teamId} subTeamId={subTeamId} />
         </>
     );
 }

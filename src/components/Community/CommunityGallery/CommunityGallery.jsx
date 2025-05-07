@@ -131,10 +131,6 @@ export default function CommunityGallery({ safeData, refetch, communityId }) {
                                     <img
                                         src={item.image}
                                         alt={`Slide ${index + 1}`}
-                                        onError={(e) => {
-                                            e.target.onerror = null;
-                                            e.target.src = "/placeholder.webp";
-                                        }}
                                         className={styles.swipperImage}
                                     />
                                     {/* Show delete button only for actual images (not placeholder) */}

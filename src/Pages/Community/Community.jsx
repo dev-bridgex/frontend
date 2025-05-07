@@ -79,6 +79,7 @@ const Community = () => {
     );
 
 
+    console.log(JSON.stringify(communityData, null, 2));
 
 
 
@@ -144,7 +145,7 @@ const Community = () => {
                         }
 
                     </div>
-                    <OurTeamsSection canModify={safeData?.CanModify} communityId={communityId} teams={safeData.Teams} />
+                    <OurTeamsSection canModify={safeData?.CanModify} communityId={communityId} teams={safeData.Teams} refetch={refetch} />
                 </div>
 
 

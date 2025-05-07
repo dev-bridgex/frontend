@@ -2,15 +2,15 @@ import { useQuery } from 'react-query';
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./SubTeam.module.css";
 import ScrollToTop from "../../components/ScrollToTop/ScrollToTop";
-import SubTeamGallery from "../../Components/SubTeam/SubTeamGallery/SubTeamGallery";
-import SubTeamOverview from "../../Components/SubTeam/SubTeamOverview/SubTeamOverview";
-import JoinUs from "../../Components/SubTeam/JoinUs/JoinUs";
+import SubTeamGallery from "../../components/SubTeam/SubTeamGallery/SubTeamGallery";
+import SubTeamOverview from "../../components/SubTeam/SubTeamOverview/SubTeamOverview";
+import JoinUs from "../../components/SubTeam/JoinUs/JoinUs";
 import axios from 'axios';
 import LoadingScreen from '../../components/LoadingScreen/LoadingScreen';
 import 'react-toastify/dist/ReactToastify.css';
-import UpdateSubTeamData from '../../Components/SubTeam/UpdateSubTeamData/UpdateSubTeamData';
-import Channels from '../../Components/SubTeam/Channels/Channels';
-import LearningPhaseSection from "../../components/SubTeam/LearningPhaseSection/LearningPhaseSection"
+import UpdateSubTeamData from '../../components/SubTeam/UpdateSubTeamData/UpdateSubTeamData';
+import ChannelsSection from '../../components/SubTeam/ChannelsSection/ChannelsSection';
+import LearningPhaseSection from "../../components/SubTeam/LearningPhaseSection/LearningPhaseSection";
 import { toast } from 'react-toastify';
 import EditSubTeam from '../../components/SubTeam/EditSubTeam/EditSubTeam';
 import { useState } from 'react';
@@ -120,6 +120,7 @@ export default function SubTeam() {
 
 
 
+
     const safeData = getSafeData(subTeamData);
 
 
@@ -213,20 +214,22 @@ export default function SubTeam() {
 
                 <div className={`${styles.subTeamContainer} specialContainer `}>
                     <SubTeamOverview subTeamData={safeData} />
-                   
-                        <>
-                            <Channels />
-                            <LearningPhaseSection 
-                                subTeamId={subTeamId} 
-                                communityId={communityId} 
-                                teamId={teamId} 
-                                learningPhaseTitle={safeData.LearningPhaseTitle}
-                                learningPhaseDesc={safeData.LearningPhaseDesc}
-                                isMember={safeData.IsMember}
-                                canModify={safeData.CanModify}
-                            />
-                        </>
-                    
+
+                    <>
+                        
+                        
+                        <ChannelsSection communityId={communityId} teamId={teamId} subteamId={subTeamId} CanModify={safeData.CanModify}  />
+                        <LearningPhaseSection
+                            subTeamId={subTeamId}
+                            communityId={communityId}
+                            teamId={teamId}
+                            learningPhaseTitle={safeData.LearningPhaseTitle}
+                            learningPhaseDesc={safeData.LearningPhaseDesc}
+                            isMember={safeData.IsMember}
+                            canModify={safeData.CanModify}
+                        />
+                    </>
+
 
                     {!token && <JoinUs joinLink={safeData?.JoinLink} />}
 

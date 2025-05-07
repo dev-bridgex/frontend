@@ -1,0 +1,119 @@
+/* Main Container */
+.AddNewChannel {
+    font-family: inherit;
+}
+
+/* channelContent */
+.channelContent {
+    border: 2px solid #E5E7EB !important;
+    border-radius: .25rem !important;
+    padding: .625rem;
+}
+
+/* channelHeader */
+.channelHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0 !important;
+    margin-bottom: var(--margin-heading);
+}
+
+.headerTitle {
+    font-size: 1.875rem;
+    color: black;
+    font-weight: 600;
+}
+
+.closeBtn {
+    font-size: 1.375rem;
+    cursor: pointer;
+}
+
+/* inputsWrapper */
+.inputsWrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5rem;
+}
+
+/* inputGroup */
+.inputGroup {
+    position: relative;
+}
+
+.inputGroup input {
+    padding-left: .5rem;
+    width: 100%;
+}
+
+.inputGroup input::placeholder {
+    color: #9CA3AF;
+}
+
+.inputGroup .characterCount {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    font-size: 0.75rem;
+    color: #6B7280;
+}
+
+/* Error states */
+.inputError {
+    border-color: #EF4444 !important;
+}
+
+.errorMessage {
+    font-size: 0.875rem;
+}
+
+/* buttonsWrapper */
+.buttonsWrapper {
+    margin-top: 1.5rem;
+}
+
+.buttonsWrapper button {
+    display: block;
+    padding: 0.625rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.buttonsWrapper button:first-child {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: white;
+    margin-top: .625rem;
+    border: none;
+}
+
+
+.buttonsWrapper button:first-child:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.buttonsWrapper button:last-child {
+    width: 100%;
+    background-color: white;
+    color: black;
+    margin-top: .375rem;
+    border: 2px solid rgb(242, 242, 242);
+}
+
+.buttonsWrapper button:last-child:hover {
+    background-color: #f9fafb;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .headerTitle {
+        font-size: 1.5rem;
+    }
+}
+
+
+

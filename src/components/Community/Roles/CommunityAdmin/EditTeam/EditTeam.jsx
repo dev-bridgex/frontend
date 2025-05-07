@@ -5,7 +5,7 @@ import styles from "./EditTeam.module.css";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
-export default function EditTeam({ communityId, teamId, initialData }) {
+export default function EditTeam({ communityId, teamId, refetch, initialData }) {
     const [name, setName] = useState("");
     const [leaderEmail, setLeaderEmail] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
@@ -40,6 +40,7 @@ export default function EditTeam({ communityId, teamId, initialData }) {
             });
 
             setSuccessMessage("Team updated successfully!");
+            refetch();
             setTimeout(() => {
                 document.getElementById("closeEditTeamModal").click();
             }, 1000);

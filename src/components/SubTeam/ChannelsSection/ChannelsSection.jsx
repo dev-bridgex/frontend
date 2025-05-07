@@ -1,0 +1,292 @@
+/* eslint-disable react/prop-types */
+import { useQuery } from 'react-query';
+import axios from 'axios';
+import styles from "./ChannelsSection.module.css";
+import LoadingScreen from '../../LoadingScreen/LoadingScreen';
+import ErrorDisplay from '../../ErrorDisplay/ErrorDisplay';
+import { useNavigate } from 'react-router-dom';
+import AddNewChannel from '../AddNewChannel/AddNewChannel';
+import { useState } from 'react';
+import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
+
+const baseUrl = import.meta.env.VITE_BASE_URL;
+
+// Fetch channels function
+const fetchChannels = async (communityId, teamId, subteamId) => {
+    try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+            `${baseUrl}/api/communities/${communityId}/teams/${teamId}/subteams/${subteamId}/channels`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    accept: 'application/json'
+                }
+            }
+        );
+
+        return response.data.Data;
+    } catch (error) {
+        throw new Error(error.response?.data?.Message || 'Failed to fetch channels data');
+    }
+};
+
+export default function ChannelsSection({ communityId, teamId, subteamId, CanModify }) {
+    const navigate = useNavigate();
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [editingChannel, setEditingChannel] = useState(null);
+    const [newChannelName, setNewChannelName] = useState("");
+
+    // Fetch channels data with React Query
+    const {
+        data: channelsData,
+        isLoading,
+        isError,
+        error,
+        refetch
+    } = useQuery(
+        ['channels', communityId, teamId, subteamId],
+        () => fetchChannels(communityId, teamId, subteamId),
+        {
+            staleTime: Infinity,
+            cacheTime: 3600000,
+            refetchOnWindowFocus: false,
+            refetchOnReconnect: false,
+            refetchInterval: false,
+            enabled: !!communityId && !!teamId && !!subteamId
+        }
+    );
+
+    const handleChannelClick = (channelId) => {
+        navigate(`/communities/${communityId}/teams/${teamId}/subteams/${subteamId}/channels/${channelId}`);
+    };
+
+    // Handle channel deletion
+    const handleDeleteChannel = async (channelId, e) => {
+        e.stopPropagation(); // Prevent navigation when clicking delete button
+        
+        // Show confirmation dialog
+        const result = await Swal.fire({
+            title: 'Delete Channel',
+            text: 'Are you sure you want to delete this channel? This action cannot be undone and all messages will be permanently deleted.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        });
+
+        // If user confirms deletion
+        if (result.isConfirmed) {
+            setIsDeleting(true);
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.delete(
+                    `${baseUrl}/api/communities/${communityId}/teams/${teamId}/subteams/${subteamId}/channels/${channelId}`,
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'accept': '*/*'
+                        }
+                    }
+                );
+
+                if (response.status === 200 || response.status === 204) {
+                    toast.success('Channel deleted successfully!', { 
+                        position: "top-center",
+                        autoClose: 2000
+                    });
+                    refetch(); // Refresh the channels list
+                }
+            } catch (error) {
+                console.error("Delete channel error:", error);
+                const errorMessage = error.response?.data?.Message || 'Failed to delete channel';
+                toast.error(errorMessage, { 
+                    position: "top-center",
+                    autoClose: 3000
+                });
+            } finally {
+                setIsDeleting(false);
+            }
+        }
+    };
+
+    // Handle edit channel mode
+    const handleEditClick = (channel, e) => {
+        e.stopPropagation(); // Prevent navigation
+        setEditingChannel(channel.Id);
+        setNewChannelName(channel.Name);
+    };
+
+    // Handle channel name update
+    const handleUpdateChannel = async (channelId, e) => {
+        e.preventDefault();
+        e.stopPropagation(); // Prevent navigation
+        
+        if (!newChannelName.trim()) {
+            toast.error('Channel name cannot be empty', { 
+                position: "top-center",
+                autoClose: 2000
+            });
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                throw new Error("No authentication token found");
+            }
+            
+            // Prepare request body
+            const requestBody = {
+                Name: newChannelName
+            };
+            
+            await axios.patch(
+                `${baseUrl}/api/communities/${communityId}/teams/${teamId}/subteams/${subteamId}/channels/${channelId}`,
+                requestBody,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                        accept: "*/*"
+                    }
+                }
+            );
+            
+            toast.success('Channel name updated successfully!', { 
+                position: "top-center",
+                autoClose: 2000
+            });
+            
+            // Reset form and refresh data
+            setEditingChannel(null);
+            setNewChannelName("");
+            refetch(); // Refresh the channels list
+            
+        } catch (error) {
+            const message = error.response?.data?.Message || error.message || "Failed to update channel name";
+            toast.error(message, { 
+                position: "top-center",
+                autoClose: 3000
+            });
+        }
+    };
+
+    // Cancel editing
+    const handleCancelEdit = (e) => {
+        e.stopPropagation(); // Prevent navigation
+        setEditingChannel(null);
+        setNewChannelName("");
+    };
+
+    // Loading state
+    if (isLoading) return <LoadingScreen />;
+
+    // Error state
+    if (isError) return <ErrorDisplay error={error} onRetry={refetch} />;
+
+    return (
+        <>
+            {CanModify && (
+                <div className={styles.addChannelWrapper}>
+                    <button
+                        className={`${styles.addChannelButton} ButtonStyle`}
+                        title="Add New Channel"
+                        data-bs-toggle="modal"
+                        data-bs-target="#addChannelModal"
+                    >
+                        <i className="fa-solid fa-plus"></i>
+                        <span>Add New Channel</span>
+                    </button>
+                </div>
+            )}
+            <section className={styles.channelsSection}>
+                <div className={styles.channelsContainer}>
+                    <div className={styles.channelsHeader}>
+                        <h3 className={styles.title}>Channels</h3>
+                    </div>
+
+                    <div className={styles.channelContent}>
+                        {!channelsData || channelsData.length === 0 ? (
+                            <div className={styles.emptyChannels}>
+                                <p>No channels available</p>
+                            </div>
+                        ) : (
+                            channelsData.map((channel) => (
+                                <div
+                                    key={channel.Id}
+                                    className={styles.channel}
+                                    onClick={() => handleChannelClick(channel.Id)}
+                                >
+                                    {editingChannel === channel.Id ? (
+                                        <form 
+                                            className={styles.editChannelForm}
+                                            onSubmit={(e) => handleUpdateChannel(channel.Id, e)}
+                                            onClick={(e) => e.stopPropagation()} // Add this to prevent click propagation
+                                        >
+                                            <input
+                                                type="text"
+                                                value={newChannelName}
+                                                onChange={(e) => setNewChannelName(e.target.value)}
+                                                onClick={(e) => e.stopPropagation()}
+                                                autoFocus
+                                            />
+                                            <div className={styles.editActions}>
+                                                <button 
+                                                    type="submit" 
+                                                    className={styles.saveButton}
+                                                    title="Save"
+                                                    onClick={(e) => e.stopPropagation()} // Add this to prevent click propagation
+                                                >
+                                                    <i className="fa-solid fa-check"></i>
+                                                </button>
+                                                <button 
+                                                    type="button" 
+                                                    className={styles.cancelButton}
+                                                    onClick={(e) => {
+                                                        e.stopPropagation(); // Ensure propagation is stopped
+                                                        handleCancelEdit(e);
+                                                    }}
+                                                    title="Cancel"
+                                                >
+                                                    <i className="fa-solid fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    ) : (
+                                        <>
+                                            <span className={styles.channelName}>{channel.Name}</span>
+                                            {CanModify && (
+                                                <div className={styles.channelActions}>
+                                                    <button 
+                                                        className={styles.editButton} 
+                                                        onClick={(e) => handleEditClick(channel, e)}
+                                                        title="Edit Channel"
+                                                    >
+                                                        <i className="fa-solid fa-pen"></i>
+                                                    </button>
+                                                    <button 
+                                                        className={styles.deleteButton} 
+                                                        onClick={(e) => handleDeleteChannel(channel.Id, e)}
+                                                        disabled={isDeleting}
+                                                        title="Delete Channel"
+                                                    >
+                                                        <i className="fa-solid fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </>
+                                    )}
+                                </div>
+                            ))
+                        )}
+                    </div>
+                </div>
+            </section>
+            {CanModify && <AddNewChannel communityId={communityId} teamId={teamId} subTeamId={subteamId} refetch={refetch} />}
+        </>
+    );
+}

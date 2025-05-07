@@ -1,0 +1,198 @@
+/* channelsSection */
+.channelsSection {
+    margin-top: var(--section-margin);
+    margin-bottom: var(--section-margin);
+}
+
+/* channelsHeader */
+.channelsHeader {
+    margin-bottom: var(--margin-heading);
+}
+
+.channelsHeader .title {
+    font-size: var(--font-size-h3);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* channelContent */
+.channelContent {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* channel */
+.channel {
+    background-color: #F3F4F6;
+    color: #374151;
+    padding: .5rem 1rem;
+    border-radius: 1.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.channelName {
+    flex: 1;
+}
+
+.channel::before {
+    content: '#';
+    margin-right: 5px;
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.channel:hover {
+    background-color: #E5E7EB;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.channel:hover::before {
+    transform: scale(1.2);
+}
+
+.channelActions {
+    display: flex;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    margin-left: .5rem;
+    column-gap: .25rem;
+}
+
+.channel:hover .channelActions {
+    transform: scale(1.05);
+}
+
+.editButton, .deleteButton, .saveButton, .cancelButton {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: #6B7280;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.editButton:hover {
+    background-color: #3B82F6;
+    color: white;
+    transform: scale(1.1);
+}
+
+.deleteButton:hover {
+    background-color: #EF4444;
+    color: white;
+    transform: scale(1.1);
+}
+
+.saveButton:hover {
+    background-color: #10B981;
+    color: white;
+    transform: scale(1.1);
+}
+
+.cancelButton:hover {
+    background-color: #6B7280;
+    color: white;
+    transform: scale(1.1);
+}
+
+.editChannelForm {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.editChannelForm input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 4px 8px;
+    border-radius: 4px;
+    outline: none;
+    font-size: 14px;
+    color: #374151;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.editActions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.emptyChannels {
+    padding: 1rem;
+    text-align: center;
+    color: #6B7280;
+    font-style: italic;
+}
+
+/* Animation for delete/edit buttons */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.channelActions {
+    animation: fadeIn 0.3s ease;
+}
+
+/* Disabled state for delete button */
+.deleteButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #F3F4F6;
+    color: #9CA3AF;
+}
+
+.addChannelWrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.addChannelButton {
+    background: linear-gradient(135deg, #3182ce, #2c5282);
+    color: white;
+    padding: .75rem 1.5rem;
+    border: none;
+    border-radius: .5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    box-shadow: 0 .25rem .375rem rgba(49, 130, 206, 0.1);
+}
+
+.addChannelButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(49, 130, 206, 0.2);
+    background: linear-gradient(135deg, #4299e1, #3182ce);
+}
+
+.addChannelButton i {
+    font-size: 1.1rem;
+    margin-right: 0.25rem;
+}

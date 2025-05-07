@@ -22,7 +22,7 @@ const getFullImageUrl = (imgPath) => {
     return `${baseUrl}/api${imgPath}`;
 };
 
-export default function OurSubTeamSection({ subTeams, communityId, teamId }) {
+export default function OurSubTeamSection({ subTeams, communityId, teamId  }) {
     const handleJoinSubTeam = async (subTeamId) => {
         try {
             if (!token) {
@@ -31,7 +31,6 @@ export default function OurSubTeamSection({ subTeams, communityId, teamId }) {
                 });
                 return;
             }
-
 
             const response = await axios.post(
                 `${baseUrl}/api/communities/${communityId}/teams/${teamId}/subteams/${subTeamId}/members/join`,
@@ -47,11 +46,16 @@ export default function OurSubTeamSection({ subTeams, communityId, teamId }) {
 
             if (response.status === 200) {
                 toast.success('Successfully joined the sub-team!', { position: "top-center" });
+                
+                // Check if response contains a JoinLink and open it in a new tab
+                if (response.data?.Data?.JoinLink) {
+                    // Open the join link in a new tab
+                    window.open(response.data.Data.JoinLink, '_blank');
+                }
             } else {
                 toast.error(response.data.message || 'Failed to join sub-team', { position: "top-center" });
             }
         } catch (error) {
-
             if (error.response) {
                 toast.error(error.response.data.Message || 'Failed to join sub-team', { position: "top-center" });
             } else {

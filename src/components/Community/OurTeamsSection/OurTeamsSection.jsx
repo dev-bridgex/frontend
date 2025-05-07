@@ -15,7 +15,7 @@ const getFullImageUrl = (imgPath) => {
   return `${baseUrl}/api${imgPath}`;
 };
 
-export default function OurTeamsSection({ teams, communityId, canModify }) {
+export default function OurTeamsSection({ teams, communityId, canModify, refetch }) {
   const [selectedTeamId, setSelectedTeamId] = useState(null);
   const [selectedTeamData, setSelectedTeamData] = useState(null);
 
@@ -33,6 +33,7 @@ export default function OurTeamsSection({ teams, communityId, canModify }) {
         <EditTeam 
           communityId={communityId} 
           teamId={selectedTeamId}
+          refetch={refetch}
           initialData={{
             name: selectedTeamData.Name,
             leaderEmail: selectedTeamData.Leader?.Email

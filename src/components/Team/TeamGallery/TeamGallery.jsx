@@ -131,10 +131,7 @@ export default function TeamGallery({ safeData, refetch, communityId, teamId }) 
                                     <img
                                         src={item.image}
                                         alt={`Slide ${index + 1}`}
-                                        onError={(e) => {
-                                            e.target.onerror = null;
-                                            e.target.src = "/placeholder.webp";
-                                        }}
+                                      
                                         className={styles.swipperImage}
                                     />
                                     {item.id && data?.CanModify && (
