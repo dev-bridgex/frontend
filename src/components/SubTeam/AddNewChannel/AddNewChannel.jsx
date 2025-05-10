@@ -15,7 +15,7 @@ export default function AddNewChannel({ communityId, teamId, subTeamId, refetch 
 
   // Handle name change
   const handleNameChange = (e) => {
-    const value = e.target.value;
+    const value = e.target.value.replace(/\s/g, ''); // Remove all spaces
     setChannelName(value);
     setCharacterCount(value.length);
     setError("");
@@ -165,5 +165,6 @@ export default function AddNewChannel({ communityId, teamId, subTeamId, refetch 
     </section>
   );
 }
+
 
 

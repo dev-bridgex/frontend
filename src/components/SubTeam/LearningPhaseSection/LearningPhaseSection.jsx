@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './LearningPhaseSection.module.css';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function LearningPhaseSection({
     subTeamId,
@@ -13,25 +13,9 @@ export default function LearningPhaseSection({
     isMember,
     canModify
 }) {
-    const sectionRef = useRef(null);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add(styles.visible);
-                }
-            },
-            { threshold: 0.1 }
-        );
-
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current);
-        }
-
-        return () => observer.disconnect();
-    }, []);
+    // Removed useRef and useEffect for animation
 
     const features = [
         {
@@ -53,12 +37,14 @@ export default function LearningPhaseSection({
     // Handle view learning phase button click
     const handleViewLearningPhase = (e) => {
         e.preventDefault();
+        console.log("Learning Phase Permission check:", { isMember, canModify });
 
         if (isMember || canModify) {
             // Navigate to learning phase page
             navigate(`/communities/community/${communityId}/teams/${teamId}/subteams/${subTeamId}/LearningPhase`);
         } else {
-            // Show error message
+            console.log("Access denied to learning phase, showing toast");
+            // Show error message using toast
             toast.error(
                 <div className={styles.accessDeniedToast}>
                     <i className="fa-solid fa-lock"></i>
@@ -81,7 +67,7 @@ export default function LearningPhaseSection({
 
     return (
         <>
-            <section ref={sectionRef} className={`${styles.learningPhaseSection} ${styles.fadeIn}`}>
+            <section className={`${styles.learningPhaseSection}`}>
                 <div className={`${styles.learingPhaseContainer}`}>
                     <div className={`${styles.LearningPhaseIntro}`}>
                         <div className={styles.titleContainer}>
@@ -122,7 +108,6 @@ export default function LearningPhaseSection({
                             <div
                                 key={index}
                                 className={`${styles.feature}`}
-                                style={{ animationDelay: `${index * 0.2}s` }}
                             >
                                 <div className={`${styles.logoWrapper}`}>
                                     <i className={feature.icon}></i>
@@ -137,6 +122,7 @@ export default function LearningPhaseSection({
                     </div>
                 </div>
             </section>
+            <ToastContainer />
         </>
     );
 }

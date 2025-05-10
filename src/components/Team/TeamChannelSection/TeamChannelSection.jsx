@@ -1,24 +1,24 @@
 /* eslint-disable react/prop-types */
 import { useQuery } from 'react-query';
 import axios from 'axios';
-import styles from "./ChannelsSection.module.css";
+import styles from "./TeamChannelSection.module.css";
 import LoadingScreen from '../../LoadingScreen/LoadingScreen';
 import ErrorDisplay from '../../ErrorDisplay/ErrorDisplay';
 import { useNavigate } from 'react-router-dom';
-import AddNewChannel from '../AddNewChannel/AddNewChannel';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AddNewTeamChannel from '../AddNewTeamChannel/AddNewTeamChannel';
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
-// Fetch channels function
-const fetchChannels = async (communityId, teamId, subteamId) => {
+// Fetch channels function for team level
+const fetchTeamChannels = async (communityId, teamId) => {
     try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-            `${baseUrl}/api/communities/${communityId}/teams/${teamId}/subteams/${subteamId}/channels`,
+            `${baseUrl}/api/communities/${communityId}/teams/${teamId}/channels`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -27,13 +27,14 @@ const fetchChannels = async (communityId, teamId, subteamId) => {
             }
         );
 
+
         return response.data.Data;
     } catch (error) {
-        throw new Error(error.response?.data?.Message || 'Failed to fetch channels data');
+        throw new Error(error.response?.data?.Message || 'Failed to fetch team channels data');
     }
 };
 
-export default function ChannelsSection({ communityId, teamId, subteamId, CanModify, isMember }) {
+export default function TeamChannelSection({ communityId, teamId, CanModify, isMember }) {
     const navigate = useNavigate();
     const [isDeleting, setIsDeleting] = useState(false);
     const [editingChannel, setEditingChannel] = useState(null);
@@ -47,15 +48,15 @@ export default function ChannelsSection({ communityId, teamId, subteamId, CanMod
         error,
         refetch
     } = useQuery(
-        ['channels', communityId, teamId, subteamId],
-        () => fetchChannels(communityId, teamId, subteamId),
+        ['teamChannels', communityId, teamId],
+        () => fetchTeamChannels(communityId, teamId),
         {
             staleTime: Infinity,
             cacheTime: 3600000,
             refetchOnWindowFocus: false,
             refetchOnReconnect: false,
             refetchInterval: false,
-            enabled: !!communityId && !!teamId && !!subteamId
+            enabled: !!communityId && !!teamId
         }
     );
 
@@ -64,7 +65,7 @@ export default function ChannelsSection({ communityId, teamId, subteamId, CanMod
         console.log("Permission check:", { isMember, CanModify });
 
         if (isMember || CanModify) {
-            navigate(`/communities/${communityId}/teams/${teamId}/subteams/${subteamId}/channels/${channelName}/${channelId}`);
+            navigate(`/communities/${communityId}/teams/${teamId}/channels/${channelName}/${channelId}`);
         } else {
             toast.error(
                 <div className={styles.accessDeniedToast}>
@@ -108,7 +109,7 @@ export default function ChannelsSection({ communityId, teamId, subteamId, CanMod
             try {
                 const token = localStorage.getItem('token');
                 const response = await axios.delete(
-                    `${baseUrl}/api/communities/${communityId}/teams/${teamId}/subteams/${subteamId}/channels/${channelId}`,
+                    `${baseUrl}/api/communities/${communityId}/teams/${teamId}/channels/${channelId}`,
                     {
                         headers: {
                             'Authorization': `Bearer ${token}`,
@@ -175,7 +176,7 @@ export default function ChannelsSection({ communityId, teamId, subteamId, CanMod
             };
 
             await axios.patch(
-                `${baseUrl}/api/communities/${communityId}/teams/${teamId}/subteams/${subteamId}/channels/${channelId}`,
+                `${baseUrl}/api/communities/${communityId}/teams/${teamId}/channels/${channelId}`,
                 requestBody,
                 {
                     headers: {
@@ -220,23 +221,27 @@ export default function ChannelsSection({ communityId, teamId, subteamId, CanMod
 
     return (
         <>
-            {CanModify && (
-                <div className={styles.addChannelWrapper}>
-                    <button
-                        className={`${styles.addChannelButton} ButtonStyle`}
-                        title="Add New Channel"
-                        data-bs-toggle="modal"
-                        data-bs-target="#addChannelModal"
-                    >
-                        <i className="fa-solid fa-plus"></i>
-                        <span>Add New Channel</span>
-                    </button>
-                </div>
-            )}
             <section className={styles.channelsSection}>
+
+
+                {CanModify && (
+                    <div className={styles.addChannelCenter}>
+                        <button
+                            className={`${styles.addChannelButton} ButtonStyle`}
+                            title="Add New Channel"
+                            data-bs-toggle="modal"
+                            data-bs-target="#addTeamChannelModal"
+                        >
+                            <i className="fa-solid fa-plus"></i>
+                            <span>Add New Channel</span>
+                        </button>
+                    </div>
+                )}
                 <div className={styles.channelsContainer}>
+
+
                     <div className={styles.channelsHeader}>
-                        <h3 className={styles.title}>Channels</h3>
+                        <h3 className={styles.title}>Team Channels</h3>
                     </div>
 
                     <div className={styles.channelContent}>
@@ -314,10 +319,12 @@ export default function ChannelsSection({ communityId, teamId, subteamId, CanMod
                             ))
                         )}
                     </div>
+
                 </div>
             </section>
-            {CanModify && <AddNewChannel communityId={communityId} teamId={teamId} subTeamId={subteamId} refetch={refetch} />}
+            {CanModify && <AddNewTeamChannel communityId={communityId} teamId={teamId} refetch={refetch} />}
             <ToastContainer />
         </>
     );
 }
+

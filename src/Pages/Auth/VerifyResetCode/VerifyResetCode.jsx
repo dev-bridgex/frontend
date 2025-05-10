@@ -9,9 +9,6 @@ import { Logo } from '../../../components/Logo/Logo';
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
 export default function VerifyResetCode() {
-
-
-
     // State management
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
@@ -25,7 +22,7 @@ export default function VerifyResetCode() {
         if (location.state?.email) {
             setEmail(location.state.email);
         } else {
-            navigate('/RequestResetCodey');
+            navigate('/RequestResetCode');
         }
     }, [location, navigate]);
 
@@ -76,55 +73,40 @@ export default function VerifyResetCode() {
     });
 
     return (
-        // verifyResetPage
-        <section className={`${styles.verifyResetPage}`}>
+        <section className={styles.verifyResetPage}>
+            <div className={styles.verifyResetContainer}>
+                {/* Left Panel */}
+                <div className={styles.verifyResetLeftPanel}>
+                    <Link to="/RequestResetCode" className={styles.backLink}>
+                        <i className="fas fa-arrow-left-long"></i>
+                        <span>Back To Reset Code</span>
+                    </Link>
 
-            {/* verifyResetContainer */}
-            <div className={`${styles.verifyResetContainer} specialContainer`}>
+                    <Logo />
 
-                {/* verifyResetFormWrapper */}
-                <div className={`${styles.verifyResetFormWrapper} shadow`}>
+                    <h2 className={styles.title}>Verify Reset Code</h2>
 
-                    {/* verifyResetLeftPanel */}
-                    <div className={`${styles.verifyResetLeftPanel}`}>
-                        <Link to="/RequestResetCode" className={`${styles.backLink}`}>
-                            <i className={`fas fa-arrow-left-long me-2`}></i>
-                            Back To Reset Code
-                        </Link>
+                    <p className={styles.desc}>
+                        Enter the 4-digit code you received in your email to reset your password.
+                    </p>
+                </div>
 
-
-                        {/* logo */}
-                        <Logo />
-
-                        <h2 className={`${styles.title}`}>Verify Reset Code</h2>
-
-                        <p className={`${styles.desc}`}>
-                            Enter the 4-digit code you received in your email to reset your password.
+                {/* Right Panel */}
+                <div className={styles.verifyResetRightPanel}>
+                    <div className={styles.formHeader}>
+                        <h4 className={styles.title}>Enter Verification Code</h4>
+                        <p className={styles.emailDisplay}>
+                            Code sent to: <strong>{email}</strong>
                         </p>
                     </div>
 
-                    {/* verifyResetRightPanel */}
-                    <div className={`${styles.verifyResetRightPanel} `}>
-
-                        {/* formHeader */}
-                        <div className={`${styles.formHeader}`}>
-                            <h4 className={`${styles.title}`}>Enter Verification Code</h4>
-
-                            {/* emailDisplay */}
-                            <p className={`${styles.emailDisplay}`}>
-                                Code sent to: <strong>{email}</strong>
-                            </p>
-
-                        </div>
-
-                        {/* verifyResetForm */}
-                        <form onSubmit={formik.handleSubmit} className={`${styles.verifyResetForm} `}>
-
-                            {/* inputWrapper */}
-                            <div className={`${styles.inputWrapper} `}>
-                                <label className={`lableStyle`} htmlFor="Code">
-                                    <span className={`redStar`}>*</span>Verification Code:
-                                </label>
+                    <form onSubmit={formik.handleSubmit} className={styles.verifyResetForm}>
+                        <div className={styles.inputWrapper}>
+                            <label className={styles.inputLabel} htmlFor="Code">
+                                <span className="redStar">*</span>Verification Code
+                            </label>
+                            <div className={styles.inputContainer}>
+                                <i className="fas fa-key"></i>
                                 <input
                                     id="Code"
                                     name="Code"
@@ -132,41 +114,52 @@ export default function VerifyResetCode() {
                                     inputMode="numeric"
                                     pattern="[0-9]*"
                                     maxLength="4"
+                                    placeholder="Enter 4-digit code"
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                     value={formik.values.Code}
-                                    className={`inputStyle ${formik.touched.Code && formik.errors.Code ? 'is-invalid' : ''}`}
-                                    placeholder="Enter 4-digit code"
+                                    className={`${styles.formInput} ${formik.touched.Code && formik.errors.Code ? styles.inputError : ''}`}
                                     autoFocus
                                 />
-                                {formik.touched.Code && formik.errors.Code && (
-                                    <div className="alert alert-danger py-2 mt-1">{formik.errors.Code}</div>
-                                )}
                             </div>
+                            {formik.touched.Code && formik.errors.Code && (
+                                <div className={styles.errorText}>{formik.errors.Code}</div>
+                            )}
+                        </div>
 
-                            {/* Display error/success messages */}
-                            {error && <div className="alert alert-danger py-2 mt-1">{error}</div>}
-                            {success && <div className="alert alert-success py-2 mt-1">{success}</div>}
+                        {error && (
+                            <div className={`${styles.messageAlert} ${styles.error}`}>
+                                <i className="fas fa-exclamation-circle"></i>
+                                <span>{error}</span>
+                            </div>
+                        )}
+                        
+                        {success && (
+                            <div className={`${styles.messageAlert} ${styles.success}`}>
+                                <i className="fas fa-check-circle"></i>
+                                <span>{success}</span>
+                            </div>
+                        )}
 
-                            {/* Submit button */}
-                            <button
-                                type="submit"
-                                className={`PrimaryButtonStyle ${styles.submittingButton}`}
-                                disabled={isSubmitting}
-                            >
-                                {isSubmitting ? (
-                                    'Verifying...'
-                                ) : (
-                                    <>
-                                        Verify Code
-                                        <i className={`fas fa-arrow-right-long ms-2`}></i>
-                                    </>
-                                )}
-                            </button>
-                        </form>
-                    </div>
+                        <button
+                            type="submit"
+                            className={styles.submitButton}
+                            disabled={isSubmitting}
+                        >
+                            {isSubmitting ? (
+                                <>
+                                    <span className={styles.spinner}></span>
+                                    <span>Verifying...</span>
+                                </>
+                            ) : (
+                                <>
+                                    <span>Verify Code</span>
+                                    <i className="fas fa-arrow-right-long"></i>
+                                </>
+                            )}
+                        </button>
+                    </form>
                 </div>
-
             </div>
         </section>
     );

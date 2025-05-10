@@ -9,10 +9,8 @@ import { Logo } from '../../../components/Logo/Logo';
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
 export default function SignUp() {
-
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [message, setMessage] = useState({ type: '', text: '' });
 
   // Form validation schema
   const validationSchema = Yup.object({
@@ -66,21 +64,22 @@ export default function SignUp() {
   // Form submission handler
   const handleSubmit = async (values) => {
     setIsSubmitting(true);
-    setError('');
-    setSuccess('');
-
-
+    setMessage({ type: '', text: '' });
 
     try {
       const { data } = await axios.post(`${baseUrl}/api/users/signup`, values);
 
       if (data.StatusCode === 201) {
-        setSuccess('Check your email (inbox or spam) to verify your account.');
+        setMessage({ 
+          type: 'success', 
+          text: 'Check your email (inbox or spam) to verify your account.' 
+        });
       }
     } catch (err) {
-
-
-      setError(err.response.data.Data[0].Error || err.message || 'Registration failed. Please try again.');
+      setMessage({ 
+        type: 'error', 
+        text: err.response?.data?.Data?.[0]?.Error || err.message || 'Registration failed. Please try again.' 
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -129,83 +128,80 @@ export default function SignUp() {
   }, []);
 
   return (
-    <section className={`${style.signUpPage} `}>
-
-      <div className={`${style.signUpContainer} specialContainer shadow `}>
-        
-        <div className={`${style.signUpLeftPanel} `}>
-          <Link to="/" className={`${style.backLink}`}>
-            <i className={`fas fa-arrow-left-long me-2`}></i>
-            Back To Home
+    <section className={style.signUpPage}>
+      <div className={style.signUpContainer}>
+        {/* Left Panel */}
+        <div className={style.signUpLeftPanel}>
+          <Link to="/" className={style.backLink}>
+            <i className="fas fa-arrow-left-long"></i>
+            <span>Back To Home</span>
           </Link>
 
-
-          {/* logo */}
           <Logo />
 
-          <h2 className={`${style.title}`}>Join BridgeX</h2>
+          <h2 className={style.title}>Join BridgeX</h2>
 
-          <p className={`${style.desc}`}>
+          <p className={style.desc}>
             Start your learning journey with BridgeX. Join our community of
             learners and unlock your potential.
           </p>
         </div>
 
-        <div className={`${style.signUpRightPanel} `}>
-          <div className={`${style.formHeader}`}>
-            <h4 className={`${style.title}`}>Create your account</h4>
-            <p className={`${style.desc}`}>
+        {/* Right Panel */}
+        <div className={style.signUpRightPanel}>
+          <div className={style.formHeader}>
+            <h4 className={style.title}>Create your account</h4>
+            <p className={style.desc}>
               Already have an account?{' '}
-              <Link to="/signIn" className={`${style.signInLink}`}>
+              <Link to="/signIn" className={style.signInLink}>
                 Sign In
               </Link>
             </p>
           </div>
 
-          <form onSubmit={formik.handleSubmit} className={`${style.signUpForm}`}>
-
+          <form onSubmit={formik.handleSubmit} className={style.signUpForm}>
             {/* inputsContainer */}
-            <div className={`${style.inputsContainer}`}>
+            <div className={style.inputsContainer}>
               {groupFields.map((fieldGroup, index) => (
-
-
-                <div key={index} className={`${style.inputGroup}`}>
+                <div key={index} className={style.inputGroup}>
                   {fieldGroup.map((field) => (
-                    <div key={field.name} className={` ${style.inputWrapper}`}>
-                      <label className={`lableStyle`} htmlFor={field.name}>
-                        {field.required && <span className={`redStar `}>*</span>}
-                        {field.label}:
+                    <div key={field.name} className={style.inputWrapper}>
+                      <label className={style.inputLabel} htmlFor={field.name}>
+                        {field.required && <span className="redStar">*</span>}
+                        {field.label}
                       </label>
-
-                      {field.type === "select" ? (
-                        <select
-                          id={field.name}
-                          name={field.name}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          value={formik.values[field.name]}
-                          className={`form-control ${formik.touched[field.name] && formik.errors[field.name] ? 'is-invalid' : ''}`}
-                        >
-                          {field.options.map((option) => (
-                            <option key={option} value={option}>
-                              {option}
-                            </option>
-                          ))}
-                        </select>
-                      ) : (
-                        <input
-                          id={field.name}
-                          name={field.name}
-                          type={field.type}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          value={formik.values[field.name]}
-                          className={`inputStyle ${formik.touched[field.name] && formik.errors[field.name] ? 'is-invalid' : ''}`}
-                        />
-                      )}
-
+                      <div className={style.inputContainer}>
+                        <i className={getIconForField(field.name)}></i>
+                        {field.type === "select" ? (
+                          <select
+                            id={field.name}
+                            name={field.name}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values[field.name]}
+                            className={`${style.formInput} ${formik.touched[field.name] && formik.errors[field.name] ? style.inputError : ''}`}
+                          >
+                            {field.options.map((option) => (
+                              <option key={option} value={option}>
+                                {option}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          <input
+                            id={field.name}
+                            name={field.name}
+                            type={field.type}
+                            placeholder={`Enter your ${field.label.toLowerCase()}`}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values[field.name]}
+                            className={`${style.formInput} ${formik.touched[field.name] && formik.errors[field.name] ? style.inputError : ''}`}
+                          />
+                        )}
+                      </div>
                       {formik.touched[field.name] && formik.errors[field.name] && (
-                        <div className="alert alert-danger py-2 mt-1">{formik.errors[field.name]}</div>
+                        <div className={style.errorText}>{formik.errors[field.name]}</div>
                       )}
                     </div>
                   ))}
@@ -213,21 +209,27 @@ export default function SignUp() {
               ))}
             </div>
 
+            {message.text && (
+              <div className={`${style.messageAlert} ${style[message.type]}`}>
+                <i className={message.type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle'}></i>
+                <span>{message.text}</span>
+              </div>
+            )}
 
-            {error && <div className="alert alert-danger py-2 mt-1">{error}</div>}
-            {success && <div className="alert alert-success py-2 mt-1">{success}</div>}
-
-            {/* submittingButon */}
-            <button type="submit"
-
-              className={`PrimaryButtonStyle ${style.submittingButon}`}
+            <button
+              type="submit"
+              className={style.submitButton}
+              disabled={isSubmitting}
             >
               {isSubmitting ? (
-                'Creating account...'
+                <>
+                  <span className={style.spinner}></span>
+                  <span>Creating account...</span>
+                </>
               ) : (
                 <>
-                  Create account
-                  <i className={`fas fa-arrow-right-long ms-2`}></i>
+                  <span>Create Account</span>
+                  <i className="fas fa-arrow-right-long"></i>
                 </>
               )}
             </button>
@@ -236,4 +238,26 @@ export default function SignUp() {
       </div>
     </section>
   );
+}
+
+// Helper function to get appropriate icon for each field
+function getIconForField(fieldName) {
+  switch (fieldName) {
+    case 'FirstName':
+    case 'LastName':
+      return 'far fa-user';
+    case 'StudentId':
+      return 'fas fa-id-card';
+    case 'PhoneNumber':
+      return 'fas fa-phone';
+    case 'Usertype':
+      return 'fas fa-users';
+    case 'Email':
+      return 'far fa-envelope';
+    case 'Password':
+    case 'ConfirmPassword':
+      return 'fas fa-lock';
+    default:
+      return 'far fa-circle';
+  }
 }

@@ -216,9 +216,14 @@ export default function SubTeam() {
                     <SubTeamOverview subTeamData={safeData} />
 
                     <>
-                        
-                        
-                        <ChannelsSection communityId={communityId} teamId={teamId} subteamId={subTeamId} CanModify={safeData.CanModify}  />
+
+
+                        <ChannelsSection communityId={communityId}
+                            teamId={teamId}
+                            subteamId={subTeamId}
+                            CanModify={safeData.CanModify}
+                            isMember={safeData.IsMember}
+                        />
                         <LearningPhaseSection
                             subTeamId={subTeamId}
                             communityId={communityId}

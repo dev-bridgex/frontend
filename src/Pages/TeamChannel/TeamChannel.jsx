@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import styles from './SubTeamChannel.module.css';
+import styles from './TeamChannel.module.css';
 import io from 'socket.io-client';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -12,22 +13,20 @@ import { jwtDecode } from "jwt-decode";
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const token = localStorage.getItem('token');
 
-// Cache for storing already loaded images to prevent duplicate requests
 const imageCache = new Map();
 
-// Function to construct full image URL (same as in ProfilePhotoSection)
 const getFullImageUrl = (imgPath) => {
     if (!imgPath) return '';
     if (imgPath.startsWith('http')) return imgPath;
     return `${baseUrl}/api${imgPath}`;
 };
 
-// Component to handle profile image loading with authorization
 const ProfileImage = ({ photoPath, userName }) => {
+
+    
     const [displayImage, setDisplayImage] = useState('');
     const [isLoading, setIsLoading] = useState(true);
 
-    // Method to fetch preview image with axios (similar to ProfilePhotoSection)
     const fetchProfileImage = async (imagePath) => {
         try {
             setIsLoading(true);
@@ -40,7 +39,6 @@ const ProfileImage = ({ photoPath, userName }) => {
 
             const fullUrl = getFullImageUrl(imagePath);
 
-            // Check if this image is already in our cache
             if (imageCache.has(fullUrl)) {
                 setDisplayImage(imageCache.get(fullUrl));
                 setIsLoading(false);
@@ -56,15 +54,12 @@ const ProfileImage = ({ photoPath, userName }) => {
                 });
 
                 const imageUrl = URL.createObjectURL(response.data);
-                // Store in cache for future use
                 imageCache.set(fullUrl, imageUrl);
                 setDisplayImage(imageUrl);
             } else {
                 setDisplayImage(fullUrl);
             }
         } catch (error) {
-            console.log(error);
-
             setDisplayImage('');
         } finally {
             setIsLoading(false);
@@ -80,7 +75,6 @@ const ProfileImage = ({ photoPath, userName }) => {
         }
     }, [photoPath]);
 
-    // Cleanup preview URLs when component unmounts
     useEffect(() => {
         return () => {
             if (displayImage && displayImage.startsWith('blob:') && !Array.from(imageCache.values()).includes(displayImage)) {
@@ -114,66 +108,51 @@ const ProfileImage = ({ photoPath, userName }) => {
     );
 };
 
-const SubTeamChannel = () => {
-    const { channelName, channelId, communityId, teamId, subTeamId } = useParams();
+const TeamChannel = () => {
+    const { channelName, channelId, communityId, teamId } = useParams();
 
-    // State management
     const [messages, setMessages] = useState([]);
     const [threads, setThreads] = useState([]);
     const [newMessage, setNewMessage] = useState('');
     const [activeThread, setActiveThread] = useState(null);
     const [replyingTo, setReplyingTo] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const [currentThreadPage, setCurrentThreadPage] = useState(1); // Add thread pagination
-    // eslint-disable-next-line no-unused-vars
+    const [currentThreadPage, setCurrentThreadPage] = useState(1);
     const [totalMessages, setTotalMessages] = useState(0);
-    const [totalThreads, setTotalThreads] = useState(0); // Add total threads count
+    const [totalThreads, setTotalThreads] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
-    const [isLoadingThreads, setIsLoadingThreads] = useState(false); // Add thread loading state
-    const [isLoadingMoreThreads, setIsLoadingMoreThreads] = useState(false); // Add more threads loading state
+    const [isLoadingThreads, setIsLoadingThreads] = useState(false);
+    const [isLoadingMoreThreads, setIsLoadingMoreThreads] = useState(false);
     const [isConnected, setIsConnected] = useState(false);
     const [totalUsers, setTotalUsers] = useState(0);
     const [hasMoreMessages, setHasMoreMessages] = useState(false);
-    const [hasMoreThreads, setHasMoreThreads] = useState(false); // Add more threads state
-    const [showingExpandedThreads, setShowingExpandedThreads] = useState(false); // Add state to track if we're showing expanded threads
-    const [showingExpandedMessages, setShowingExpandedMessages] = useState(false); // Add state to track if we're showing expanded messages
+    const [hasMoreThreads, setHasMoreThreads] = useState(false);
+    const [showingExpandedThreads, setShowingExpandedThreads] = useState(false);
+    const [showingExpandedMessages, setShowingExpandedMessages] = useState(false);
     const MESSAGES_PER_PAGE = 15;
-    const THREADS_PER_PAGE = 15; // Define threads per page
+    const THREADS_PER_PAGE = 15;
 
-
-    // Add state to store current user ID and leader status
     const [currentUserId, setCurrentUserId] = useState(null);
     const [isLeader, setIsLeader] = useState(false);
 
-    // Extract user ID from token when component mounts
     useEffect(() => {
         try {
             const token = localStorage.getItem('token');
             if (token) {
                 const decodedToken = jwtDecode(token);
-                // Extract user ID from token
                 const userId = decodedToken.payload?.UserId;
                 setCurrentUserId(userId);
-
-
-
-
-                // Fetch leader status
                 fetchLeaderStatus();
             }
-        } catch (error) {
-            console.error("Error decoding token:", error);
-        }
+        } catch (error) { /* empty */ }
     }, []);
 
-    // Function to fetch leader status
     const fetchLeaderStatus = async () => {
         try {
             const token = localStorage.getItem('token');
-
             const response = await axios.get(
-                `${baseUrl}/api/communities/${communityId}/teams/${teamId}/subteams/${subTeamId}/auth`,
+                `${baseUrl}/api/communities/${communityId}/teams/${teamId}/auth`,
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -184,64 +163,45 @@ const SubTeamChannel = () => {
 
             if (response.data.Success) {
                 setIsLeader(response.data.Data.IsLeader);
-                console.log("User is leader:", response.data.Data.IsLeader);
             }
-        } catch (error) {
-            console.error("Error fetching leader status:", error);
-        }
+        } catch (error) { /* empty */ }
     };
 
-    // Function to check if user can delete a message
     const canDeleteMessage = (message) => {
-
         if (!currentUserId || !message) return false;
-
-        // Leaders can delete any message
         if (isLeader) return true;
-
         if (message.UserId) {
             return message.UserId === currentUserId;
         }
-
         if (message.User && message.User.Id) {
             return message.User.Id === currentUserId;
         }
-
         return false;
     };
-
-
 
     const messagesEndRef = useRef(null);
     const socketRef = useRef(null);
 
-    // Initialize WebSocket connection
     useEffect(() => {
-        console.log('[WebSocket] Setting up connection...');
-
         socketRef.current = io(`wss://bridgex.api.abdullahabaza.me`, {
             withCredentials: true,
             query: { token },
             transports: ['websocket']
         });
 
-        // Connection events
         socketRef.current.on('connect', () => {
             setIsConnected(true);
-            console.log(`[WebSocket] Connected. Joining channel: ${channelId}, thread: ${activeThread || 'main'}`);
             socketRef.current.emit('JoinChannel', {
                 ChannelId: channelId,
                 ThreadId: activeThread || null
             });
         });
 
-        socketRef.current.on('disconnect', (reason) => {
-            console.log(`[WebSocket] Disconnected: ${reason}`);
+        socketRef.current.on('disconnect', () => {
             setIsConnected(false);
         });
 
-        socketRef.current.on('connect_error', (err) => {
-            console.error('[WebSocket] Connection error:', err);
+        socketRef.current.on('connect_error', () => {
             setIsConnected(false);
             toast.error('Connection error. Reconnecting...', {
                 position: "top-center",
@@ -249,46 +209,31 @@ const SubTeamChannel = () => {
             });
         });
 
-        // Message events are now handled in a separate useEffect
-
         socketRef.current.on('chat_deleted', (messageId) => {
-            console.log('[WebSocket] Message deleted:', messageId);
             setMessages(prev => {
                 const newMessages = prev.filter(msg => msg.Id !== messageId);
-                // Update total count when a message is deleted
                 setTotalMessages(prev => Math.max(0, prev - 1));
                 return newMessages;
             });
         });
 
         socketRef.current.on('chat_thread', (thread) => {
-            // console.log('[WebSocket] New thread created:', thread);
             setThreads(prev => {
                 const updatedThreads = [...prev, thread];
-
-                // If we now have more than THREADS_PER_PAGE threads, 
-                // keep only the most recent THREADS_PER_PAGE threads
                 if (updatedThreads.length > THREADS_PER_PAGE) {
-                    // Set hasMoreThreads to true since we now have more threads
                     setHasMoreThreads(true);
-                    // Return only the most recent THREADS_PER_PAGE threads
                     return updatedThreads.slice(-THREADS_PER_PAGE);
                 }
-
                 return updatedThreads;
             });
-
-            // Update total thread count for pagination
             setTotalThreads(prev => prev + 1);
         });
 
         socketRef.current.on('totalUsers', (data) => {
-            // console.log('[WebSocket] Total users update:', data);
-            setTotalUsers(data.Count); // Extract the Count property
+            setTotalUsers(data.Count);
         });
 
         socketRef.current.on('error', (error) => {
-            // console.error('[WebSocket] Error:', error);
             toast.error(`WebSocket error: ${error.message || error}`, {
                 position: "top-center",
                 autoClose: 1500
@@ -296,7 +241,6 @@ const SubTeamChannel = () => {
         });
 
         socketRef.current.on('Error', (error) => {
-            // console.error('[WebSocket] Error (uppercase):', error);
             toast.error(`WebSocket Error: ${error.message || error}`, {
                 position: "top-center",
                 autoClose: 1500
@@ -308,23 +252,17 @@ const SubTeamChannel = () => {
                 socketRef.current.disconnect();
             }
         };
-    }, [channelId, activeThread]); // Add activeThread to dependencies
+    }, [channelId, activeThread]);
 
-    // Handle thread changes
     useEffect(() => {
         if (!socketRef.current || !isConnected) return;
-
-        console.log(`Joining channel: ${channelId}, thread: ${activeThread || 'main'} for handle thread changes`);
-
         socketRef.current.emit('JoinChannel', {
             ChannelId: channelId,
             ThreadId: activeThread || null
         });
-
         fetchMessages();
     }, [activeThread, isConnected, channelId]);
 
-    // Fetch messages
     const fetchMessages = async (page = 1, append = false) => {
         if (page === 1) {
             setIsLoading(true);
@@ -334,7 +272,7 @@ const SubTeamChannel = () => {
 
         try {
             const response = await axios.get(
-                `${baseUrl}/api/subteams/channels/${channelId}?page=${page}&threadId=${activeThread || ''}`,
+                `${baseUrl}/api/teams/channels/${channelId}?page=${page}&threadId=${activeThread || ''}`,
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -346,43 +284,31 @@ const SubTeamChannel = () => {
             if (response.data.Success) {
                 const newMessages = response.data.Data.Data || [];
                 const totalCount = response.data.Data.Count || 0;
-
                 setTotalMessages(totalCount);
-
-                // Improved calculation for hasMore
                 const hasMore = totalCount > (page * MESSAGES_PER_PAGE);
-                console.log(`Total messages: ${totalCount}, Current page: ${page}, Messages per page: ${MESSAGES_PER_PAGE}, Has more: ${hasMore}`);
                 setHasMoreMessages(hasMore);
 
                 if (append) {
-                    // When loading more (older) messages, add them at the beginning
-                    // Sort the new messages to ensure they're in the right order
                     const sortedNewMessages = [...newMessages].sort((a, b) => {
                         const dateA = new Date(a.CreatedAt || 0);
                         const dateB = new Date(b.CreatedAt || 0);
-                        return dateA - dateB; // Ascending order (oldest first)
+                        return dateA - dateB;
                     });
-
                     setMessages(prev => [...sortedNewMessages, ...prev]);
                 } else {
-                    // Initial load - sort messages by date (oldest first)
                     const sortedMessages = [...newMessages].sort((a, b) => {
                         const dateA = new Date(a.CreatedAt || 0);
                         const dateB = new Date(b.CreatedAt || 0);
-                        return dateA - dateB; // Ascending order (oldest first)
+                        return dateA - dateB;
                     });
-
                     setMessages(sortedMessages);
                     setTimeout(() => {
                         scrollToBottom();
                     }, 100);
                 }
-
-                // Update current page
                 setCurrentPage(page);
             }
         } catch (err) {
-            // console.error("Error fetching messages:", err);
             toast.error(err.message || "Failed to load messages", {
                 position: "top-center",
                 autoClose: 1500
@@ -393,24 +319,18 @@ const SubTeamChannel = () => {
         }
     };
 
-    // Load more messages
     const handleLoadMoreMessages = () => {
         if (isLoadingMore || !hasMoreMessages) return;
         fetchMessages(currentPage + 1, true);
-        setShowingExpandedMessages(true); // Set to true when we load more
+        setShowingExpandedMessages(true);
     };
 
-    // Add a function to collapse messages (show less)
     const handleCollapseMessages = () => {
-        // Reset to page 1
         setCurrentPage(1);
-        // Fetch only the first page of messages
         fetchMessages(1, false);
-        // Update state to indicate we're not showing expanded messages
         setShowingExpandedMessages(false);
     };
 
-    // Fetch threads
     const fetchThreads = async (page = 1, append = false) => {
         if (page === 1) {
             setIsLoadingThreads(true);
@@ -420,7 +340,7 @@ const SubTeamChannel = () => {
 
         try {
             const response = await axios.get(
-                `${baseUrl}/api/subteams/channels/${channelId}/threads?page=${page}`,
+                `${baseUrl}/api/teams/channels/${channelId}/threads?page=${page}`,
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -432,129 +352,81 @@ const SubTeamChannel = () => {
             if (response.data.Success) {
                 const newThreads = response.data.Data.Data || [];
                 const totalCount = response.data.Data.Count || 0;
-
                 setTotalThreads(totalCount);
-
-                // Improved calculation for hasMore
                 const hasMore = totalCount > (page * THREADS_PER_PAGE);
-                console.log(`Total threads: ${totalCount}, Current page: ${page}, Threads per page: ${THREADS_PER_PAGE}, Has more: ${hasMore}`);
                 setHasMoreThreads(hasMore);
-
-                // Reverse the order of threads (oldest first)
                 const reversedThreads = [...newThreads].reverse();
 
                 if (append) {
-                    // When loading more threads, prepend them to the existing list
-                    // This will add older threads at the top
                     setThreads(prev => [...reversedThreads, ...prev]);
                 } else {
-                    // Initial load - replace existing threads
                     setThreads(reversedThreads);
                 }
-
-                // Update current thread page
                 setCurrentThreadPage(page);
             }
         } catch (err) {
-            // console.error("Error fetching threads:", err);
             toast.error(err.message || "Failed to load threads", {
                 position: "top-center",
                 autoClose: 1500
             });
         } finally {
             setIsLoadingThreads(false);
-            setIsLoadingMoreThreads(false);
         }
     };
 
-    // Load more threads
     const handleLoadMoreThreads = () => {
         if (isLoadingMoreThreads || !hasMoreThreads) return;
         fetchThreads(currentThreadPage + 1, true);
-        setShowingExpandedThreads(true); // Set to true when we load more
+        setShowingExpandedThreads(true);
     };
 
-    // Add a function to collapse threads (show less)
     const handleCollapseThreads = () => {
-        // Reset to page 1
         setCurrentThreadPage(1);
-        // Fetch only the first page of threads
         fetchThreads(1, false);
-        // Update state to indicate we're not showing expanded threads
         setShowingExpandedThreads(false);
     };
 
-    // Initial data load
     useEffect(() => {
-        setMessages([]); // Clear messages when changing channels or threads
-        setCurrentPage(1); // Reset page when thread changes
-        setShowingExpandedMessages(false); // Reset expanded messages state
+        setMessages([]);
+        setCurrentPage(1);
+        setShowingExpandedMessages(false);
         fetchMessages(1, false);
         if (!activeThread) {
-            setThreads([]); // Clear threads when changing channels
-            setCurrentThreadPage(1); // Reset thread page
-            setShowingExpandedThreads(false); // Reset expanded threads state
+            setThreads([]);
+            setCurrentThreadPage(1);
+            setShowingExpandedThreads(false);
             fetchThreads(1, false);
         }
     }, [channelId, activeThread]);
 
-    // Socket event handler for new threads - completely rewritten
     useEffect(() => {
         if (!socketRef.current) return;
-
-        // Define the handler function
         const handleNewThread = (thread) => {
-            console.log('[WebSocket] New thread received:', thread);
-
-            // Use functional update to ensure we're working with the latest state
             setThreads(prevThreads => {
-                // Check if thread already exists in the current state
                 const threadExists = prevThreads.some(t => t.Id === thread.Id);
-
                 if (threadExists) {
-                    console.log('[WebSocket] Thread already exists, not adding:', thread.Id);
                     return prevThreads;
                 }
-
-                console.log('[WebSocket] Adding new thread to state:', thread.Id);
                 return [...prevThreads, thread];
             });
-
-            // Update total thread count for pagination
             setTotalThreads(prev => prev + 1);
         };
-
-        // Register the event handler
-        console.log('[WebSocket] Registering chat_thread handler');
         socketRef.current.on('chat_thread', handleNewThread);
-
-        // Cleanup function
         return () => {
-            console.log('[WebSocket] Removing chat_thread handler');
             socketRef.current.off('chat_thread', handleNewThread);
         };
-    }, []); // Empty dependency array to ensure this only runs once
+    }, []);
 
-
-
-    // Send message
     const handleSendMessage = async () => {
         if (!newMessage.trim()) return;
-
         try {
-            console.log(`Sending message to channel: ${channelId}, thread: ${activeThread || 'main'}`);
-            console.log(`Message content: ${newMessage}`);
-
             const payload = {
                 Message: newMessage,
                 ReplyToId: replyingTo?.Id || null,
                 ThreadId: activeThread || null
             };
-
-            // console.log('Request payload:', payload);
-
             const response = await axios.post(
-                `${baseUrl}/api/subteams/channels/${channelId}`,
+                `${baseUrl}/api/teams/channels/${channelId}`,
                 payload,
                 {
                     headers: {
@@ -563,15 +435,11 @@ const SubTeamChannel = () => {
                     }
                 }
             );
-
-            // console.log('Server response:', response.data);
-
             if (response.data.Success) {
                 setNewMessage('');
                 setReplyingTo(null);
             }
         } catch (err) {
-            // console.error('Error sending message:', err);
             toast.error(err.message, {
                 position: "top-center",
                 autoClose: 1500
@@ -579,11 +447,10 @@ const SubTeamChannel = () => {
         }
     };
 
-    // Create thread
     const handleCreateThread = async (messageId) => {
         try {
             const response = await axios.post(
-                `${baseUrl}/api/subteams/channels/${channelId}/${messageId}`,
+                `${baseUrl}/api/teams/channels/${channelId}/${messageId}`,
                 {},
                 {
                     headers: {
@@ -592,38 +459,29 @@ const SubTeamChannel = () => {
                     }
                 }
             );
-
             if (response.data.Success) {
                 toast.success("Thread created!", {
                     position: "top-center",
                     autoClose: 1500
                 });
             } else {
-                // Handle case where API returns success: false
                 toast.error(response.data.Message || "Failed to create thread", {
                     position: "top-center",
                     autoClose: 1500
                 });
             }
         } catch (err) {
-            console.error("Error creating thread:", err);
-
-            // Improved error handling with more detailed messages
             if (err.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
                 toast.error(err.response.data?.Message || `Server error: ${err.response.status}`, {
                     position: "top-center",
                     autoClose: 1500
                 });
             } else if (err.request) {
-                // The request was made but no response was received
                 toast.error("No response from server. Please check your connection.", {
                     position: "top-center",
                     autoClose: 1500
                 });
             } else {
-                // Something happened in setting up the request that triggered an Error
                 toast.error(`Error: ${err.message}`, {
                     position: "top-center",
                     autoClose: 1500
@@ -632,13 +490,10 @@ const SubTeamChannel = () => {
         }
     };
 
-    // Delete message
     const handleDeleteMessage = async (messageId) => {
         try {
-            console.log(`Attempting to delete message with ID: ${messageId}`);
-
             const response = await axios.delete(
-                `${baseUrl}/api/subteams/channels/${channelId}/${messageId}`,
+                `${baseUrl}/api/teams/channels/${channelId}/${messageId}`,
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -646,11 +501,7 @@ const SubTeamChannel = () => {
                     }
                 }
             );
-
             if (response.status === 200) {
-                console.log(`Successfully deleted message with ID: ${messageId}`);
-
-                // Update UI immediately after successful deletion
                 setMessages(prev => {
                     return prev.map(msg =>
                         msg.Id === messageId
@@ -658,14 +509,12 @@ const SubTeamChannel = () => {
                             : msg
                     );
                 });
-
                 toast.success("Message deleted!", {
                     position: "top-center",
                     autoClose: 1500
                 });
             }
         } catch (err) {
-            console.error(`Error deleting message: ${err.message}`);
             toast.error(err.message || "Failed to delete message", {
                 position: "top-center",
                 autoClose: 1500
@@ -673,7 +522,6 @@ const SubTeamChannel = () => {
         }
     };
 
-    // Helper functions
     const scrollToBottom = () => {
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
@@ -682,17 +530,14 @@ const SubTeamChannel = () => {
 
     const formatDate = (dateString) => {
         if (!dateString) return '';
-
         try {
-            // Check if the date is valid
             const date = new Date(dateString);
             if (isNaN(date.getTime())) {
-                return 'Just now'; // Fallback for invalid dates
+                return 'Just now';
             }
             return date.toLocaleString();
         } catch (error) {
-            console.error("Error formatting date:", error);
-            return 'Just now'; // Fallback for any errors
+            return 'Just now';
         }
     };
 
@@ -703,107 +548,55 @@ const SubTeamChannel = () => {
         }
     };
 
-    // Socket event handler for new messages
     useEffect(() => {
         if (!socketRef.current) return;
-
         const handleNewMessage = (message) => {
-            console.log(message);
-            console.log('[WebSocket] New message received:', message);
-
-            // Check if the message has ThreadId property at all
             if (activeThread) {
                 message.ThreadId = activeThread;
-                console.log('[WebSocket] Added ThreadId to message:', message);
             }
-
-            // Check if message belongs to current view
             const belongsToCurrentView =
                 (!activeThread && !message.ThreadId) ||
                 (activeThread && message.ThreadId === activeThread);
-
-            console.log('[WebSocket] Message belongs to current view:', belongsToCurrentView,
-                'activeThread:', activeThread,
-                'message.ThreadId:', message.ThreadId);
-
             if (belongsToCurrentView) {
-                // Ensure the message has a valid date
                 if (!message.CreatedAt) {
                     message.CreatedAt = new Date().toISOString();
                 }
-
-                console.log('[WebSocket] Adding message to UI');
-
-                // Add the new message to the messages array
                 setMessages(prev => {
                     const updatedMessages = [...prev, message];
-
-                    // If we now have more than MESSAGES_PER_PAGE messages, 
-                    // keep only the most recent MESSAGES_PER_PAGE messages
                     if (updatedMessages.length > MESSAGES_PER_PAGE) {
-                        // Set hasMoreMessages to true since we now have more messages
                         setHasMoreMessages(true);
-                        // Return only the most recent MESSAGES_PER_PAGE messages
                         return updatedMessages.slice(-MESSAGES_PER_PAGE);
                     }
-
                     return updatedMessages;
                 });
-
-                // Scroll to bottom after adding message
                 setTimeout(() => {
                     scrollToBottom();
                 }, 100);
-
-                // Update total message count for pagination
                 setTotalMessages(prevTotal => prevTotal + 1);
             }
         };
-
         socketRef.current.on('chat', handleNewMessage);
-
         return () => {
             socketRef.current.off('chat', handleNewMessage);
         };
     }, [activeThread, MESSAGES_PER_PAGE]);
 
-    // Socket event handler for message deletion
     useEffect(() => {
         if (!socketRef.current) return;
-
         const handleMessageDeleted = (deletedMessage) => {
-            console.log('[WebSocket] Message deleted - FULL DATA:', deletedMessage);
-            console.log('[WebSocket] Current activeThread:', activeThread);
-
-            // Handle when deletedMessage is just an ID (string or number)
             if (typeof deletedMessage !== 'object') {
-                console.log('[WebSocket] Deleted message is not an object, just ID:', deletedMessage);
-
-                // Remove message with this ID regardless of thread
                 setMessages(prev => {
-                    console.log(`Removing message ${deletedMessage} from UI (ID only)`);
                     const newMessages = prev.filter(msg => msg.Id !== deletedMessage);
                     setTotalMessages(prev => Math.max(0, prev - 1));
                     return newMessages;
                 });
                 return;
             }
-
-            // For object type deletedMessage
             const messageId = deletedMessage.Id;
-            console.log('[WebSocket] Deleted message ID:', messageId);
-
             const messageExists = messages.some(msg => msg.Id === messageId);
-            console.log('[WebSocket] Message exists in current view:', messageExists);
-
-            // If the message exists in our current view, update it
             if (messageExists) {
-                console.log('[WebSocket] Updating UI for deleted message in current view');
-
                 if (deletedMessage.Message === 'Deleted message') {
-                    // Update the message to show as deleted
                     setMessages(prev => {
-                        console.log(`Updating message ${messageId} to show as deleted`);
                         return prev.map(msg =>
                             msg.Id === messageId
                                 ? { ...msg, Message: 'Deleted message', IsDeleted: true }
@@ -811,41 +604,28 @@ const SubTeamChannel = () => {
                         );
                     });
                 } else {
-                    // Remove the message completely
                     setMessages(prev => {
-                        console.log(`Removing message ${messageId} from UI`);
                         const newMessages = prev.filter(msg => msg.Id !== messageId);
                         setTotalMessages(prev => Math.max(0, prev - 1));
                         return newMessages;
                     });
                 }
-            } else {
-                console.log('[WebSocket] Ignoring deleted message - not in current view');
             }
         };
-
         socketRef.current.on('chat_deleted', handleMessageDeleted);
-
         return () => {
             socketRef.current.off('chat_deleted', handleMessageDeleted);
         };
-    }, [activeThread, messages]); // Add messages to dependencies
+    }, [activeThread, messages]);
 
-    // Force re-render when messages change
     useEffect(() => {
-        // console.log("Messages updated:", messages.length);
-        // You could add additional logic here if needed
     }, [messages]);
 
-    // Add useEffect to ensure hasMoreMessages and hasMoreThreads are properly set on initial load
     useEffect(() => {
         if (totalMessages > MESSAGES_PER_PAGE && !hasMoreMessages) {
-            console.log("Setting hasMoreMessages to true based on totalMessages");
             setHasMoreMessages(true);
         }
-
         if (totalThreads > THREADS_PER_PAGE && !hasMoreThreads) {
-            console.log("Setting hasMoreThreads to true based on totalThreads");
             setHasMoreThreads(true);
         }
     }, [totalMessages, totalThreads, hasMoreMessages, hasMoreThreads]);
@@ -855,7 +635,6 @@ const SubTeamChannel = () => {
             <ScrollToTop />
             <div className={styles.channelPageContainer}>
                 <div className={styles.chatLayout}>
-                    {/* Threads panel */}
                     <div className={styles.threadsPanel}>
                         <div className={styles.threadsPanelHeader}>
                             <h3>Conversations</h3>
@@ -868,7 +647,6 @@ const SubTeamChannel = () => {
                                 </button>
                             )}
                         </div>
-
                         <div className={styles.threadsList}>
                             {isLoadingThreads && threads.length === 0 ? (
                                 <div className={styles.loadingIndicator}>
@@ -882,7 +660,6 @@ const SubTeamChannel = () => {
                                 </div>
                             ) : (
                                 <>
-                                    {/* Either show Load More OR Show Less button, not both */}
                                     {!activeThread && (
                                         <div className={styles.loadMoreContainer}>
                                             {showingExpandedThreads ? (
@@ -903,7 +680,7 @@ const SubTeamChannel = () => {
                                                         </>
                                                     )}
                                                 </button>
-                                            ) : (hasMoreThreads && threads.length >= THREADS_PER_PAGE ) ? (
+                                            ) : (hasMoreThreads && threads.length >= THREADS_PER_PAGE) ? (
                                                 <button
                                                     className={styles.loadMoreButton}
                                                     onClick={handleLoadMoreThreads}
@@ -924,8 +701,6 @@ const SubTeamChannel = () => {
                                             ) : null}
                                         </div>
                                     )}
-
-                                    {/* Thread List */}
                                     {threads.map(thread => (
                                         <div
                                             key={thread.Id}
@@ -944,8 +719,6 @@ const SubTeamChannel = () => {
                             )}
                         </div>
                     </div>
-
-                    {/* Chat content */}
                     <div className={styles.chatContent}>
                         <div className={styles.chatHeader}>
                             <div className={styles.chatHeaderInfo}>
@@ -962,8 +735,6 @@ const SubTeamChannel = () => {
                                 </div>
                             )}
                         </div>
-
-                        {/* Messages area */}
                         <div className={styles.messagesArea}>
                             {isLoading ? (
                                 <div className={styles.loadingIndicator}>
@@ -978,7 +749,6 @@ const SubTeamChannel = () => {
                                 </div>
                             ) : (
                                 <div className={styles.messagesList} key={`messages-${messages.map(m => m.Id).join('-')}`}>
-                                    {/* Either show Load More OR Show Less button for messages */}
                                     <div className={styles.loadMoreContainer}>
                                         {showingExpandedMessages ? (
                                             <button
@@ -1018,8 +788,6 @@ const SubTeamChannel = () => {
                                             </button>
                                         ) : null}
                                     </div>
-
-                                    {/* Messages */}
                                     {messages.map(message => (
                                         <div
                                             key={message.Id}
@@ -1027,38 +795,40 @@ const SubTeamChannel = () => {
                                         >
                                             <div className={styles.messageAvatar}>
                                                 <ProfileImage
-                                                    photoPath={message.User.ProfilePhoto}
-                                                    userName={message.User.FirstName}
+                                                    photoPath={message.User?.ProfilePhoto}
+                                                    userName={message.User?.FirstName}
                                                 />
                                             </div>
                                             <div className={styles.messageContent}>
                                                 <div className={styles.messageMetadata}>
                                                     <span className={styles.userName}>
-                                                        {message.User.FirstName} {message.User.LastName}
+                                                        {message.User?.FirstName} {message.User.LastName}
                                                     </span>
                                                     <span className={styles.messageTime}>
                                                         {formatDate(message.CreatedAt)}
                                                     </span>
                                                 </div>
-
                                                 {message.ReplyTo && (
-                                                    <div className={styles.repliedMessage}>
+                                                    <div className={`${styles.repliedMessage}`}>
                                                         <i className="fa-solid fa-reply"></i>
                                                         <div className={styles.replyAvatarContainer}>
-                                                            <ProfileImage
-                                                                photoPath={message.ReplyTo.User.ProfilePhoto}
-                                                                userName={message.ReplyTo.User.FirstName}
-                                                            />
+                                                            {message.ReplyTo.User ? (
+                                                                <ProfileImage
+                                                                    photoPath={message.ReplyTo.User?.ProfilePhoto}
+                                                                    userName={message.ReplyTo.User?.FirstName}
+                                                                />
+                                                            ) : (
+                                                                <div className={styles.avatarPlaceholder}>?</div>
+                                                            )}
                                                         </div>
                                                         <span className={styles.replyAuthor}>
-                                                            {message.ReplyTo.User.FirstName}:
+                                                            {message.ReplyTo.User?.FirstName || 'Unknown'}:
                                                         </span>
                                                         <span className={styles.replyText}>
                                                             {message.ReplyTo.Message}
                                                         </span>
                                                     </div>
                                                 )}
-
                                                 <div className={`${styles.messageText} ${message.IsDeleted || message.Message === 'Deleted message' ? styles.deletedMessageText : ''}`}>
                                                     {message.IsDeleted || message.Message === 'Deleted message'
                                                         ? (
@@ -1070,18 +840,17 @@ const SubTeamChannel = () => {
                                                         : message.Message
                                                     }
                                                 </div>
-
-                                                {/* Only show actions if message is not deleted */}
                                                 {!message.IsDeleted && message.Message !== 'Deleted message' && (
                                                     <div className={styles.messageActions}>
                                                         <button
                                                             className={styles.actionButton}
-                                                            onClick={() => setReplyingTo(message)}
+                                                            onClick={() => {
+                                                                setReplyingTo(message);
+                                                            }}
                                                             title="Reply"
                                                         >
                                                             <i className="fa-solid fa-reply"></i>
                                                         </button>
-
                                                         {!activeThread && (
                                                             <button
                                                                 className={styles.actionButton}
@@ -1091,8 +860,6 @@ const SubTeamChannel = () => {
                                                                 <i className="fa-solid fa-comments"></i>
                                                             </button>
                                                         )}
-
-                                                        {/* Only show delete button if user can delete this message */}
                                                         {canDeleteMessage(message) && (
                                                             <button
                                                                 className={styles.actionButton}
@@ -1111,8 +878,6 @@ const SubTeamChannel = () => {
                                 </div>
                             )}
                         </div>
-
-                        {/* Message input */}
                         <div className={styles.messageInputArea}>
                             {replyingTo && (
                                 <div className={styles.replyingToIndicator}>
@@ -1146,6 +911,4 @@ const SubTeamChannel = () => {
     );
 };
 
-
-
-export default SubTeamChannel;
+export default TeamChannel;

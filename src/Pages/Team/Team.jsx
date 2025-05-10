@@ -12,6 +12,8 @@ import OurSubTeamSection from '../../components/Team/OurSubTeamSection/OurSubTea
 import AddSubTeam from '../../components/Team/AddSubTeam/AddSubTeam';
 import TeamGallery from '../../components/Team/TeamGallery/TeamGallery';
 import TeamOverview from '../../components/Team/TeamOverview/TeamOverview';
+import TeamChannelSection from '../../components/Team/TeamChannelSection/TeamChannelSection';
+import TeamLeadersSection from '../../components/Team/TeamLeadersSection/TeamLeadersSection';
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -73,6 +75,7 @@ const getSafeData = (data) => {
         Images: data.Images || placeholderData.Images,
         MediaLinks: data.MediaLinks || placeholderData.MediaLinks,
         SubTeams: processedSubTeams,
+        Leaders: data.Leaders || [],
         Leader: data.Leader || {
             FirstName: "Admin",
             Email: "admin@example.com",
@@ -96,6 +99,8 @@ const Team = () => {
         }
     );
 
+
+    console.log(JSON.stringify(teamData, null, 2));
 
 
 
@@ -141,6 +146,7 @@ const Team = () => {
                         safeData={safeData}
                     />
 
+
                     {safeData.CanModify && (
                         <div className="d-flex justify-content-center">
                             <button
@@ -154,7 +160,10 @@ const Team = () => {
                     )}
 
                     <OurSubTeamSection subTeams={safeData.SubTeams} communityId={communityId} teamId={teamId} refetch={refetch} canModify={safeData.CanModify} />
+                    <TeamChannelSection communityId={communityId} teamId={teamId} CanModify={safeData.CanModify} isMember={safeData.IsMember} />
                     <AchievementSection achievementData={teamData?.Achievements} />
+                    <TeamLeadersSection leaders={safeData.Leaders} />
+
                 </div>
             </section>
         </>
@@ -162,3 +171,4 @@ const Team = () => {
 };
 
 export default Team;
+

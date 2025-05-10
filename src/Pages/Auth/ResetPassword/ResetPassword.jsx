@@ -82,121 +82,121 @@ export default function ResetPassword() {
     return (
 
         // resetPasswordPage
-        <section className={`${styles.resetPasswordPage}`}>
+        <section className={styles.resetPasswordPage}>
 
             {/* resetPasswordContainer */}
-            <div className={`${styles.resetPasswordContainer} specialContainer`}>
+            <div className={styles.resetPasswordContainer}>
 
-                {/* restPasswordFormWrapper */}
-                <div className={`${styles.restPasswordFormWrapper} shadow`}>
+                {/* Left Panel */}
+                <div className={styles.resetPasswordLeftPanel}>
+                    <Link to="/signIn" className={styles.backLink}>
+                        <i className="fas fa-arrow-left-long"></i>
+                        <span>Back To Sign In</span>
+                    </Link>
 
-                    {/* resetPasswordLeftPanel */}
-                    <div className={`${styles.resetPasswordLeftPanel}`}>
-                        <Link to="/signIn" className={`${styles.backLink}`}>
-                            <i className={`fas fa-arrow-left-long me-2`}></i>
-                            Back To Sign In
-                        </Link>
+                    <Logo />
 
-                        {/* logo */}
-                        <Logo />
+                    <h2 className={styles.title}>Reset Your Password</h2>
 
+                    <p className={styles.desc}>
+                        Create a new password for your account. Make sure it&apos;s secure and memorable.
+                    </p>
+                </div>
 
-                        <h2 className={`${styles.title}`}>Reset Your Password</h2>
-
-                        <p className={`${styles.desc}`}>
-                            Create a new password for your account. Make sure it&apos;s secure and memorable.
+                {/* Right Panel */}
+                <div className={styles.resetPasswordRightPanel}>
+                    <div className={styles.formHeader}>
+                        <h4 className={styles.title}>Set New Password</h4>
+                        <p className={styles.desc}>
+                            Remember your password?{' '}
+                            <Link to="/signIn" className={styles.signInLink}>
+                                Sign In
+                            </Link>
                         </p>
+                        <div className={styles.emailDisplay}>
+                            <p>Resetting password for: <strong>{email}</strong></p>
+                        </div>
                     </div>
 
-                    {/* resetPasswordRightPanel */}
-                    <div className={`${styles.resetPasswordRightPanel}`}>
-
-                        {/* formHeader */}
-                        <div className={`${styles.formHeader}`}>
-                            <h4 className={`${styles.title}`}>Set New Password</h4>
-
-                            {/* desc */}
-                            <p className={`${styles.desc}`}>
-                                Remember your password?{' '}
-                                <Link to="/signIn" className={`${styles.signInLink}`}>
-                                    Sign In
-                                </Link>
-                            </p>
-
-                            {/* verificationStatus */}
-                            <div className={`${styles.verificationStatus}`}>
-                                <p>Resetting password for: <strong>{email}</strong></p>
-                            </div>
-                        </div>
-
-                        {/* resetPasswordForm */}
-                        <form onSubmit={formik.handleSubmit} className={`${styles.resetPasswordForm}`}>
-
-                            {/* inputWrapper */}
-                            <div className={`${styles.inputWrapper}`}>
-                                <label className={`lableStyle`} htmlFor="NewPassword">
-                                    <span className={`redStar`}>*</span>New Password:
-                                </label>
+                    <form onSubmit={formik.handleSubmit} className={styles.resetPasswordForm}>
+                        <div className={styles.inputWrapper}>
+                            <label className={styles.inputLabel} htmlFor="NewPassword">
+                                <span className="redStar">*</span>New Password
+                            </label>
+                            <div className={styles.inputContainer}>
+                                <i className="fas fa-lock"></i>
                                 <input
                                     id="NewPassword"
                                     name="NewPassword"
                                     type="password"
+                                    placeholder="Enter new password"
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                     value={formik.values.NewPassword}
-                                    className={`inputStyle ${formik.touched.NewPassword && formik.errors.NewPassword ? 'is-invalid' : ''}`}
-                                    placeholder="Enter new password"
+                                    className={`${styles.formInput} ${formik.touched.NewPassword && formik.errors.NewPassword ? styles.inputError : ''}`}
                                     autoFocus
                                 />
-                                {formik.touched.NewPassword && formik.errors.NewPassword && (
-                                    <div className="alert alert-danger py-2 mt-1">{formik.errors.NewPassword}</div>
-                                )}
                             </div>
+                            {formik.touched.NewPassword && formik.errors.NewPassword && (
+                                <div className={styles.errorText}>{formik.errors.NewPassword}</div>
+                            )}
+                        </div>
 
-                            {/* inputWrapper */}
-                            <div className={`${styles.inputWrapper}`}>
-                                <label className={`lableStyle`} htmlFor="ConfirmPassword">
-                                    <span className={`redStar`}>*</span>Confirm Password:
-                                </label>
+                        <div className={styles.inputWrapper}>
+                            <label className={styles.inputLabel} htmlFor="ConfirmPassword">
+                                <span className="redStar">*</span>Confirm Password
+                            </label>
+                            <div className={styles.inputContainer}>
+                                <i className="fas fa-lock-open"></i>
                                 <input
                                     id="ConfirmPassword"
                                     name="ConfirmPassword"
                                     type="password"
+                                    placeholder="Confirm new password"
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                     value={formik.values.ConfirmPassword}
-                                    className={`inputStyle ${formik.touched.ConfirmPassword && formik.errors.ConfirmPassword ? 'is-invalid' : ''}`}
-                                    placeholder="Confirm new password"
+                                    className={`${styles.formInput} ${formik.touched.ConfirmPassword && formik.errors.ConfirmPassword ? styles.inputError : ''}`}
                                 />
-                                {formik.touched.ConfirmPassword && formik.errors.ConfirmPassword && (
-                                    <div className="alert alert-danger py-2 mt-2">{formik.errors.ConfirmPassword}</div>
-                                )}
                             </div>
+                            {formik.touched.ConfirmPassword && formik.errors.ConfirmPassword && (
+                                <div className={styles.errorText}>{formik.errors.ConfirmPassword}</div>
+                            )}
+                        </div>
 
-                            {error && <div className="alert alert-danger py-2 mt-1">{error}</div>}
-                            {success && <div className="alert alert-success py-2 mt-1">{success}</div>}
+                        {error && (
+                            <div className={`${styles.messageAlert} ${styles.error}`}>
+                                <i className="fas fa-exclamation-circle"></i>
+                                <span>{error}</span>
+                            </div>
+                        )}
+                        
+                        {success && (
+                            <div className={`${styles.messageAlert} ${styles.success}`}>
+                                <i className="fas fa-check-circle"></i>
+                                <span>{success}</span>
+                            </div>
+                        )}
 
-                            {/* submittingButton */}
-                            <button
-                                type="submit"
-                                className={`PrimaryButtonStyle ${styles.submittingButton}`}
-                                disabled={isSubmitting}
-                            >
-                                {isSubmitting ? (
-                                    'Resetting...'
-                                ) : (
-                                    <>
-                                        Reset Password
-                                        <i className={`fas fa-arrow-right-long ms-2`}></i>
-                                    </>
-                                )}
-                            </button>
-                        </form>
-                    </div>
-
+                        <button
+                            type="submit"
+                            className={styles.submitButton}
+                            disabled={isSubmitting}
+                        >
+                            {isSubmitting ? (
+                                <>
+                                    <span className={styles.spinner}></span>
+                                    <span>Resetting Password...</span>
+                                </>
+                            ) : (
+                                <>
+                                    <span>Reset Password</span>
+                                    <i className="fas fa-arrow-right-long"></i>
+                                </>
+                            )}
+                        </button>
+                    </form>
                 </div>
-
-
             </div>
         </section>
     );

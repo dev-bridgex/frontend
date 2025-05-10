@@ -19,11 +19,15 @@
 
 /* title */
 .communitiesHeader .title {
-    font-weight: 700;
     font-size: var(--font-size-h2);
-    margin-bottom: var(--margin-between-elements) !important;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: var(--margin-heading) !important;
     text-align: center;
-    color: #2d3748;
+    background: linear-gradient(135deg, var(--text-primary) 0%, #3947d5 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 /* subtitle */

@@ -79,7 +79,6 @@ const Community = () => {
     );
 
 
-    console.log(JSON.stringify(communityData, null, 2));
 
 
 

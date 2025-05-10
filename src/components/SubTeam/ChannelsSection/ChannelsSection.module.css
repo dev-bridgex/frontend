@@ -196,3 +196,19 @@
     font-size: 1.1rem;
     margin-right: 0.25rem;
 }
+
+.accessDeniedToast {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.accessDeniedToast i {
+    font-size: 1.5rem;
+    color: #ff6b6b;
+}
+
+.accessDeniedToast p {
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+}

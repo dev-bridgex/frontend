@@ -56,15 +56,13 @@ export default function VerifyEmail() {
 
     return (
         <section className={style.verifyEmailPage}>
-            <div className={`${style.verifyEmailContainer} specialContainer shadow`}>
+            <div className={style.verifyEmailContainer}>
                 <div className={style.verifyEmailLeftPanel}>
                     <Link to="/signUp" className={style.backLink}>
-                        <i className="fas fa-arrow-left-long me-2"></i>
-                        Back to Sign Up
+                        <i className="fas fa-arrow-left-long"></i>
+                        <span>Back to Sign Up</span>
                     </Link>
 
-
-                    {/* logo */}
                     <Logo />
 
                     <h2 className={style.title}>Verify Your Email</h2>
@@ -83,6 +81,11 @@ export default function VerifyEmail() {
                 <div className={style.verifyEmailRightPanel}>
                     <div className={style.formHeader}>
                         <h4 className={style.title}>Email Verification Status</h4>
+                        {Email && (
+                            <p className={style.emailDisplay}>
+                                Verifying: <strong>{Email}</strong>
+                            </p>
+                        )}
                     </div>
 
                     <div className={style.statusContainer}>
@@ -94,10 +97,11 @@ export default function VerifyEmail() {
                         )}
 
                         {error && (
-                            <div className="alert alert-danger py-2 mt-2">
-                                {error}
-                                <div className="mt-3">
-                                    <Link to="/signIn" className="btn btn-outline-primary">
+                            <div className={`${style.messageAlert} ${style.error}`}>
+                                <i className="fas fa-exclamation-circle"></i>
+                                <span>{error}</span>
+                                <div className={style.actionButtons}>
+                                    <Link to="/signIn" className={style.actionButton}>
                                         Sign In
                                     </Link>
                                 </div>
@@ -105,14 +109,16 @@ export default function VerifyEmail() {
                         )}
 
                         {success && (
-                            <div className="alert alert-success py-2 mt-2">
-                                {success}
+                            <div className={`${style.messageAlert} ${style.success}`}>
+                                <i className="fas fa-check-circle"></i>
+                                <span>{success}</span>
                             </div>
                         )}
 
                         {!Token && (
-                            <div className="alert alert-warning py-2 mt-2">
-                                No verification token found. Please check your email for the correct link.
+                            <div className={`${style.messageAlert} ${style.warning}`}>
+                                <i className="fas fa-exclamation-triangle"></i>
+                                <span>No verification token found. Please check your email for the correct link.</span>
                             </div>
                         )}
                     </div>
