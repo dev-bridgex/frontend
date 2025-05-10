@@ -57,7 +57,7 @@ export default function NavModal() {
             <div className="modal-dialog">
                 <div className={`${style.modalContent} modal-content`}>
                     <div className={`${style.modalHeader} modal-header`}>
-                        <Logo />
+                        <Logo isBlue={true} />
                         <i 
                             className={`${style.modalClose} fa-solid fa-xmark`} 
                             onClick={closeModal}

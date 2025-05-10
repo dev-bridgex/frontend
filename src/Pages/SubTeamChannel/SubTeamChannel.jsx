@@ -62,8 +62,8 @@ const ProfileImage = ({ photoPath, userName }) => {
             } else {
                 setDisplayImage(fullUrl);
             }
+        // eslint-disable-next-line no-unused-vars
         } catch (error) {
-            console.log(error);
 
             setDisplayImage('');
         } finally {
@@ -162,9 +162,8 @@ const SubTeamChannel = () => {
                 // Fetch leader status
                 fetchLeaderStatus();
             }
-        } catch (error) {
-            console.error("Error decoding token:", error);
-        }
+        // eslint-disable-next-line no-unused-vars
+        } catch (error) { /* empty */ }
     }, []);
 
     // Function to fetch leader status
@@ -184,11 +183,9 @@ const SubTeamChannel = () => {
 
             if (response.data.Success) {
                 setIsLeader(response.data.Data.IsLeader);
-                console.log("User is leader:", response.data.Data.IsLeader);
             }
-        } catch (error) {
-            console.error("Error fetching leader status:", error);
-        }
+        // eslint-disable-next-line no-unused-vars
+        } catch (error) { /* empty */ }
     };
 
     // Function to check if user can delete a message
@@ -217,7 +214,6 @@ const SubTeamChannel = () => {
 
     // Initialize WebSocket connection
     useEffect(() => {
-        console.log('[WebSocket] Setting up connection...');
 
         socketRef.current = io(`wss://bridgex.api.abdullahabaza.me`, {
             withCredentials: true,
@@ -228,20 +224,17 @@ const SubTeamChannel = () => {
         // Connection events
         socketRef.current.on('connect', () => {
             setIsConnected(true);
-            console.log(`[WebSocket] Connected. Joining channel: ${channelId}, thread: ${activeThread || 'main'}`);
             socketRef.current.emit('JoinChannel', {
                 ChannelId: channelId,
                 ThreadId: activeThread || null
             });
         });
 
-        socketRef.current.on('disconnect', (reason) => {
-            console.log(`[WebSocket] Disconnected: ${reason}`);
+        socketRef.current.on('disconnect', () => {
             setIsConnected(false);
         });
 
-        socketRef.current.on('connect_error', (err) => {
-            console.error('[WebSocket] Connection error:', err);
+        socketRef.current.on('connect_error', () => {
             setIsConnected(false);
             toast.error('Connection error. Reconnecting...', {
                 position: "top-center",
@@ -252,7 +245,6 @@ const SubTeamChannel = () => {
         // Message events are now handled in a separate useEffect
 
         socketRef.current.on('chat_deleted', (messageId) => {
-            console.log('[WebSocket] Message deleted:', messageId);
             setMessages(prev => {
                 const newMessages = prev.filter(msg => msg.Id !== messageId);
                 // Update total count when a message is deleted
@@ -262,7 +254,6 @@ const SubTeamChannel = () => {
         });
 
         socketRef.current.on('chat_thread', (thread) => {
-            // console.log('[WebSocket] New thread created:', thread);
             setThreads(prev => {
                 const updatedThreads = [...prev, thread];
 
@@ -283,12 +274,10 @@ const SubTeamChannel = () => {
         });
 
         socketRef.current.on('totalUsers', (data) => {
-            // console.log('[WebSocket] Total users update:', data);
             setTotalUsers(data.Count); // Extract the Count property
         });
 
         socketRef.current.on('error', (error) => {
-            // console.error('[WebSocket] Error:', error);
             toast.error(`WebSocket error: ${error.message || error}`, {
                 position: "top-center",
                 autoClose: 1500
@@ -296,7 +285,6 @@ const SubTeamChannel = () => {
         });
 
         socketRef.current.on('Error', (error) => {
-            // console.error('[WebSocket] Error (uppercase):', error);
             toast.error(`WebSocket Error: ${error.message || error}`, {
                 position: "top-center",
                 autoClose: 1500
@@ -314,7 +302,6 @@ const SubTeamChannel = () => {
     useEffect(() => {
         if (!socketRef.current || !isConnected) return;
 
-        console.log(`Joining channel: ${channelId}, thread: ${activeThread || 'main'} for handle thread changes`);
 
         socketRef.current.emit('JoinChannel', {
             ChannelId: channelId,
@@ -351,7 +338,6 @@ const SubTeamChannel = () => {
 
                 // Improved calculation for hasMore
                 const hasMore = totalCount > (page * MESSAGES_PER_PAGE);
-                console.log(`Total messages: ${totalCount}, Current page: ${page}, Messages per page: ${MESSAGES_PER_PAGE}, Has more: ${hasMore}`);
                 setHasMoreMessages(hasMore);
 
                 if (append) {
@@ -382,7 +368,6 @@ const SubTeamChannel = () => {
                 setCurrentPage(page);
             }
         } catch (err) {
-            // console.error("Error fetching messages:", err);
             toast.error(err.message || "Failed to load messages", {
                 position: "top-center",
                 autoClose: 1500
@@ -437,7 +422,6 @@ const SubTeamChannel = () => {
 
                 // Improved calculation for hasMore
                 const hasMore = totalCount > (page * THREADS_PER_PAGE);
-                console.log(`Total threads: ${totalCount}, Current page: ${page}, Threads per page: ${THREADS_PER_PAGE}, Has more: ${hasMore}`);
                 setHasMoreThreads(hasMore);
 
                 // Reverse the order of threads (oldest first)
@@ -456,7 +440,6 @@ const SubTeamChannel = () => {
                 setCurrentThreadPage(page);
             }
         } catch (err) {
-            // console.error("Error fetching threads:", err);
             toast.error(err.message || "Failed to load threads", {
                 position: "top-center",
                 autoClose: 1500
@@ -504,7 +487,6 @@ const SubTeamChannel = () => {
 
         // Define the handler function
         const handleNewThread = (thread) => {
-            console.log('[WebSocket] New thread received:', thread);
 
             // Use functional update to ensure we're working with the latest state
             setThreads(prevThreads => {
@@ -512,11 +494,9 @@ const SubTeamChannel = () => {
                 const threadExists = prevThreads.some(t => t.Id === thread.Id);
 
                 if (threadExists) {
-                    console.log('[WebSocket] Thread already exists, not adding:', thread.Id);
                     return prevThreads;
                 }
 
-                console.log('[WebSocket] Adding new thread to state:', thread.Id);
                 return [...prevThreads, thread];
             });
 
@@ -525,12 +505,10 @@ const SubTeamChannel = () => {
         };
 
         // Register the event handler
-        console.log('[WebSocket] Registering chat_thread handler');
         socketRef.current.on('chat_thread', handleNewThread);
 
         // Cleanup function
         return () => {
-            console.log('[WebSocket] Removing chat_thread handler');
             socketRef.current.off('chat_thread', handleNewThread);
         };
     }, []); // Empty dependency array to ensure this only runs once
@@ -542,16 +520,13 @@ const SubTeamChannel = () => {
         if (!newMessage.trim()) return;
 
         try {
-            console.log(`Sending message to channel: ${channelId}, thread: ${activeThread || 'main'}`);
-            console.log(`Message content: ${newMessage}`);
-
+            
             const payload = {
                 Message: newMessage,
                 ReplyToId: replyingTo?.Id || null,
                 ThreadId: activeThread || null
             };
 
-            // console.log('Request payload:', payload);
 
             const response = await axios.post(
                 `${baseUrl}/api/subteams/channels/${channelId}`,
@@ -564,14 +539,12 @@ const SubTeamChannel = () => {
                 }
             );
 
-            // console.log('Server response:', response.data);
 
             if (response.data.Success) {
                 setNewMessage('');
                 setReplyingTo(null);
             }
         } catch (err) {
-            // console.error('Error sending message:', err);
             toast.error(err.message, {
                 position: "top-center",
                 autoClose: 1500
@@ -606,7 +579,6 @@ const SubTeamChannel = () => {
                 });
             }
         } catch (err) {
-            console.error("Error creating thread:", err);
 
             // Improved error handling with more detailed messages
             if (err.response) {
@@ -635,7 +607,6 @@ const SubTeamChannel = () => {
     // Delete message
     const handleDeleteMessage = async (messageId) => {
         try {
-            console.log(`Attempting to delete message with ID: ${messageId}`);
 
             const response = await axios.delete(
                 `${baseUrl}/api/subteams/channels/${channelId}/${messageId}`,
@@ -648,7 +619,6 @@ const SubTeamChannel = () => {
             );
 
             if (response.status === 200) {
-                console.log(`Successfully deleted message with ID: ${messageId}`);
 
                 // Update UI immediately after successful deletion
                 setMessages(prev => {
@@ -665,7 +635,6 @@ const SubTeamChannel = () => {
                 });
             }
         } catch (err) {
-            console.error(`Error deleting message: ${err.message}`);
             toast.error(err.message || "Failed to delete message", {
                 position: "top-center",
                 autoClose: 1500
@@ -690,8 +659,8 @@ const SubTeamChannel = () => {
                 return 'Just now'; // Fallback for invalid dates
             }
             return date.toLocaleString();
+        // eslint-disable-next-line no-unused-vars
         } catch (error) {
-            console.error("Error formatting date:", error);
             return 'Just now'; // Fallback for any errors
         }
     };
@@ -708,13 +677,10 @@ const SubTeamChannel = () => {
         if (!socketRef.current) return;
 
         const handleNewMessage = (message) => {
-            console.log(message);
-            console.log('[WebSocket] New message received:', message);
 
             // Check if the message has ThreadId property at all
             if (activeThread) {
                 message.ThreadId = activeThread;
-                console.log('[WebSocket] Added ThreadId to message:', message);
             }
 
             // Check if message belongs to current view
@@ -722,9 +688,7 @@ const SubTeamChannel = () => {
                 (!activeThread && !message.ThreadId) ||
                 (activeThread && message.ThreadId === activeThread);
 
-            console.log('[WebSocket] Message belongs to current view:', belongsToCurrentView,
-                'activeThread:', activeThread,
-                'message.ThreadId:', message.ThreadId);
+           
 
             if (belongsToCurrentView) {
                 // Ensure the message has a valid date
@@ -732,7 +696,6 @@ const SubTeamChannel = () => {
                     message.CreatedAt = new Date().toISOString();
                 }
 
-                console.log('[WebSocket] Adding message to UI');
 
                 // Add the new message to the messages array
                 setMessages(prev => {
@@ -772,16 +735,11 @@ const SubTeamChannel = () => {
         if (!socketRef.current) return;
 
         const handleMessageDeleted = (deletedMessage) => {
-            console.log('[WebSocket] Message deleted - FULL DATA:', deletedMessage);
-            console.log('[WebSocket] Current activeThread:', activeThread);
-
             // Handle when deletedMessage is just an ID (string or number)
             if (typeof deletedMessage !== 'object') {
-                console.log('[WebSocket] Deleted message is not an object, just ID:', deletedMessage);
 
                 // Remove message with this ID regardless of thread
                 setMessages(prev => {
-                    console.log(`Removing message ${deletedMessage} from UI (ID only)`);
                     const newMessages = prev.filter(msg => msg.Id !== deletedMessage);
                     setTotalMessages(prev => Math.max(0, prev - 1));
                     return newMessages;
@@ -791,19 +749,15 @@ const SubTeamChannel = () => {
 
             // For object type deletedMessage
             const messageId = deletedMessage.Id;
-            console.log('[WebSocket] Deleted message ID:', messageId);
 
             const messageExists = messages.some(msg => msg.Id === messageId);
-            console.log('[WebSocket] Message exists in current view:', messageExists);
 
             // If the message exists in our current view, update it
             if (messageExists) {
-                console.log('[WebSocket] Updating UI for deleted message in current view');
 
                 if (deletedMessage.Message === 'Deleted message') {
                     // Update the message to show as deleted
                     setMessages(prev => {
-                        console.log(`Updating message ${messageId} to show as deleted`);
                         return prev.map(msg =>
                             msg.Id === messageId
                                 ? { ...msg, Message: 'Deleted message', IsDeleted: true }
@@ -813,14 +767,13 @@ const SubTeamChannel = () => {
                 } else {
                     // Remove the message completely
                     setMessages(prev => {
-                        console.log(`Removing message ${messageId} from UI`);
                         const newMessages = prev.filter(msg => msg.Id !== messageId);
                         setTotalMessages(prev => Math.max(0, prev - 1));
                         return newMessages;
                     });
                 }
+            // eslint-disable-next-line no-empty
             } else {
-                console.log('[WebSocket] Ignoring deleted message - not in current view');
             }
         };
 
@@ -833,19 +786,15 @@ const SubTeamChannel = () => {
 
     // Force re-render when messages change
     useEffect(() => {
-        // console.log("Messages updated:", messages.length);
-        // You could add additional logic here if needed
     }, [messages]);
 
     // Add useEffect to ensure hasMoreMessages and hasMoreThreads are properly set on initial load
     useEffect(() => {
         if (totalMessages > MESSAGES_PER_PAGE && !hasMoreMessages) {
-            console.log("Setting hasMoreMessages to true based on totalMessages");
             setHasMoreMessages(true);
         }
 
         if (totalThreads > THREADS_PER_PAGE && !hasMoreThreads) {
-            console.log("Setting hasMoreThreads to true based on totalThreads");
             setHasMoreThreads(true);
         }
     }, [totalMessages, totalThreads, hasMoreMessages, hasMoreThreads]);

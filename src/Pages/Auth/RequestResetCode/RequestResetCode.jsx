@@ -53,90 +53,92 @@ export default function RequestResetCode() {
 
     return (
         <section className={styles.requestResetPage}>
-            <div className={styles.requestResetContainer}>
-                {/* Left Panel */}
-                <div className={styles.requestResetLeftPanel}>
-                    <Link to="/signIn" className={styles.backLink}>
-                        <i className="fas fa-arrow-left-long"></i>
-                        <span>Back To Sign In</span>
-                    </Link>
-                    
-                    <Logo />
+            <div className="specialContainer">
+                <div className={styles.requestResetContainer}>
+                    {/* Left Panel */}
+                    <div className={styles.requestResetLeftPanel}>
+                        <Link to="/signIn" className={styles.backLink}>
+                            <i className="fas fa-arrow-left-long"></i>
+                            <span>Back To Sign In</span>
+                        </Link>
 
-                    <h2 className={styles.title}>Reset Your Password</h2>
+                        <Logo />
 
-                    <p className={styles.desc}>
-                        Enter your email address to receive a password reset code.
-                    </p>
-                </div>
+                        <h2 className={styles.title}>Reset Your Password</h2>
 
-                {/* Right Panel */}
-                <div className={styles.requestResetRightPanel}>
-                    <div className={styles.formHeader}>
-                        <h4 className={styles.title}>Request Reset Code</h4>
                         <p className={styles.desc}>
-                            Remember your password?{' '}
-                            <Link to="/signIn" className={styles.signInLink}>
-                                Sign In
-                            </Link>
+                            Enter your email address to receive a password reset code.
                         </p>
                     </div>
 
-                    <form onSubmit={formik.handleSubmit} className={styles.requestResetForm}>
-                        <div className={styles.inputWrapper}>
-                            <label className={styles.inputLabel} htmlFor="Email">
-                                <span className="redStar">*</span>Email
-                            </label>
-                            <div className={styles.inputContainer}>
-                                <i className="far fa-envelope"></i>
-                                <input
-                                    id="Email"
-                                    name="Email"
-                                    type="email"
-                                    placeholder="Enter your email address"
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.Email}
-                                    className={`${styles.formInput} ${formik.touched.Email && formik.errors.Email ? styles.inputError : ''}`}
-                                />
-                            </div>
-                            {formik.touched.Email && formik.errors.Email && (
-                                <div className={styles.errorText}>{formik.errors.Email}</div>
-                            )}
+                    {/* Right Panel */}
+                    <div className={styles.requestResetRightPanel}>
+                        <div className={styles.formHeader}>
+                            <h4 className={styles.title}>Request Reset Code</h4>
+                            <p className={styles.desc}>
+                                Remember your password?{' '}
+                                <Link to="/signIn" className={styles.signInLink}>
+                                    Sign In
+                                </Link>
+                            </p>
                         </div>
 
-                        {error && (
-                            <div className={`${styles.messageAlert} ${styles.error}`}>
-                                <i className="fas fa-exclamation-circle"></i>
-                                <span>{error}</span>
+                        <form onSubmit={formik.handleSubmit} className={styles.requestResetForm}>
+                            <div className={styles.inputWrapper}>
+                                <label className={styles.inputLabel} htmlFor="Email">
+                                    <span className="redStar">*</span>Email
+                                </label>
+                                <div className={styles.inputContainer}>
+                                    <i className="far fa-envelope"></i>
+                                    <input
+                                        id="Email"
+                                        name="Email"
+                                        type="email"
+                                        placeholder="Enter your email address"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.Email}
+                                        className={`${styles.formInput} ${formik.touched.Email && formik.errors.Email ? styles.inputError : ''}`}
+                                    />
+                                </div>
+                                {formik.touched.Email && formik.errors.Email && (
+                                    <div className={styles.errorText}>{formik.errors.Email}</div>
+                                )}
                             </div>
-                        )}
-                        
-                        {success && (
-                            <div className={`${styles.messageAlert} ${styles.success}`}>
-                                <i className="fas fa-check-circle"></i>
-                                <span>{success}</span>
-                            </div>
-                        )}
 
-                        <button
-                            type="submit"
-                            className={styles.submitButton}
-                            disabled={isSubmitting}
-                        >
-                            {isSubmitting ? (
-                                <>
-                                    <span className={styles.spinner}></span>
-                                    <span>Sending code...</span>
-                                </>
-                            ) : (
-                                <>
-                                    <span>Send Reset Code</span>
-                                    <i className="fas fa-arrow-right-long"></i>
-                                </>
+                            {error && (
+                                <div className={`${styles.messageAlert} ${styles.error}`}>
+                                    <i className="fas fa-exclamation-circle"></i>
+                                    <span>{error}</span>
+                                </div>
                             )}
-                        </button>
-                    </form>
+
+                            {success && (
+                                <div className={`${styles.messageAlert} ${styles.success}`}>
+                                    <i className="fas fa-check-circle"></i>
+                                    <span>{success}</span>
+                                </div>
+                            )}
+
+                            <button
+                                type="submit"
+                                className={styles.submitButton}
+                                disabled={isSubmitting}
+                            >
+                                {isSubmitting ? (
+                                    <>
+                                        <span className={styles.spinner}></span>
+                                        <span>Sending code...</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span>Send Reset Code</span>
+                                        <i className="fas fa-arrow-right-long"></i>
+                                    </>
+                                )}
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </section>

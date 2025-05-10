@@ -29,7 +29,6 @@ export default function ProtectedRoute({ children }) {
   // eslint-disable-next-line no-unused-vars
   } catch (error) {
     
-    // console.error("Token validation error:", error.message);
     
     // Invalid token format
     localStorage.removeItem("token");

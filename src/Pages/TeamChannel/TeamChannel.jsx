@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ScrollToTop from '../../components/ScrollToTop/ScrollToTop';
 import { jwtDecode } from "jwt-decode";
+import ErrorDisplay from '../../components/ErrorDisplay/ErrorDisplay';
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const token = localStorage.getItem('token');
@@ -22,8 +23,6 @@ const getFullImageUrl = (imgPath) => {
 };
 
 const ProfileImage = ({ photoPath, userName }) => {
-
-    
     const [displayImage, setDisplayImage] = useState('');
     const [isLoading, setIsLoading] = useState(true);
 
@@ -371,6 +370,7 @@ const TeamChannel = () => {
             });
         } finally {
             setIsLoadingThreads(false);
+            setIsLoadingMoreThreads(false);
         }
     };
 
@@ -802,7 +802,7 @@ const TeamChannel = () => {
                                             <div className={styles.messageContent}>
                                                 <div className={styles.messageMetadata}>
                                                     <span className={styles.userName}>
-                                                        {message.User?.FirstName} {message.User.LastName}
+                                                        {message.User?.FirstName} {message.User?.LastName}
                                                     </span>
                                                     <span className={styles.messageTime}>
                                                         {formatDate(message.CreatedAt)}
@@ -812,14 +812,15 @@ const TeamChannel = () => {
                                                     <div className={`${styles.repliedMessage}`}>
                                                         <i className="fa-solid fa-reply"></i>
                                                         <div className={styles.replyAvatarContainer}>
-                                                            {message.ReplyTo.User ? (
+                                                            {/* {message.ReplyTo.User ? (
+                                                                
                                                                 <ProfileImage
                                                                     photoPath={message.ReplyTo.User?.ProfilePhoto}
                                                                     userName={message.ReplyTo.User?.FirstName}
                                                                 />
                                                             ) : (
                                                                 <div className={styles.avatarPlaceholder}>?</div>
-                                                            )}
+                                                            )} */}
                                                         </div>
                                                         <span className={styles.replyAuthor}>
                                                             {message.ReplyTo.User?.FirstName || 'Unknown'}:

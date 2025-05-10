@@ -52,7 +52,11 @@ export default function SignUp() {
     Password: Yup.string()
       .required('Password is required')
       .min(7, 'Password must be at least 7 characters')
-      .max(20, 'Password cannot exceed 20 characters'),
+      .max(20, 'Password cannot exceed 20 characters')
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,20}$/,
+        'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
+      ),
 
     ConfirmPassword: Yup.string()
       .required('Please confirm your password')
@@ -261,3 +265,4 @@ function getIconForField(fieldName) {
       return 'far fa-circle';
   }
 }
+

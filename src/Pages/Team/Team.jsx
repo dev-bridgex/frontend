@@ -4,7 +4,7 @@ import styles from "./Team.module.css";
 import ScrollToTop from "../../components/ScrollToTop/ScrollToTop";
 import axios from 'axios';
 import LoadingScreen from '../../components/LoadingScreen/LoadingScreen';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UpdateTeamData from '../../components/Team/UpdateTeamData/UpdateTeamData';
 import AchievementSection from './../../components/Team/AchievementSection/AchievementSection';
@@ -14,6 +14,7 @@ import TeamGallery from '../../components/Team/TeamGallery/TeamGallery';
 import TeamOverview from '../../components/Team/TeamOverview/TeamOverview';
 import TeamChannelSection from '../../components/Team/TeamChannelSection/TeamChannelSection';
 import TeamLeadersSection from '../../components/Team/TeamLeadersSection/TeamLeadersSection';
+import ErrorDisplay from '../../components/ErrorDisplay/ErrorDisplay';
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -99,29 +100,11 @@ const Team = () => {
         }
     );
 
-
-    console.log(JSON.stringify(teamData, null, 2));
-
-
-
     const safeData = getSafeData(teamData);
-
-
 
     if (isLoading) return <LoadingScreen />;
 
-    if (isError) {
-        toast.error(error.message, {
-            position: "top-center",
-            autoClose: 5000,
-        });
-        return (
-            <div className={styles.error}>
-                Error: {error.message}
-                <ToastContainer />
-            </div>
-        );
-    }
+    if (isError) return <ErrorDisplay error={error} onRetry={refetch} />;
 
     return (
         <>
@@ -171,4 +154,5 @@ const Team = () => {
 };
 
 export default Team;
+
 

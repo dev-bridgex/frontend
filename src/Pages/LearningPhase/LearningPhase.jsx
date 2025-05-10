@@ -45,6 +45,9 @@ export default function LearningPhase() {
         }
     );
 
+    // Add error handling with ErrorDisplay
+    if (isLoading) return <LoadingScreen />;
+    if (isError) return <ErrorDisplay error={error} onRetry={refetch} />;
 
     // Calculate total duration in seconds
     const totalSeconds = data?.Sections?.reduce((sum, section) => {
@@ -76,9 +79,6 @@ export default function LearningPhase() {
     };
 
     const formattedTotalDuration = formatDuration(totalSeconds);
-
-    if (isLoading) return <LoadingScreen />;
-    if (isError) return <ErrorDisplay error={error} />;
 
     return (
         <>

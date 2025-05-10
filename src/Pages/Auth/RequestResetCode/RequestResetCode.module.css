@@ -16,20 +16,20 @@
     display: flex;
     width: 100%;
     max-width: 70rem;
-    border-radius: 1.25rem;
+    continuance-radius: 1.25rem;
     overflow: hidden;
     box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.15);
     background-color: white;
     position: relative;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(0.625rem);
+    border: 0.0625rem solid rgba(255, 255, 255, 0.1);
     animation: containerFadeIn 0.8s ease-out;
 }
 
 @keyframes containerFadeIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(1.25rem);
     }
 
     to {
@@ -70,9 +70,9 @@
     top: -25%;
     left: -25%;
     background-image:
-        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-    background-size: 20px 20px;
+        linear-gradient(rgba(255, 255, 255, 0.05) 0.0625rem, transparent 0.0625rem),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0.0625rem, transparent 0.0625rem);
+    background-size: 1.25rem 1.25rem;
     z-index: 1;
     opacity: 0.5;
     animation: meshMove 15s linear infinite;
@@ -84,7 +84,7 @@
     }
 
     100% {
-        transform: translate(20px, 20px);
+        transform: translate(1.25rem, 1.25rem);
     }
 }
 
@@ -122,7 +122,7 @@
     line-height: 1.2;
     position: relative;
     z-index: 2;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.2);
     animation: fadeInUp 0.6s ease-out 0.2s both;
 }
 
@@ -141,7 +141,7 @@
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(1.25rem);
     }
 
     to {
@@ -198,8 +198,8 @@
     content: '';
     position: absolute;
     width: 100%;
-    height: 2px;
-    bottom: -2px;
+    height: 0.125rem;
+    bottom: -0.125rem;
     left: 0;
     background-color: var(--primary-color);
     transform: scaleX(0);
@@ -259,7 +259,7 @@
     font-size: 1rem;
     transition: all 0.3s ease;
     background-color: #f8fafc;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.02);
 }
 
 .formInput::placeholder {
@@ -273,7 +273,7 @@
     background-color: white;
 }
 
-.formInput:focus+i {
+.formInput:focus + i {
     color: var(--primary-color);
 }
 
@@ -309,7 +309,7 @@
     font-size: 0.9375rem;
     font-weight: 500;
     animation: fadeIn 0.4s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
     margin-bottom: 1.25rem;
 }
 
@@ -402,15 +402,12 @@
 
 /* responsive design */
 @media (max-width: 1200px) {
-    .requestResetContainer {
-        max-width: 90%;
-    }
+   
 }
 
 @media (max-width: 800px) {
     .requestResetContainer {
         flex-direction: column;
-        max-width: 95%;
     }
 
     .requestResetLeftPanel,
@@ -424,16 +421,5 @@
 
     .requestResetRightPanel {
         padding: 2rem 1.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .requestResetContainer {
-        max-width: 100%;
-        border-radius: 0;
-    }
-
-    .requestResetPage {
-        padding: 0;
     }
 }

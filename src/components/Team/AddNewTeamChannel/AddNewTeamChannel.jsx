@@ -71,7 +71,6 @@ export default function AddNewTeamChannel({ communityId, teamId, refetch }) {
                 refetch();
             }
         } catch (error) {
-            console.error("Create channel error:", error);
             const errorMessage = error.response?.data?.Message || 'Failed to create channel';
             toast.error(errorMessage, {
                 position: "top-center",

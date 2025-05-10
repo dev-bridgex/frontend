@@ -79,9 +79,8 @@ export default function AIChatModal({ isOpen, onClose, communityId, teamId, subT
                     }
                 }
             }
-        } catch (error) {
-            console.error('Error fetching chat history:', error);
-        } finally {
+        // eslint-disable-next-line no-unused-vars
+        } catch (error) { /* empty */ } finally {
             setIsLoadingHistory(false);
         }
     };
@@ -137,8 +136,8 @@ export default function AIChatModal({ isOpen, onClose, communityId, teamId, subT
                 // Update chat history
                 fetchChatHistory();
             }
+        // eslint-disable-next-line no-unused-vars
         } catch (error) {
-            console.error('Error sending message:', error);
             // Add error message
             setMessages(prev => [...prev, {
                 type: 'error',

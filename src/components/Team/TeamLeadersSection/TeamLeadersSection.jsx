@@ -62,8 +62,8 @@ const ProfileImage = ({ photoPath, userName }) => {
       } else {
         setDisplayImage(fullUrl);
       }
+    // eslint-disable-next-line no-unused-vars
     } catch (error) {
-      console.log(error);
       setDisplayImage('');
     } finally {
       setIsLoading(false);

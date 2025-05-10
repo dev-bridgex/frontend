@@ -37,13 +37,11 @@ export default function LearningPhaseSection({
     // Handle view learning phase button click
     const handleViewLearningPhase = (e) => {
         e.preventDefault();
-        console.log("Learning Phase Permission check:", { isMember, canModify });
 
         if (isMember || canModify) {
             // Navigate to learning phase page
             navigate(`/communities/community/${communityId}/teams/${teamId}/subteams/${subTeamId}/LearningPhase`);
         } else {
-            console.log("Access denied to learning phase, showing toast");
             // Show error message using toast
             toast.error(
                 <div className={styles.accessDeniedToast}>

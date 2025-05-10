@@ -76,7 +76,7 @@ export default function NavBar() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Logo blueLogo={true} />
+            <Logo isBlue={true} />
           </motion.div>
 
           <ul className={style.navBarUl}>

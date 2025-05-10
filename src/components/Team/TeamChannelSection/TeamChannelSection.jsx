@@ -62,7 +62,6 @@ export default function TeamChannelSection({ communityId, teamId, CanModify, isM
 
     // Handle channel click with permission check
     const handleChannelClick = (channelId, channelName) => {
-        console.log("Permission check:", { isMember, CanModify });
 
         if (isMember || CanModify) {
             navigate(`/communities/${communityId}/teams/${teamId}/channels/${channelName}/${channelId}`);
@@ -126,7 +125,6 @@ export default function TeamChannelSection({ communityId, teamId, CanModify, isM
                     refetch(); // Refresh the channels list
                 }
             } catch (error) {
-                console.error("Delete channel error:", error);
                 const errorMessage = error.response?.data?.Message || 'Failed to delete channel';
                 toast.error(errorMessage, {
                     position: "top-center",
